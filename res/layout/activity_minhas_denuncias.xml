@@ -1,0 +1,15 @@
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
+        
+        <com.google.android.maps.MapView
+    		xmlns:android="http://schemas.android.com/apk/res/android"
+    		android:id="@+id/mapa_minhas_denuncias"
+    		android:layout_width="fill_parent"
+    		android:layout_height="fill_parent"
+    		android:clickable="true"
+    		android:apiKey="￼￼￼￼￼0jThpxQvFWO8eXGpIRgLPAc8j4ynRxdld_36nQA"
+		/>
+
+    </LinearLayout>
