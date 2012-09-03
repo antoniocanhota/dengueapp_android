@@ -6,7 +6,9 @@
     <string name="title_activity_main">DengueApp</string>
     <string name="title_activity_sobre">SobreActivity</string>
     <string name="title_activity_minhas_denuncias">MinhasDenunciasActivity</string>
+    <string name="title_activity_publicar_denuncia">PublicarDenunciaActivity</string>
     <string name="title_activity_dicas_prevencao">DicasPrevencaoActivity</string>
+    <string name="publicar_denuncia">Publicar denúncia</string>
     <string name="denuncias">Denúncias</string>
     <string name="minhas_denuncias">Minhas denúncias</string>
     <string name="dicas_prevencao">Dicas de prevenção</string>

@@ -23,6 +23,14 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".PublicarDenunciaActivity" >
+​​​​​​​​​​​​			<intent-filter>
+​​​​​​​​​​​​​​​​				<action android:name="br.uff.antoniocanhota.dengueapp.android.PUBLICARDENUNCIAACTIVITY" /> ​​​​​​​​​​​​​
+    
+    			<category android:name="android.intent.category.DEFAULT" /> ​​​​​​​​​​​​
+    		</intent-filter>
+​​​​​​​​		</activity>
+        <activity
             android:name=".DenunciasActivity" >
 ​​​​​​​​​​​​			<intent-filter>
 ​​​​​​​​​​​​​​​​				<action android:name="br.uff.antoniocanhota.dengueapp.android.DENUNCIASACTIVITY" /> ​​​​​​​​​​​​​

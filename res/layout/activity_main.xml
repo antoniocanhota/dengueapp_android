@@ -14,6 +14,12 @@
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <Button
+            android:id="@+id/bt_publicar_denuncia"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/publicar_denuncia" />
+        
+        <Button
             android:id="@+id/bt_denuncias"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
