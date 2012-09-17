@@ -21,35 +21,35 @@ public class MainActivity extends Activity {
         Button bt_sobre = (Button)findViewById(R.id.bt_sobre);
         
         bt_publicar_denuncia.setOnClickListener(new View.OnClickListener(){
-			@Override
+			
 			public void onClick(View arg0) {
 				startActivity(new Intent("br.uff.antoniocanhota.dengueapp.android.PUBLICARDENUNCIAACTIVITY"));
 			}			
         });
         
         bt_denuncias.setOnClickListener(new View.OnClickListener(){
-        	@Override
+        	
         	public void onClick(View arg0) {
         		startActivity(new Intent("br.uff.antoniocanhota.dengueapp.android.DENUNCIASACTIVITY"));
         	}			
         });
         
         bt_minhas_denuncias.setOnClickListener(new View.OnClickListener(){
-			@Override
+			
 			public void onClick(View arg0) {
 				startActivity(new Intent("br.uff.antoniocanhota.dengueapp.android.MINHASDENUNCIASACTIVITY"));				
 			}
         });
         
         bt_dicas_prevencao.setOnClickListener(new View.OnClickListener(){
-        	@Override
+        	
         	public void onClick(View arg0) {
         		startActivity(new Intent("br.uff.antoniocanhota.dengueapp.android.DICASPREVENCAOACTIVITY"));				
         	}
         });
         
         bt_sobre.setOnClickListener(new View.OnClickListener(){
-        	@Override
+        	
         	public void onClick(View arg0) {
         		startActivity(new Intent("br.uff.antoniocanhota.dengueapp.android.SOBREACTIVITY"));				
         	}
