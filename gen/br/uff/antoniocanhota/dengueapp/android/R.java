@@ -85,9 +85,6 @@ public final class R {
         public static final int webserivce_listagem_denuncias=0x7f040018;
         public static final int webservice_publicar_denuncia=0x7f040017;
     }
-    public static final class strings {
-        public static final int api_google_maps=0x7f080000;
-    }
     public static final class style {
         public static final int AppTheme=0x7f050000;
     }
