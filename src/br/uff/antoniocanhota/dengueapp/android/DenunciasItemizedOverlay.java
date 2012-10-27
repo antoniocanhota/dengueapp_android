@@ -33,15 +33,11 @@ public class DenunciasItemizedOverlay extends ItemizedOverlay<OverlayItem> {
 	public int size() {
 	  return mOverlays.size();
 	}
-	
-	//Esse método deverá ser modificado para que exiba as informações
-	//da denúncia clicada 
+	 
 	@Override
 	protected boolean onTap(int index) {
 	  OverlayItem item = mOverlays.get(index);
 	  AlertDialog.Builder dialog = new AlertDialog.Builder(mContext);
-	  dialog.setTitle(item.getTitle());
-	  dialog.setMessage(item.getSnippet());
 	  dialog.setTitle(item.getTitle());
 	  dialog.setMessage(item.getSnippet());
 	  dialog.show();
