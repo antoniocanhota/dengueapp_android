@@ -25,4 +25,9 @@
 	<string name="webservice_publicar_denuncia">http://10.0.2.2:3000/webservices/denuncias/publicar</string>
 	<string name="webserivce_listagem_denuncias">http://10.0.2.2:3000/webservices/denuncias</string>
 	<string name="confirmar_publicacao_de_denuncia">Confirmar e publicar denúncia</string>
+	<!--
+	chave para o mac: 0jThpxQvFWO9uJJsik5milTZWFAAACqh7usjHGA
+	chave para o linux de casa: 0jThpxQvFWO96kWlACMapyrB1aVjKYYiMk13WQQ
+	 -->
+	<string name="api_google_maps">0jThpxQvFWO96kWlACMapyrB1aVjKYYiMk13WQQ</string>
 </resources>
