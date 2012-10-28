@@ -45,34 +45,34 @@ public class DenunciasActivity extends MapActivity{
 		setContentView(R.layout.activity_denuncias);
 		MapView mapView = (MapView) findViewById(R.id.mapa_denuncias);
 		
-		//Convers‹o do XML do webservice em uma lista de denœncias
+		//Conversï¿½o do XML do webservice em uma lista de denï¿½ncias
 		Hashtable<Integer,Denuncia> hash_de_denuncias = processarXMLDenuncias();
 		Enumeration enum_denuncias = hash_de_denuncias.keys();
 		
-		//Cria‹o da listagem de pontos das denœncias
+		//Criaï¿½ï¿½o da listagem de pontos das denï¿½ncias
 		List<Overlay> mapOverlays = mapView.getOverlays();
 	    Drawable drawable = this.getResources().getDrawable(R.drawable.ic_marker);
 	    DenunciasItemizedOverlay itemizedoverlay = new DenunciasItemizedOverlay(drawable, this);
 	    
-		//Itera‹o da lista de denœncias
+		//Iteraï¿½ï¿½o da lista de denï¿½ncias
 		while(enum_denuncias.hasMoreElements()){
 			
-			//Transforma‹o dos dados de uma denœncia em XML em um objeto 'Denuncia'
+			//Transformaï¿½ï¿½o dos dados de uma denï¿½ncia em XML em um objeto 'Denuncia'
 			Object obj = enum_denuncias.nextElement();
 			Denuncia denuncia = hash_de_denuncias.get(obj);
 			
-			//Cria‹o do ponto no mapa
+			//Criaï¿½ï¿½o do ponto no mapa
 			Double lat = Double.parseDouble(String.valueOf(denuncia.getLatitude()));
 			Double lng = Double.parseDouble(String.valueOf(denuncia.getLongitude()));
   			GeoPoint ponto = new GeoPoint((int)(lat * 1E6), (int)(lng * 1E6)); 
   			
- 			//Adicionando o ponto ˆ listagem de pontos
- 		    OverlayItem overlayitem = new OverlayItem(ponto, "T’tulo do box", "Texto do box");	
+ 			//Adicionando o ponto ï¿½ listagem de pontos
+ 		    OverlayItem overlayitem = new OverlayItem(ponto, "Tï¿½tulo do box", "Texto do box");	
  		    itemizedoverlay.addOverlay(overlayitem);
  		    
 		}
 		
-		//Configura›es diversas de exibi‹o do mapa
+		//Configuraï¿½ï¿½es diversas de exibiï¿½ï¿½o do mapa
 	    mapView.setBuiltInZoomControls(true);
 	    mapView.setSatellite(true);
 	    mapa = mapView.getController();
