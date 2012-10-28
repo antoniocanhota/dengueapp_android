@@ -49,15 +49,18 @@ public class DenunciasActivity extends MapActivity{
 		Hashtable<Integer,Denuncia> hash_de_denuncias = processarXMLDenuncias();
 		Enumeration enum_denuncias = hash_de_denuncias.keys();
 		
+
 		//Cria��o da listagem de pontos das den�ncias
 		List<Overlay> mapOverlays = mapView.getOverlays();
 	    Drawable drawable = this.getResources().getDrawable(R.drawable.ic_marker);
 	    DenunciasItemizedOverlay itemizedoverlay = new DenunciasItemizedOverlay(drawable, this);
 	    
 		//Itera��o da lista de den�ncias
-		while(enum_denuncias.hasMoreElements()){
-			
+
+		while(enum_denuncias.hasMoreElements()){		
+
 			//Transforma��o dos dados de uma den�ncia em XML em um objeto 'Denuncia'
+
 			Object obj = enum_denuncias.nextElement();
 			Denuncia denuncia = hash_de_denuncias.get(obj);
 			
@@ -67,12 +70,14 @@ public class DenunciasActivity extends MapActivity{
   			GeoPoint ponto = new GeoPoint((int)(lat * 1E6), (int)(lng * 1E6)); 
   			
  			//Adicionando o ponto � listagem de pontos
- 		    OverlayItem overlayitem = new OverlayItem(ponto, "T�tulo do box", "Texto do box");	
+ 		    OverlayItem overlayitem = new OverlayItem(ponto, "T�tulo do box", "Texto do box");
+
  		    itemizedoverlay.addOverlay(overlayitem);
  		    
 		}
 		
 		//Configura��es diversas de exibi��o do mapa
+
 	    mapView.setBuiltInZoomControls(true);
 	    mapView.setSatellite(true);
 	    mapa = mapView.getController();
