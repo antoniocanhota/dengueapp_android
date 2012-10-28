@@ -55,6 +55,12 @@ public final class R {
         public static final int aluno_email=0x7f040010;
         public static final int aluno_label=0x7f04000f;
         public static final int aluno_valor=0x7f04000e;
+        /** 
+	chave para o mac: 0jThpxQvFWO9uJJsik5milTZWFAAACqh7usjHGA
+	chave para o linux de casa: 0jThpxQvFWO96kWlACMapyrB1aVjKYYiMk13WQQ
+	 
+         */
+        public static final int api_google_maps=0x7f04001a;
         public static final int app_name=0x7f040000;
         public static final int confirmar_publicacao_de_denuncia=0x7f040019;
         public static final int denuncias=0x7f040009;

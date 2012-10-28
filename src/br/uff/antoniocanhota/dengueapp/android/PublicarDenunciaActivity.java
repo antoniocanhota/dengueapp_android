@@ -12,7 +12,6 @@ import org.apache.http.message.BasicNameValuePair;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
@@ -46,13 +45,26 @@ public class PublicarDenunciaActivity extends Activity {
 	private static void enviar(Context ctx, String lat, String lng, String denunciante_id) {
 		HttpClient client = new DefaultHttpClient();
 		HttpPost post = new HttpPost(ctx.getString(R.string.webservice_publicar_denuncia));
-		NameValuePair nv0 = new BasicNameValuePair("denuncia[denunciante_id]",denunciante_id);
-		NameValuePair nv1 = new BasicNameValuePair("denuncia[latitude]", lat);
-		NameValuePair nv2 = new BasicNameValuePair("denuncia[longitude]", lng);
 		ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		
+		NameValuePair nv0 = new BasicNameValuePair("denuncia[denunciante_id]",denunciante_id);
 		nameValuePairs.add(nv0);
+		
+		NameValuePair nv1 = new BasicNameValuePair("denuncia[latitude]", lat);
 		nameValuePairs.add(nv1);
-		nameValuePairs.add(nv2);
+		
+		NameValuePair nv2 = new BasicNameValuePair("denuncia[longitude]", lng);
+		nameValuePairs.add(nv2);		
+		
+		NameValuePair nv3 = new BasicNameValuePair("denuncia[identificacao_do_hardware]", Utilitarios.getDeviceID(ctx));
+		nameValuePairs.add(nv3);
+		
+		NameValuePair nv4 = new BasicNameValuePair("denuncia[identificao_do_android]", Utilitarios.getAndroidID(ctx));
+		nameValuePairs.add(nv4);
+
+		NameValuePair nv5 = new BasicNameValuePair("denuncia[numero_do_telefone]", Utilitarios.getPhoneNumber(ctx));
+		nameValuePairs.add(nv5);
+		
 		try {
 			post.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 			HttpResponse response = client.execute(post);

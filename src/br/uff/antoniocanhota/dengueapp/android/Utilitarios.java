@@ -10,7 +10,40 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import android.content.Context;
+import android.provider.Settings.Secure;
+import android.telephony.TelephonyManager;
+
 public class Utilitarios {
+
+	public static String getPhoneNumber(Context ctx){
+		TelephonyManager tMgr =(TelephonyManager)ctx.getSystemService(Context.TELEPHONY_SERVICE);
+		return tMgr.getLine1Number();		   
+	}
+	
+	public static String getAndroidID(Context ctx){
+		String android_id = Secure.getString(ctx.getContentResolver(),Secure.ANDROID_ID);
+		return android_id;
+	}
+	
+	public static String getDeviceID(Context ctx) {
+	     String deviceID = null;
+	     String serviceName = Context.TELEPHONY_SERVICE;
+	     TelephonyManager m_telephonyManager = (TelephonyManager)ctx.getSystemService(serviceName);
+	     int deviceType = m_telephonyManager.getPhoneType();
+	     switch (deviceType) {
+	           case (TelephonyManager.PHONE_TYPE_GSM):
+	           break;
+	           case (TelephonyManager.PHONE_TYPE_CDMA):
+	           break;
+	           case (TelephonyManager.PHONE_TYPE_NONE):
+	           break;
+	          default:
+	         break;
+	     }
+	     deviceID = m_telephonyManager.getDeviceId();
+	     return deviceID;
+	}
 
 	public static String processarCampoXML(Element objeto, String campo){
 		NodeList campoElmntLs = objeto.getElementsByTagName(campo);
@@ -27,7 +60,7 @@ public class Utilitarios {
 		URLConnection conn = url.openConnection();
 		
 		if (!(conn instanceof HttpURLConnection)) 
-			throw new IOException("N‹o Ž uma conex‹o HTTP");
+			throw new IOException("Nï¿½o ï¿½ uma conexï¿½o HTTP");
 		try{
 			HttpURLConnection httpConn = (HttpURLConnection) conn;
 			httpConn.setAllowUserInteraction(false);

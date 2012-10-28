@@ -7,7 +7,7 @@
         android:id="@+id/mapa_denuncias"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:apiKey="0jThpxQvFWO96kWlACMapyrB1aVjKYYiMk13WQQ"
+        android:apiKey="@string/api_google_maps"
         android:clickable="true" />
 
 </LinearLayout>
