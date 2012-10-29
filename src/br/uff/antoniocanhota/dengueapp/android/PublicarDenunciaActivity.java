@@ -32,17 +32,24 @@ public class PublicarDenunciaActivity extends Activity {
 		bt_confirmar_publicacao_de_denuncia
 				.setOnClickListener(new View.OnClickListener() {
 					public void onClick(View arg0) {
-						//Coordenadas na Ilha do Governador!
-						String lat = "-22.806393";
-						String lng = "-43.211889";
-						String denunciante_id = "1";
-						PublicarDenunciaActivity.enviar(getApplicationContext(),lat,lng,denunciante_id);
+						
+						//Geração de coordenadas aleatórias no grande Rio
+						double minLat = -22.00;
+					    double maxLat = -22.20;      
+					    double latitude = minLat + (double)(Math.random() * ((maxLat - minLat) + 1));
+					    double minLon = -42.50;
+					    double maxLon = -43.00;     
+					    double longitude = minLon + (double)(Math.random() * ((maxLon - minLon) + 1));
+					    String lat = String.valueOf(latitude);
+						String lng = String.valueOf(longitude);
+						
+						PublicarDenunciaActivity.enviar(getApplicationContext(),lat,lng);
 					}
 				});
 		
 	}
 
-	private static void enviar(Context ctx, String lat, String lng, String denunciante_id) {
+	private static void enviar(Context ctx, String lat, String lng) {
 		HttpClient client = new DefaultHttpClient();
 		HttpPost post = new HttpPost(ctx.getString(R.string.webservice_publicar_denuncia));
 		ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();		
