@@ -44,7 +44,7 @@ public class Utilitarios {
 	     deviceID = m_telephonyManager.getDeviceId();
 	     return deviceID;
 	}
-
+	
 	public static String processarCampoXML(Element objeto, String campo){
 		NodeList campoElmntLs = objeto.getElementsByTagName(campo);
 		Element campoElmnt = (Element) campoElmntLs.item(0);
