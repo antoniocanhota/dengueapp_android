@@ -9,6 +9,7 @@
     <string name="title_activity_publicar_denuncia">PublicarDenunciaActivity</string>
     <string name="title_activity_dicas_prevencao">DicasPrevencaoActivity</string>
     <string name="publicar_denuncia">Publicar denúncia</string>
+    <string name="tirar_foto">Tirar foto</string>
     <string name="denuncias">Denúncias</string>
     <string name="minhas_denuncias">Minhas denúncias</string>
     <string name="dicas_prevencao">Dicas de prevenção</string>
