@@ -7,13 +7,12 @@
         android:minSdkVersion="8"
         android:targetSdkVersion="15" />
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-    
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+
     <application
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name" >
-        
         <uses-library android:name="com.google.android.maps" />
 
         <activity
@@ -25,46 +24,69 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".PublicarDenunciaActivity" >
+​​​​​​​​​​​​			
+            <intent-filter>
+​​​​​​​​​​​​​​​​				
+                <action android:name="br.uff.antoniocanhota.dengueapp.android.PUBLICARDENUNCIAACTIVITY" />
+ ​​​​​​​​​​​​​
+                <category android:name="android.intent.category.DEFAULT" />
+ ​​​​​​​​​​​​
+            </intent-filter>
+​​​​​​​​		
+        </activity>
+        <activity android:name=".DenunciasActivity" >
+​​​​​​​​​​​​			
+            <intent-filter>
+​​​​​​​​​​​​​​​​				
+                <action android:name="br.uff.antoniocanhota.dengueapp.android.DENUNCIASACTIVITY" />
+ ​​​​​​​​​​​​​
+                <category android:name="android.intent.category.DEFAULT" />
+ ​​​​​​​​​​​​
+            </intent-filter>
+​​​​​​​​		
+        </activity>
+        <activity android:name=".MinhasDenunciasActivity" >
+​​​​​​​​​​​​			
+            <intent-filter>
+​​​​​​​​​​​​​​​​				
+                <action android:name="br.uff.antoniocanhota.dengueapp.android.MINHASDENUNCIASACTIVITY" />
+ ​​​​​​​​​​​​​
+                <category android:name="android.intent.category.DEFAULT" />
+ ​​​​​​​​​​​​
+            </intent-filter>
+​​​​​​​​		
+        </activity>
+        <activity android:name=".DicasPrevencaoActivity" >
+​​​​​​​​​​​​			
+            <intent-filter>
+​​​​​​​​​​​​​​​​				
+                <action android:name="br.uff.antoniocanhota.dengueapp.android.DICASPREVENCAOACTIVITY" />
+ ​​​​​​​​​​​​​
+                <category android:name="android.intent.category.DEFAULT" />
+ ​​​​​​​​​​​​
+            </intent-filter>
+​​​​​​​​		
+        </activity>
+        <activity android:name=".SobreActivity" >
+​​​​​​​​​​​​			
+            <intent-filter>
+​​​​​​​​​​​​​​​​				
+                <action android:name="br.uff.antoniocanhota.dengueapp.android.SOBREACTIVITY" />
+ ​​​​​​​​​​​​​
+                <category android:name="android.intent.category.DEFAULT" />
+ ​​​​​​​​​​​​
+            </intent-filter>
+​​​​​​​​		
+        </activity>
         <activity
-            android:name=".PublicarDenunciaActivity" >
-​​​​​​​​​​​​			<intent-filter>
-​​​​​​​​​​​​​​​​				<action android:name="br.uff.antoniocanhota.dengueapp.android.PUBLICARDENUNCIAACTIVITY" /> ​​​​​​​​​​​​​
-    
-    			<category android:name="android.intent.category.DEFAULT" /> ​​​​​​​​​​​​
-    		</intent-filter>
-​​​​​​​​		</activity>
-        <activity
-            android:name=".DenunciasActivity" >
-​​​​​​​​​​​​			<intent-filter>
-​​​​​​​​​​​​​​​​				<action android:name="br.uff.antoniocanhota.dengueapp.android.DENUNCIASACTIVITY" /> ​​​​​​​​​​​​​
-    
-    			<category android:name="android.intent.category.DEFAULT" /> ​​​​​​​​​​​​
-    		</intent-filter>
-​​​​​​​​		</activity>
-        <activity
-            android:name=".MinhasDenunciasActivity" >
-​​​​​​​​​​​​			<intent-filter>
-​​​​​​​​​​​​​​​​				<action android:name="br.uff.antoniocanhota.dengueapp.android.MINHASDENUNCIASACTIVITY" /> ​​​​​​​​​​​​​
-    
-    			<category android:name="android.intent.category.DEFAULT" /> ​​​​​​​​​​​​
-    		</intent-filter>
-​​​​​​​​		</activity>
-        <activity
-            android:name=".DicasPrevencaoActivity" >
-​​​​​​​​​​​​			<intent-filter>
-​​​​​​​​​​​​​​​​				<action android:name="br.uff.antoniocanhota.dengueapp.android.DICASPREVENCAOACTIVITY" /> ​​​​​​​​​​​​​
-    
-    			<category android:name="android.intent.category.DEFAULT" /> ​​​​​​​​​​​​
-    		</intent-filter>
-​​​​​​​​		</activity>
-        <activity
-            android:name=".SobreActivity" >
-​​​​​​​​​​​​			<intent-filter>
-​​​​​​​​​​​​​​​​				<action android:name="br.uff.antoniocanhota.dengueapp.android.SOBREACTIVITY" /> ​​​​​​​​​​​​​
-    
-    			<category android:name="android.intent.category.DEFAULT" /> ​​​​​​​​​​​​
-    		</intent-filter>
-​​​​​​​​		</activity>
+            android:name=".MinhasInformacoesActivity">
+            <intent-filter>
+                <action android:name="br.uff.antoniocanhota.dengueapp.android.MINHASINFORMACOESACTIVITY" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

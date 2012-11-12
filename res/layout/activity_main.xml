@@ -36,6 +36,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/dicas_prevencao" />
+        
+        <Button
+            android:id="@+id/bt_minhas_informacoes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/minhas_informacoes" />
 
         <Button
             android:id="@+id/bt_sobre"

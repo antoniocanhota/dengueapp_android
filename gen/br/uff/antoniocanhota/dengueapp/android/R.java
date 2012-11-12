@@ -17,39 +17,42 @@ public final class R {
         public static final int ic_point=0x7f020003;
     }
     public static final class id {
-        public static final int bt_confirmar_publicacao_de_denuncia=0x7f070008;
+        public static final int bt_confirmar_publicacao_de_denuncia=0x7f070009;
         public static final int bt_denuncias=0x7f070003;
         public static final int bt_dicas_prevencao=0x7f070005;
         public static final int bt_minhas_denuncias=0x7f070004;
+        public static final int bt_minhas_informacoes=0x7f070006;
         public static final int bt_publicar_denuncia=0x7f070002;
-        public static final int bt_sobre=0x7f070006;
+        public static final int bt_sobre=0x7f070007;
         public static final int mapa_denuncias=0x7f070000;
-        public static final int mapa_minhas_denuncias=0x7f070007;
-        public static final int menu_settings=0x7f070011;
+        public static final int mapa_minhas_denuncias=0x7f070008;
+        public static final int menu_settings=0x7f070012;
         public static final int textView1=0x7f070001;
-        public static final int textView2=0x7f070009;
-        public static final int textView3=0x7f07000b;
-        public static final int textView4=0x7f07000d;
-        public static final int textView5=0x7f07000a;
-        public static final int textView6=0x7f07000c;
-        public static final int textView7=0x7f07000f;
-        public static final int textView8=0x7f070010;
-        public static final int textView9=0x7f07000e;
+        public static final int textView2=0x7f07000a;
+        public static final int textView3=0x7f07000c;
+        public static final int textView4=0x7f07000e;
+        public static final int textView5=0x7f07000b;
+        public static final int textView6=0x7f07000d;
+        public static final int textView7=0x7f070010;
+        public static final int textView8=0x7f070011;
+        public static final int textView9=0x7f07000f;
     }
     public static final class layout {
         public static final int activity_denuncias=0x7f030000;
         public static final int activity_dicas_prevencao=0x7f030001;
         public static final int activity_main=0x7f030002;
         public static final int activity_minhas_denuncias=0x7f030003;
-        public static final int activity_publicar_denuncia=0x7f030004;
-        public static final int activity_sobre=0x7f030005;
+        public static final int activity_minhas_informacoes=0x7f030004;
+        public static final int activity_publicar_denuncia=0x7f030005;
+        public static final int activity_sobre=0x7f030006;
     }
     public static final class menu {
         public static final int activity_dicas_prevencao=0x7f060000;
         public static final int activity_main=0x7f060001;
         public static final int activity_minhas_denuncias=0x7f060002;
-        public static final int activity_publicar_denuncia=0x7f060003;
-        public static final int activity_sobre=0x7f060004;
+        public static final int activity_minhas_informacoes=0x7f060003;
+        public static final int activity_publicar_denuncia=0x7f060004;
+        public static final int activity_sobre=0x7f060005;
     }
     public static final class string {
         public static final int aluno_email=0x7f040010;
@@ -58,7 +61,7 @@ public final class R {
         /** 
 	chave para o mac: 0jThpxQvFWO9uJJsik5milTZWFAAACqh7usjHGA
 	chave para o linux de casa: 0jThpxQvFWO96kWlACMapyrB1aVjKYYiMk13WQQ
-	 
+    
          */
         public static final int api_google_maps=0x7f04001a;
         public static final int app_name=0x7f040000;
@@ -69,6 +72,7 @@ public final class R {
         public static final int hello_world=0x7f040001;
         public static final int menu_settings=0x7f040002;
         public static final int minhas_denuncias=0x7f04000a;
+        public static final int minhas_informacoes=0x7f04001c;
         public static final int orientador_label=0x7f040012;
         public static final int orientador_valor=0x7f040011;
         public static final int publicar_denuncia=0x7f040008;
@@ -77,6 +81,7 @@ public final class R {
         public static final int title_activity_dicas_prevencao=0x7f040007;
         public static final int title_activity_main=0x7f040003;
         public static final int title_activity_minhas_denuncias=0x7f040005;
+        public static final int title_activity_minhas_informacoes=0x7f04001b;
         public static final int title_activity_publicar_denuncia=0x7f040006;
         public static final int title_activity_sobre=0x7f040004;
         public static final int versao_label=0x7f040015;
