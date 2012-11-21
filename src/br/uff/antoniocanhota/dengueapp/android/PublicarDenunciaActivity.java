@@ -1,5 +1,11 @@
 package br.uff.antoniocanhota.dengueapp.android;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 
 import org.apache.http.HttpResponse;
@@ -9,10 +15,19 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.entity.*;
+import org.apache.http.entity.mime.HttpMultipartMode;
+import org.apache.http.entity.mime.MultipartEntity;
+import org.apache.http.entity.mime.content.ContentBody;
+import org.apache.http.entity.mime.content.FileBody;
+import org.apache.http.entity.mime.content.StringBody;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Bitmap.CompressFormat;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.Menu;
@@ -24,6 +39,7 @@ import android.widget.Toast;
 public class PublicarDenunciaActivity extends Activity {
 	private static final int TIRAR_FOTO = 1020394857;
 	private ImageView imgFoto;
+	private Bitmap bitmap;
 
 	String webservice_de_publicar_denuncia = "http://10.0.2.2:3000/webservices/denuncias/publicar";
 
@@ -57,8 +73,13 @@ public class PublicarDenunciaActivity extends Activity {
 								+ (double) (Math.random() * ((maxLon - minLon) + 1));
 						String lat = String.valueOf(latitude);
 						String lng = String.valueOf(longitude);
-						PublicarDenunciaActivity.enviar(
-								getApplicationContext(), lat, lng);
+						try {
+							PublicarDenunciaActivity.enviar(
+									getApplicationContext(), lat, lng, bitmap);
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 					}
 				});
 
@@ -68,9 +89,9 @@ public class PublicarDenunciaActivity extends Activity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == TIRAR_FOTO) {
 			if (resultCode == RESULT_OK) {
-				Bitmap bitmap = (Bitmap) data.getExtras().get("data");
+				bitmap = (Bitmap) data.getExtras().get("data");
 				imgFoto.setImageBitmap(bitmap);
-				//A foto poderá ser salva aqui
+				// A foto poderá ser salva aqui
 			} else if (resultCode == RESULT_CANCELED) {
 				Toast.makeText(this, "Cancelou", Toast.LENGTH_SHORT);
 			} else {
@@ -80,35 +101,49 @@ public class PublicarDenunciaActivity extends Activity {
 		}
 	}
 
-	private static void enviar(Context ctx, String lat, String lng) {
+	private static void enviar(Context ctx, String lat, String lng,
+			Bitmap imagem) throws IOException {
 		HttpClient client = new DefaultHttpClient();
 		HttpPost post = new HttpPost(
 				ctx.getString(R.string.webservice_publicar_denuncia));
-		ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		MultipartEntity mpEntity = new MultipartEntity(
+				HttpMultipartMode.BROWSER_COMPATIBLE);
+		
+		// Object filename;
+		// create a file to write bitmap data
+		File f = new File(ctx.getCacheDir(), "foto_denuncia.jpg");
+		f.createNewFile();
 
-		NameValuePair nv1 = new BasicNameValuePair("denuncia[latitude]", lat);
-		nameValuePairs.add(nv1);
+		// Convert bitmap to byte array
+		ByteArrayOutputStream bos = new ByteArrayOutputStream();
+		imagem.compress(CompressFormat.PNG, 0 /* ignored for PNG */, bos);
+		byte[] bitmapdata = bos.toByteArray();
 
-		NameValuePair nv2 = new BasicNameValuePair("denuncia[longitude]", lng);
-		nameValuePairs.add(nv2);
+		// write the bytes in file
+		FileOutputStream fos = new FileOutputStream(f);
+		fos.write(bitmapdata);
+		fos.flush();
+		fos.close();
 
-		NameValuePair nv3 = new BasicNameValuePair(
+		// adiciona os parametros à requisição POST
+		mpEntity.addPart("denuncia[foto]", new FileBody(f, "image/jpeg"));
+		mpEntity.addPart("denuncia[latitude]",
+				new StringBody(lat, Charset.forName("UTF-8")));
+		mpEntity.addPart("denuncia[longitude]",
+				new StringBody(lng, Charset.forName("UTF-8")));
+		mpEntity.addPart(
 				"dispositivo[identificador_do_hardware]",
-				Utilitarios.getDeviceID(ctx));
-		nameValuePairs.add(nv3);
-
-		NameValuePair nv4 = new BasicNameValuePair(
+				new StringBody(Utilitarios.getDeviceID(ctx), Charset
+						.forName("UTF-8")));
+		mpEntity.addPart(
 				"dispositivo[identificador_do_android]",
-				Utilitarios.getAndroidID(ctx));
-		nameValuePairs.add(nv4);
-
-		NameValuePair nv5 = new BasicNameValuePair(
-				"dispositivo[numero_do_telefone]",
-				Utilitarios.getPhoneNumber(ctx));
-		nameValuePairs.add(nv5);
+				new StringBody(Utilitarios.getAndroidID(ctx), Charset
+						.forName("UTF-8")));
+		mpEntity.addPart("dispositivo[numero_do_telefone]", new StringBody(
+				Utilitarios.getPhoneNumber(ctx), Charset.forName("UTF-8")));
 
 		try {
-			post.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+			post.setEntity(mpEntity);
 			HttpResponse response = client.execute(post);
 			Toast.makeText(ctx, "Denúncia Publicada", Toast.LENGTH_SHORT)
 					.show();
@@ -116,6 +151,7 @@ public class PublicarDenunciaActivity extends Activity {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
 	}
 
 	@Override
