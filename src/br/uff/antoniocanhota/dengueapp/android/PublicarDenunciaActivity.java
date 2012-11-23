@@ -22,11 +22,16 @@ import org.apache.http.entity.mime.content.ContentBody;
 import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.entity.mime.content.StringBody;
 
+import com.google.android.maps.GeoPoint;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -40,6 +45,11 @@ public class PublicarDenunciaActivity extends Activity {
 	private static final int TIRAR_FOTO = 1020394857;
 	private ImageView imgFoto;
 	private Bitmap bitmap;
+
+	private LocationManager lm;
+	private LocationListener locationListener;
+	private String lat;
+	private String lng;
 
 	String webservice_de_publicar_denuncia = "http://10.0.2.2:3000/webservices/denuncias/publicar";
 
@@ -59,20 +69,15 @@ public class PublicarDenunciaActivity extends Activity {
 			}
 		});
 
+		// ---use the LocationManager class to obtain locations data---
+		lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+		locationListener = new MyLocationListener();
+		lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0,
+				locationListener);
+		
 		bt_confirmar_publicacao_de_denuncia
 				.setOnClickListener(new View.OnClickListener() {
 					public void onClick(View arg0) {
-						// Geração de coordenadas aleatórias no grande Rio
-						double minLat = -22.00;
-						double maxLat = -22.20;
-						double latitude = minLat
-								+ (double) (Math.random() * ((maxLat - minLat) + 1));
-						double minLon = -42.50;
-						double maxLon = -43.00;
-						double longitude = minLon
-								+ (double) (Math.random() * ((maxLon - minLon) + 1));
-						String lat = String.valueOf(latitude);
-						String lng = String.valueOf(longitude);
 						try {
 							PublicarDenunciaActivity.enviar(
 									getApplicationContext(), lat, lng, bitmap);
@@ -82,6 +87,30 @@ public class PublicarDenunciaActivity extends Activity {
 						}
 					}
 				});
+
+	}
+	
+	private class MyLocationListener implements LocationListener {
+		public void onLocationChanged(Location loc) {
+			if (loc != null) {
+				Toast.makeText(getBaseContext(),"Location changed : Lat: " + loc.getLatitude()+ " Lng: " + loc.getLongitude(),Toast.LENGTH_SHORT).show();
+			}
+//			p = new GeoPoint((int) (loc.getLatitude() * 1E6),(int) (loc.getLongitude() * 1E6));
+//			mc.animateTo(p);
+//			mc.setZoom(18);
+			lat = String.valueOf((loc.getLatitude() / 1E6));
+			lng = String.valueOf((loc.getLongitude() / 1E6));
+			
+		}
+
+		public void onProviderDisabled(String provider) {
+		}
+
+		public void onProviderEnabled(String provider) {
+		}
+
+		public void onStatusChanged(String provider, int status,Bundle extras) {
+		}
 
 	}
 
@@ -108,7 +137,7 @@ public class PublicarDenunciaActivity extends Activity {
 				ctx.getString(R.string.webservice_publicar_denuncia));
 		MultipartEntity mpEntity = new MultipartEntity(
 				HttpMultipartMode.BROWSER_COMPATIBLE);
-		
+
 		// Object filename;
 		// create a file to write bitmap data
 		File f = new File(ctx.getCacheDir(), "foto_denuncia.jpg");
