@@ -8,6 +8,9 @@
     <string name="title_activity_minhas_denuncias">MinhasDenunciasActivity</string>
     <string name="title_activity_publicar_denuncia">PublicarDenunciaActivity</string>
     <string name="title_activity_dicas_prevencao">DicasPrevencaoActivity</string>
+    <string name="imei_label">IMEI</string>
+    <string name="telefone_label">Meu número de telefone</string>
+    <string name="cod_ativacao_label">Código de ativação</string>
     <string name="publicar_denuncia">Publicar denúncia</string>
     <string name="tirar_foto">Tirar foto</string>
     <string name="denuncias">Denúncias</string>
@@ -21,7 +24,7 @@
     <string name="orientador_valor">Igor Monteiro Moraes</string>
     <string name="orientador_label">Orientador</string>
     <string name="sobre_paragrafo_1">Aplicação desenvolvida como parte do trabalho de conclusão de curso em bacharel em ciência da computação pela Universidade Federal Fluminense</string>
-    <string name="versao_valor">Estamos trabalhando nisso&#8230;</string>
+    <string name="versao_valor">0.1&#8230;</string>
     <string name="versao_label">Versão</string>
     <string name="enviando_denuncia">Eviando denúncia</string>
     <string name="webservice_publicar_denuncia">http://10.0.2.2:3000/webservices/denuncias/publicar</string>
@@ -32,7 +35,7 @@
 	chave para o linux de casa: 0jThpxQvFWO96kWlACMapyrB1aVjKYYiMk13WQQ
     -->
     <string name="api_google_maps">0jThpxQvFWO9uJJsik5milTZWFAAACqh7usjHGA</string>
-    <string name="title_activity_minhas_informacoes">MinhasInformacoes</string>
-    <string name="minhas_informacoes">Minhas Informações</string>
+    <string name="title_activity_minhas_informacoes">Minhas informacoes</string>
+    <string name="minhas_informacoes">Minhas informações</string>
 
 </resources>

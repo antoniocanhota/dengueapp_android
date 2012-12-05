@@ -1,14 +1,59 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:android1="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
 
     <TextView
+        android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:text="@string/hello_world"
-        tools:context=".MinhasInformacoes" />
+        android:paddingBottom="15dp"
+        android:paddingTop="5dp"
+        android:text="@string/minhas_informacoes"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
-</RelativeLayout>
+     <TextView
+        android1:id="@+id/telefone_label"
+        android1:layout_width="wrap_content"
+        android1:layout_height="wrap_content"
+        android:paddingBottom="5dp"
+        android1:text="@string/telefone_label"
+        android1:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android1:id="@+id/telefone_campo"
+        android1:layout_width="wrap_content"
+        android1:layout_height="wrap_content"
+        android1:textAppearance="?android:attr/textAppearanceMedium" />
+    
+    <TextView
+        android1:id="@+id/imei_label"
+        android1:layout_width="wrap_content"
+        android1:layout_height="wrap_content"
+        android:paddingBottom="5dp"
+        android1:text="@string/imei_label"
+        android1:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android1:id="@+id/imei_campo"
+        android1:layout_width="wrap_content"
+        android1:layout_height="wrap_content"
+        android1:textAppearance="?android:attr/textAppearanceMedium" />
+    
+     <TextView
+        android1:id="@+id/cod_ativacao_label"
+        android1:layout_width="wrap_content"
+        android1:layout_height="wrap_content"
+        android:paddingBottom="5dp"
+        android1:text="@string/cod_ativacao_label"
+        android1:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android1:id="@+id/cod_ativacao_campo"
+        android1:layout_width="wrap_content"
+        android1:layout_height="wrap_content"
+        android1:textAppearance="?android:attr/textAppearanceMedium" />
+
+</LinearLayout>

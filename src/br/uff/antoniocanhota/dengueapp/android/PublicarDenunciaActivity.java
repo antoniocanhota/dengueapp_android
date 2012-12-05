@@ -23,6 +23,9 @@ import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.entity.mime.content.StringBody;
 
 import com.google.android.maps.GeoPoint;
+import com.google.android.maps.MapActivity;
+import com.google.android.maps.MapController;
+import com.google.android.maps.MapView;
 
 import android.app.Activity;
 import android.content.Context;
@@ -41,23 +44,47 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-public class PublicarDenunciaActivity extends Activity {
+public class PublicarDenunciaActivity extends MapActivity {
 	private static final int TIRAR_FOTO = 1020394857;
 	private ImageView imgFoto;
 	private Bitmap bitmap;
 
 	private LocationManager lm;
 	private LocationListener locationListener;
+	private MapController mapa;
 	private String lat;
 	private String lng;
+	private GeoPoint localDaDenuncia;
+	
 
 	String webservice_de_publicar_denuncia = "http://10.0.2.2:3000/webservices/denuncias/publicar";
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		// ---use the LocationManager class to obtain locations data---
+		lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+		locationListener = new MyLocationListener();
+		lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0,
+				locationListener);
+		
 		setContentView(R.layout.activity_publicar_denuncia);
 		imgFoto = (ImageView) findViewById(R.id.foto_da_denuncia);
+		
+		//Centraliza e foca no local do usuáiro
+		MapView mapView = (MapView) findViewById(R.id.mapa_publicar_denuncia);
+		mapa = mapView.getController();
+		
+		//TODO: REMOVER ESTE BACALHAU DAQUI DEPOIS
+		if (lat != null && lng != null){
+			double lat_db = Double.parseDouble(lat);
+	 	    double lng_db = Double.parseDouble(lng);
+	 	    localDaDenuncia = new GeoPoint((int) (lat_db * 1E6), (int) (lng_db * 1E6));
+	 
+			mapa.animateTo(localDaDenuncia);
+		    mapa.setZoom(15);	
+		}
+ 		
 
 		Button bt_confirmar_publicacao_de_denuncia = (Button) findViewById(R.id.bt_confirmar_publicacao_de_denuncia);
 		Button bt_tirar_foto = (Button) findViewById(R.id.bt_tirar_foto);
@@ -69,18 +96,26 @@ public class PublicarDenunciaActivity extends Activity {
 			}
 		});
 
-		// ---use the LocationManager class to obtain locations data---
-		lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-		locationListener = new MyLocationListener();
-		lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0,
-				locationListener);
-		
 		bt_confirmar_publicacao_de_denuncia
 				.setOnClickListener(new View.OnClickListener() {
 					public void onClick(View arg0) {
 						try {
-							PublicarDenunciaActivity.enviar(
+							Boolean ret = PublicarDenunciaActivity.enviar(
 									getApplicationContext(), lat, lng, bitmap);
+							// startActivity(new
+							// Intent("android.intent.action.MAIN"));
+							if (ret == true) {
+								Toast.makeText(getApplicationContext(),
+										"Denúncia enviada com sucesso.",
+										Toast.LENGTH_SHORT).show();
+								finish();
+							} else {
+								Toast.makeText(
+										getApplicationContext(),
+										"Erro ao enviar a denúcia. Tente novamente em breve",
+										Toast.LENGTH_SHORT).show();
+							}
+
 						} catch (IOException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
@@ -89,18 +124,25 @@ public class PublicarDenunciaActivity extends Activity {
 				});
 
 	}
-	
+
 	private class MyLocationListener implements LocationListener {
 		public void onLocationChanged(Location loc) {
 			if (loc != null) {
-				Toast.makeText(getBaseContext(),"Location changed : Lat: " + loc.getLatitude()+ " Lng: " + loc.getLongitude(),Toast.LENGTH_SHORT).show();
+				Toast.makeText(
+						getBaseContext(),
+						"Location changed : Lat: " + loc.getLatitude()
+								+ " Lng: " + loc.getLongitude(),
+						Toast.LENGTH_SHORT).show();
 			}
-//			p = new GeoPoint((int) (loc.getLatitude() * 1E6),(int) (loc.getLongitude() * 1E6));
-//			mc.animateTo(p);
-//			mc.setZoom(18);
+			localDaDenuncia = new GeoPoint((int) (loc.getLatitude()),(int) (loc.getLongitude()));
+			// p = new GeoPoint((int) (loc.getLatitude() * 1E6),(int) (loc.getLongitude() * 1E6));
+			// mc.animateTo(p);
+			// mc.setZoom(18);
+			
+
+			
 			lat = String.valueOf((loc.getLatitude() / 1E6));
 			lng = String.valueOf((loc.getLongitude() / 1E6));
-			
 		}
 
 		public void onProviderDisabled(String provider) {
@@ -109,7 +151,7 @@ public class PublicarDenunciaActivity extends Activity {
 		public void onProviderEnabled(String provider) {
 		}
 
-		public void onStatusChanged(String provider, int status,Bundle extras) {
+		public void onStatusChanged(String provider, int status, Bundle extras) {
 		}
 
 	}
@@ -130,57 +172,82 @@ public class PublicarDenunciaActivity extends Activity {
 		}
 	}
 
-	private static void enviar(Context ctx, String lat, String lng,
+	private static boolean enviar(Context ctx, String lat, String lng,
 			Bitmap imagem) throws IOException {
-		HttpClient client = new DefaultHttpClient();
-		HttpPost post = new HttpPost(
-				ctx.getString(R.string.webservice_publicar_denuncia));
-		MultipartEntity mpEntity = new MultipartEntity(
-				HttpMultipartMode.BROWSER_COMPATIBLE);
 
-		// Object filename;
-		// create a file to write bitmap data
-		File f = new File(ctx.getCacheDir(), "foto_denuncia.jpg");
-		f.createNewFile();
+		Boolean resultado = false;
+		if (imagem == null) {
+			Toast.makeText(ctx,
+					"Você precisa tirar uma foto do local antes de publicar!",
+					Toast.LENGTH_SHORT).show();
+		} else {
+			if (lat == null || lng == null) {
+				Toast.makeText(
+						ctx,
+						"Ainda não conseguimos obter sua localização. Aguarde alguns segundos e tente novamente.",
+						Toast.LENGTH_SHORT).show();
+			} else {
 
-		// Convert bitmap to byte array
-		ByteArrayOutputStream bos = new ByteArrayOutputStream();
-		imagem.compress(CompressFormat.PNG, 0 /* ignored for PNG */, bos);
-		byte[] bitmapdata = bos.toByteArray();
+				HttpClient client = new DefaultHttpClient();
+				HttpPost post = new HttpPost(
+						ctx.getString(R.string.webservice_publicar_denuncia));
+				MultipartEntity mpEntity = new MultipartEntity(
+						HttpMultipartMode.BROWSER_COMPATIBLE);
 
-		// write the bytes in file
-		FileOutputStream fos = new FileOutputStream(f);
-		fos.write(bitmapdata);
-		fos.flush();
-		fos.close();
+				// Object filename;
+				// create a file to write bitmap data
+				File f = new File(ctx.getCacheDir(), "foto_denuncia.jpg");
+				f.createNewFile();
 
-		// adiciona os parametros à requisição POST
-		mpEntity.addPart("denuncia[foto]", new FileBody(f, "image/jpeg"));
-		mpEntity.addPart("denuncia[latitude]",
-				new StringBody(lat, Charset.forName("UTF-8")));
-		mpEntity.addPart("denuncia[longitude]",
-				new StringBody(lng, Charset.forName("UTF-8")));
-		mpEntity.addPart(
-				"dispositivo[identificador_do_hardware]",
-				new StringBody(Utilitarios.getDeviceID(ctx), Charset
-						.forName("UTF-8")));
-		mpEntity.addPart(
-				"dispositivo[identificador_do_android]",
-				new StringBody(Utilitarios.getAndroidID(ctx), Charset
-						.forName("UTF-8")));
-		mpEntity.addPart("dispositivo[numero_do_telefone]", new StringBody(
-				Utilitarios.getPhoneNumber(ctx), Charset.forName("UTF-8")));
+				// Convert bitmap to byte array
+				ByteArrayOutputStream bos = new ByteArrayOutputStream();
+				imagem.compress(CompressFormat.PNG, 0 /* ignored for PNG */, bos);
+				byte[] bitmapdata = bos.toByteArray();
 
-		try {
-			post.setEntity(mpEntity);
-			HttpResponse response = client.execute(post);
-			Toast.makeText(ctx, "Denúncia Publicada", Toast.LENGTH_SHORT)
-					.show();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+				// write the bytes in file
+				FileOutputStream fos = new FileOutputStream(f);
+				fos.write(bitmapdata);
+				fos.flush();
+				fos.close();
+
+				// adiciona os parametros à requisição POST
+				mpEntity.addPart("denuncia[foto]",
+						new FileBody(f, "image/jpeg"));
+				mpEntity.addPart("denuncia[latitude]", new StringBody(lat,
+						Charset.forName("UTF-8")));
+				mpEntity.addPart("denuncia[longitude]", new StringBody(lng,
+						Charset.forName("UTF-8")));
+				mpEntity.addPart(
+						"dispositivo[identificador_do_hardware]",
+						new StringBody(Utilitarios.getDeviceID(ctx), Charset
+								.forName("UTF-8")));
+				mpEntity.addPart(
+						"dispositivo[identificador_do_android]",
+						new StringBody(Utilitarios.getAndroidID(ctx), Charset
+								.forName("UTF-8")));
+				mpEntity.addPart(
+						"dispositivo[numero_do_telefone]",
+						new StringBody(Utilitarios.getPhoneNumber(ctx), Charset
+								.forName("UTF-8")));
+
+				try {
+					post.setEntity(mpEntity);
+					HttpResponse response = client.execute(post);
+					resultado = true;
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					resultado = false;
+					e.printStackTrace();
+				}
+			}
 		}
+		return resultado;
 
+	}
+
+	protected boolean isRouteDisplayed() {
+		// TODO Auto-generated method stub return false;
+		return false;
 	}
 
 	@Override
