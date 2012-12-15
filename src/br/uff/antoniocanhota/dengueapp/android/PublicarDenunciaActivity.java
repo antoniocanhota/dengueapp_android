@@ -57,7 +57,7 @@ public class PublicarDenunciaActivity extends MapActivity {
 	private GeoPoint localDaDenuncia;
 	
 
-	String webservice_de_publicar_denuncia = "http://10.0.2.2:3000/webservices/denuncias/publicar";
+	String webservice_de_publicar_denuncia = "http://guarded-woodland-6543.herokuapp.com/webservices/denuncias/publicar";
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {

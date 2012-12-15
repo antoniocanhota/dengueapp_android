@@ -34,7 +34,7 @@ public class MinhasDenunciasActivity extends MapActivity {
 		String identificador_do_android = Utilitarios.getAndroidID(getApplicationContext());
 		
 		//Convers�o do XML do webservice em uma lista de den�ncias		
-		Hashtable<Integer,Denuncia> hash_de_denuncias = Denuncia.processarXMLDenuncias("http://10.0.2.2:3000/webservices/denuncias_do_usuario/"+identificador_do_android);
+		Hashtable<Integer,Denuncia> hash_de_denuncias = Denuncia.processarXMLDenuncias("http://guarded-woodland-6543.herokuapp.com/webservices/denuncias_do_usuario/"+identificador_do_android);
 		Enumeration enum_denuncias = hash_de_denuncias.keys();
 		
 

@@ -46,7 +46,7 @@ public class DenunciasActivity extends MapActivity{
 		MapView mapView = (MapView) findViewById(R.id.mapa_denuncias);
 		
 		//Convers�o do XML do webservice em uma lista de den�ncias
-		Hashtable<Integer,Denuncia> hash_de_denuncias = Denuncia.processarXMLDenuncias("http://10.0.2.2:3000/webservices/denuncias");
+		Hashtable<Integer,Denuncia> hash_de_denuncias = Denuncia.processarXMLDenuncias("http://guarded-woodland-6543.herokuapp.com/webservices/denuncias");
 		Enumeration enum_denuncias = hash_de_denuncias.keys();
 		
 
