@@ -55,7 +55,6 @@ public class PublicarDenunciaActivity extends MapActivity {
 	private String lat;
 	private String lng;
 	private GeoPoint localDaDenuncia;
-	
 
 	String webservice_de_publicar_denuncia = "http://guarded-woodland-6543.herokuapp.com/webservices/denuncias/publicar";
 
@@ -67,24 +66,24 @@ public class PublicarDenunciaActivity extends MapActivity {
 		locationListener = new MyLocationListener();
 		lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0,
 				locationListener);
-		
+
 		setContentView(R.layout.activity_publicar_denuncia);
 		imgFoto = (ImageView) findViewById(R.id.foto_da_denuncia);
-		
-		//Centraliza e foca no local do usuáiro
+
+		// Centraliza e foca no local do usuáiro
 		MapView mapView = (MapView) findViewById(R.id.mapa_publicar_denuncia);
 		mapa = mapView.getController();
-		
-		//TODO: REMOVER ESTE BACALHAU DAQUI DEPOIS
-		if (lat != null && lng != null){
+
+		// TODO: REMOVER ESTE BACALHAU DAQUI DEPOIS
+		if (lat != null && lng != null) {
 			double lat_db = Double.parseDouble(lat);
-	 	    double lng_db = Double.parseDouble(lng);
-	 	    localDaDenuncia = new GeoPoint((int) (lat_db * 1E6), (int) (lng_db * 1E6));
-	 
+			double lng_db = Double.parseDouble(lng);
+			localDaDenuncia = new GeoPoint((int) (lat_db * 1E6),
+					(int) (lng_db * 1E6));
+
 			mapa.animateTo(localDaDenuncia);
-		    mapa.setZoom(15);	
+			mapa.setZoom(15);
 		}
- 		
 
 		Button bt_confirmar_publicacao_de_denuncia = (Button) findViewById(R.id.bt_confirmar_publicacao_de_denuncia);
 		Button bt_tirar_foto = (Button) findViewById(R.id.bt_tirar_foto);
@@ -134,15 +133,15 @@ public class PublicarDenunciaActivity extends MapActivity {
 								+ " Lng: " + loc.getLongitude(),
 						Toast.LENGTH_SHORT).show();
 			}
-			localDaDenuncia = new GeoPoint((int) (loc.getLatitude()),(int) (loc.getLongitude()));
-			// p = new GeoPoint((int) (loc.getLatitude() * 1E6),(int) (loc.getLongitude() * 1E6));
+			localDaDenuncia = new GeoPoint((int) (loc.getLatitude()),
+					(int) (loc.getLongitude()));
+			// p = new GeoPoint((int) (loc.getLatitude() * 1E6),(int)
+			// (loc.getLongitude() * 1E6));
 			// mc.animateTo(p);
 			// mc.setZoom(18);
-			
 
-			
-			lat = String.valueOf((loc.getLatitude() / 1E6));
-			lng = String.valueOf((loc.getLongitude() / 1E6));
+			lat = String.valueOf((loc.getLatitude()));
+			lng = String.valueOf((loc.getLongitude()));
 		}
 
 		public void onProviderDisabled(String provider) {
@@ -190,7 +189,7 @@ public class PublicarDenunciaActivity extends MapActivity {
 
 				HttpClient client = new DefaultHttpClient();
 				HttpPost post = new HttpPost(
-						ctx.getString(R.string.webservice_publicar_denuncia));
+						"http://guarded-woodland-6543.herokuapp.com/webservices/denuncias/publicar");
 				MultipartEntity mpEntity = new MultipartEntity(
 						HttpMultipartMode.BROWSER_COMPATIBLE);
 
@@ -225,10 +224,15 @@ public class PublicarDenunciaActivity extends MapActivity {
 						"dispositivo[identificador_do_android]",
 						new StringBody(Utilitarios.getAndroidID(ctx), Charset
 								.forName("UTF-8")));
-				mpEntity.addPart(
-						"dispositivo[numero_do_telefone]",
-						new StringBody(Utilitarios.getPhoneNumber(ctx), Charset
-								.forName("UTF-8")));
+				// a condicional a seguir é feita para evitar erro ao usar tablets, que não possuem
+				// a informação do número do telefone
+				String numero_do_telefone = Utilitarios.getPhoneNumber(ctx);
+				if (numero_do_telefone != null) {
+					mpEntity.addPart("dispositivo[numero_do_telefone]",
+							new StringBody(Utilitarios.getPhoneNumber(ctx),
+									Charset.forName("UTF-8")));
+				}
+				;
 
 				try {
 					post.setEntity(mpEntity);
