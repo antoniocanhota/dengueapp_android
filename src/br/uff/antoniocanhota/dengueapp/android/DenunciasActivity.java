@@ -35,6 +35,8 @@ import android.widget.Toast;
 
 public class DenunciasActivity extends MapActivity{
 
+	String webservice_de_listagem_de_denuncias = "http://dengue.herokuapp.com/webservices/denuncias";
+	
 	MapController mapa; 
 	GeoPoint centro;
 	String txt;
@@ -46,7 +48,7 @@ public class DenunciasActivity extends MapActivity{
 		MapView mapView = (MapView) findViewById(R.id.mapa_denuncias);
 		
 		//Convers�o do XML do webservice em uma lista de den�ncias
-		Hashtable<Integer,Denuncia> hash_de_denuncias = Denuncia.processarXMLDenuncias("http://guarded-woodland-6543.herokuapp.com/webservices/denuncias");
+		Hashtable<Integer,Denuncia> hash_de_denuncias = Denuncia.processarXMLDenuncias(webservice_de_listagem_de_denuncias);
 		Enumeration enum_denuncias = hash_de_denuncias.keys();
 		
 

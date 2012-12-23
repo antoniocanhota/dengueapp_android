@@ -56,7 +56,7 @@ public class PublicarDenunciaActivity extends MapActivity {
 	private String lng;
 	private GeoPoint localDaDenuncia;
 
-	String webservice_de_publicar_denuncia = "http://guarded-woodland-6543.herokuapp.com/webservices/denuncias/publicar";
+	static String webservice_de_publicar_denuncia = "http://dengue.herokuapp.com/webservices/denuncias/publicar";
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -189,7 +189,7 @@ public class PublicarDenunciaActivity extends MapActivity {
 
 				HttpClient client = new DefaultHttpClient();
 				HttpPost post = new HttpPost(
-						"http://guarded-woodland-6543.herokuapp.com/webservices/denuncias/publicar");
+						webservice_de_publicar_denuncia);
 				MultipartEntity mpEntity = new MultipartEntity(
 						HttpMultipartMode.BROWSER_COMPATIBLE);
 

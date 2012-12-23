@@ -27,8 +27,8 @@
     <string name="versao_valor">0.1&#8230;</string>
     <string name="versao_label">Versão</string>
     <string name="enviando_denuncia">Eviando denúncia</string>
-    <string name="webservice_publicar_denuncia">http://guarded-woodland-6543.herokuapp.com/webservices/denuncias/publicar</string>
-    <string name="webserivce_listagem_denuncias">http://guarded-woodland-6543.herokuapp.com/webservices/denuncias</string>
+    <string name="webservice_publicar_denuncia">http://dengue.herokuapp.com/webservices/denuncias/publicar</string>
+    <string name="webserivce_listagem_denuncias">http://dengue.herokuapp.com/webservices/denuncias</string>
     <string name="confirmar_publicacao_de_denuncia">Confirmar e publicar denúncia</string>
     <!--
 	chave para o mac: 0jThpxQvFWO9uJJsik5milTZWFAAACqh7usjHGA
