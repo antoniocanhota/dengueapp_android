@@ -20,7 +20,7 @@ import android.os.Bundle;
 
 public class MinhasDenunciasActivity extends MapActivity {
 
-	String webservice_de_listagem_de_denuncias_de_um_usuario = "http://guarded-woodland-6543.herokuapp.com/webservices/denuncias_do_usuario/";
+	String webservice_de_listagem_de_denuncias_de_um_usuario = "http://dengue.herokuapp.com/webservices/denuncias_do_usuario/";
 	
 	MapController mapa; 
 	GeoPoint centro;
