@@ -35,7 +35,7 @@ import android.widget.Toast;
 
 public class DenunciasActivity extends MapActivity{
 
-	String webservice_de_listagem_de_denuncias = "http://dengue.herokuapp.com/webservices/denuncias";
+	String webservice_de_listagem_de_denuncias = "http://dengue.herokuapp.com/webservices/denuncias.xml";
 	
 	MapController mapa; 
 	GeoPoint centro;
@@ -72,7 +72,7 @@ public class DenunciasActivity extends MapActivity{
   			GeoPoint ponto = new GeoPoint((int)(lat * 1E6), (int)(lng * 1E6)); 
   			
  			//Adicionando o ponto � listagem de pontos
- 		    OverlayItem overlayitem = new OverlayItem(ponto, "T�tulo do box", "Texto do box");
+ 		    OverlayItem overlayitem = new OverlayItem(ponto, "Denúncia #"+denuncia.getId(), "Texto do box");
 
  		    itemizedoverlay.addOverlay(overlayitem);
  		    

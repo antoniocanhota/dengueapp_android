@@ -15,11 +15,22 @@ import org.w3c.dom.NodeList;
 
 public class Denuncia {
 
+	private Integer id;
 	private Double latitude;
 	private Double longitude;
+	private String url_da_foto;
+	private String data_e_hora;
 	
 	public Denuncia(){
 		
+	}
+	
+	public Integer getId(){
+		return id;
+	}
+	
+	public void setId(Integer id){
+		this.id = id;
 	}
 	
 	public Double getLatitude(){
@@ -36,6 +47,22 @@ public class Denuncia {
 	
 	public void setLongitude(Double longitude){
 		this.longitude = longitude;
+	}
+	
+	public String getFotoUrl(){
+		return url_da_foto;
+	}
+	
+	public void setFotoUrl(String url_da_foto){
+		this.url_da_foto = url_da_foto;
+	}
+	
+	public String getdataEHora(){
+		return data_e_hora;
+	}
+	
+	public void setDataEHora(String data_e_hora){
+		this.data_e_hora = data_e_hora;
 	}
 	
 	public static Hashtable<Integer,Denuncia> processarXMLDenuncias(String webservice){
@@ -63,10 +90,12 @@ public class Denuncia {
 				if (denuncia_bruta.getNodeType() == Node.ELEMENT_NODE){
 					Element denuncia = (Element) denuncia_bruta;
 					Denuncia d = new Denuncia();
+					id = Integer.parseInt(Utilitarios.processarCampoXML(denuncia,"id"));
+					d.setId(id);
 					d.setLatitude(Double.parseDouble(Utilitarios.processarCampoXML(denuncia,"latitude")));
 					d.setLongitude(Double.parseDouble(Utilitarios.processarCampoXML(denuncia,"longitude")));
-					id = Integer.parseInt(Utilitarios.processarCampoXML(denuncia,"id"));
-					//<data-e-hora type="datetime">2012-06-05T10:24:21-03:00</data-e-hora>
+					d.setFotoUrl(Utilitarios.processarCampoXML(denuncia, "url_imagem"));
+					d.setDataEHora(Utilitarios.processarCampoXML(denuncia, "data-e-hora"));
 					hash_de_denuncias.put(id,d);
 				}
 				//Toast.makeText(getBaseContext(),latitude, Toast.LENGTH_SHORT).show();
