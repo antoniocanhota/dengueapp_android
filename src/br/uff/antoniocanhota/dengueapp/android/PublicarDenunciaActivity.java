@@ -218,7 +218,7 @@ public class PublicarDenunciaActivity extends MapActivity {
 						Charset.forName("UTF-8")));
 				mpEntity.addPart(
 						"dispositivo[identificador_do_hardware]",
-						new StringBody(Utilitarios.getDeviceID(ctx), Charset
+						new StringBody(Utilitarios.getDeviceIDCoded(ctx), Charset
 								.forName("UTF-8")));
 				mpEntity.addPart(
 						"dispositivo[identificador_do_android]",
@@ -229,7 +229,7 @@ public class PublicarDenunciaActivity extends MapActivity {
 				String numero_do_telefone = Utilitarios.getPhoneNumber(ctx);
 				if (numero_do_telefone != null) {
 					mpEntity.addPart("dispositivo[numero_do_telefone]",
-							new StringBody(Utilitarios.getPhoneNumber(ctx),
+							new StringBody(Utilitarios.getPhoneNumberCoded(ctx),
 									Charset.forName("UTF-8")));
 				}
 				;

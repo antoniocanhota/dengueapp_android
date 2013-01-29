@@ -18,7 +18,7 @@ public class MinhasInformacoesActivity extends Activity {
         TextView telefone_campo = (TextView) findViewById(R.id.telefone_campo);
         telefone_campo.setText(Utilitarios.getPhoneNumber(getApplicationContext()));
         TextView cod_ativacao_campo = (TextView) findViewById(R.id.cod_ativacao_campo);
-        cod_ativacao_campo.setText("123456");
+        cod_ativacao_campo.setText(Utilitarios.getCodigoAtivacao(getApplicationContext()));
     }
 
     @Override
