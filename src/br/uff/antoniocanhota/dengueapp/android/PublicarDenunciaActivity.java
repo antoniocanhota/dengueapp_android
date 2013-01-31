@@ -57,6 +57,7 @@ public class PublicarDenunciaActivity extends MapActivity {
 	private GeoPoint localDaDenuncia;
 
 	static String webservice_de_publicar_denuncia = "http://dengue.herokuapp.com/webservices/denuncias/publicar";
+	//static String webservice_de_publicar_denuncia = "http://10.0.2.2:3000/webservices/denuncias/publicar";
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -226,7 +227,7 @@ public class PublicarDenunciaActivity extends MapActivity {
 								.forName("UTF-8")));
 				// a condicional a seguir é feita para evitar erro ao usar tablets, que não possuem
 				// a informação do número do telefone
-				String numero_do_telefone = Utilitarios.getPhoneNumber(ctx);
+				String numero_do_telefone = Utilitarios.getPhoneNumberCoded(ctx);
 				if (numero_do_telefone != null) {
 					mpEntity.addPart("dispositivo[numero_do_telefone]",
 							new StringBody(Utilitarios.getPhoneNumberCoded(ctx),

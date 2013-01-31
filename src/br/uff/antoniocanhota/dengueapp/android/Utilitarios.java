@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.math.BigDecimal;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
@@ -55,15 +56,17 @@ public class Utilitarios {
 	}
 	
 	public static String getDeviceIDCoded(Context ctx){
-		int device_id = Integer.parseInt(Utilitarios.getDeviceID(ctx));
-		int codigo_de_ativacao = Integer.parseInt(Utilitarios.getCodigoAtivacao(ctx));
-		return Integer.toString(device_id + codigo_de_ativacao);
+		BigDecimal device_id = new BigDecimal(Utilitarios.getDeviceID(ctx));
+		BigDecimal codigo_de_ativacao = new BigDecimal(Utilitarios.getCodigoAtivacao(ctx));
+		BigDecimal device_id_coded = device_id.add(codigo_de_ativacao);
+		return device_id_coded.toString();
 	}
 	
 	public static String getPhoneNumberCoded(Context ctx){
-		int phone_number = Integer.parseInt(Utilitarios.getPhoneNumber(ctx));
-		int codigo_de_ativacao = Integer.parseInt(Utilitarios.getCodigoAtivacao(ctx));
-		return Integer.toString(phone_number + codigo_de_ativacao);
+		BigDecimal phone_number = new BigDecimal(Utilitarios.getPhoneNumber(ctx));
+		BigDecimal codigo_de_ativacao = new BigDecimal(Utilitarios.getCodigoAtivacao(ctx));
+		BigDecimal phone_number_coded = phone_number.add(codigo_de_ativacao);
+		return phone_number_coded.toString();
 	}
 	
 	public static String getCodigoAtivacao(Context ctx) {
