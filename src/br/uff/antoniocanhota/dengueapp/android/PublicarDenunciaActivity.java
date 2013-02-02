@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -32,6 +34,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -42,6 +46,8 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class PublicarDenunciaActivity extends MapActivity {
@@ -55,36 +61,39 @@ public class PublicarDenunciaActivity extends MapActivity {
 	private String lat;
 	private String lng;
 	private GeoPoint localDaDenuncia;
+	private ProgressBar progressBar;
 
 	static String webservice_de_publicar_denuncia = "http://dengue.herokuapp.com/webservices/denuncias/publicar";
 	//static String webservice_de_publicar_denuncia = "http://10.0.2.2:3000/webservices/denuncias/publicar";
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+		super.onCreate(savedInstanceState);		
+		progressBar = (ProgressBar) findViewById(R.id.progressBar);
+		
 		// ---use the LocationManager class to obtain locations data---
 		lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 		locationListener = new MyLocationListener();
 		lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0,
 				locationListener);
-
+		
 		setContentView(R.layout.activity_publicar_denuncia);
 		imgFoto = (ImageView) findViewById(R.id.foto_da_denuncia);
 
 		// Centraliza e foca no local do usuáiro
-		MapView mapView = (MapView) findViewById(R.id.mapa_publicar_denuncia);
-		mapa = mapView.getController();
-
-		// TODO: REMOVER ESTE BACALHAU DAQUI DEPOIS
-		if (lat != null && lng != null) {
-			double lat_db = Double.parseDouble(lat);
-			double lng_db = Double.parseDouble(lng);
-			localDaDenuncia = new GeoPoint((int) (lat_db * 1E6),
-					(int) (lng_db * 1E6));
-
-			mapa.animateTo(localDaDenuncia);
-			mapa.setZoom(15);
-		}
+//		MapView mapView = (MapView) findViewById(R.id.mapa_publicar_denuncia);
+//		mapa = mapView.getController();
+//
+//		// TODO: REMOVER ESTE BACALHAU DAQUI DEPOIS
+//		if (lat != null && lng != null) {
+//			double lat_db = Double.parseDouble(lat);
+//			double lng_db = Double.parseDouble(lng);
+//			localDaDenuncia = new GeoPoint((int) (lat_db * 1E6),
+//					(int) (lng_db * 1E6));
+//
+//			mapa.animateTo(localDaDenuncia);
+//			mapa.setZoom(15);
+//		}
 
 		Button bt_confirmar_publicacao_de_denuncia = (Button) findViewById(R.id.bt_confirmar_publicacao_de_denuncia);
 		Button bt_tirar_foto = (Button) findViewById(R.id.bt_tirar_foto);
@@ -109,13 +118,14 @@ public class PublicarDenunciaActivity extends MapActivity {
 										"Denúncia enviada com sucesso.",
 										Toast.LENGTH_SHORT).show();
 								finish();
+								
 							} else {
 								Toast.makeText(
 										getApplicationContext(),
 										"Erro ao enviar a denúcia. Tente novamente em breve",
 										Toast.LENGTH_SHORT).show();
 							}
-
+							lm.removeUpdates(locationListener);
 						} catch (IOException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
@@ -124,15 +134,31 @@ public class PublicarDenunciaActivity extends MapActivity {
 				});
 
 	}
-
+	
 	private class MyLocationListener implements LocationListener {
 		public void onLocationChanged(Location loc) {
 			if (loc != null) {
-				Toast.makeText(
-						getBaseContext(),
-						"Location changed : Lat: " + loc.getLatitude()
-								+ " Lng: " + loc.getLongitude(),
-						Toast.LENGTH_SHORT).show();
+				Geocoder geoCoder = new Geocoder(getBaseContext(), Locale.getDefault());
+				try {
+					List<Address> addresses = geoCoder.getFromLocation(
+							loc.getLatitude(),
+							loc.getLongitude(),
+							1);
+					String add = "";
+					if (addresses.size() > 0){						
+						for (int i=0; i<addresses.get(0).getMaxAddressLineIndex(); i++)
+							add += addresses.get(0).getAddressLine(i) + "\n";
+					}
+					TextView addressView = (TextView) findViewById(R.id.endereco_aproximado_da_denuncia);
+					if (add == "") {
+						addressView.setText("Latitude: "+loc.getLatitude()+"\n"+"Longitude:"+loc.getLongitude());
+					}else{
+						addressView.setText(add);
+					}							
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 			localDaDenuncia = new GeoPoint((int) (loc.getLatitude()),
 					(int) (loc.getLongitude()));
