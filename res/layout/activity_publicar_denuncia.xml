@@ -9,6 +9,8 @@
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingBottom="15dp"
+        	android:paddingTop="5dp"
             android:text="Publicar denúncia"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
@@ -17,6 +19,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Publicar uma denúncia é simples. Siga os passos abaixo."
+            android:paddingBottom="5dp"
             android:textAppearance="?android:attr/textAppearanceSmall" />
 
         <TextView
@@ -28,10 +31,10 @@
 
         <ImageView
             android:id="@+id/foto_da_denuncia"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="122dp"
             android:layout_gravity="bottom"
-            android:layout_weight="0.18"
+            android:paddingBottom="5dp"
             android:src="@drawable/ic_tirar_foto" >
 
         </ImageView>
@@ -46,17 +49,21 @@
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical" >
+            android:gravity="center_vertical"
+            android:paddingBottom="5dp"
+        	android:paddingTop="5dp" 
+            >
 
             <ProgressBar
                 android:id="@+id/progressBar"
-                android:layout_width="24dp"
-                android:layout_height="24dp" />
+                android:layout_width="16dp"
+                android:layout_height="16dp" />
 
             <TextView
                 android:id="@+id/textView1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:paddingLeft="5dp"                
                 android:text="Procurando sua localização aproximada"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
@@ -70,7 +77,7 @@
             android:paddingBottom="15dp"
             android:paddingTop="5dp"
             android:text="Aguarde..."
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:textAppearance="?android:attr/textAppearanceSmall" />
 
         <TextView
             android:id="@+id/textView6"
@@ -84,6 +91,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Com a foto tirada e a localização determinada, basta apertar o botão abaixo."
+            android:paddingBottom="30dp"
             android:textAppearance="?android:attr/textAppearanceSmall" />
 
         <Button
