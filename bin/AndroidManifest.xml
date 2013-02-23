@@ -9,8 +9,8 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
- 	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
- 	
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
     <application
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name" >
@@ -25,7 +25,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".PublicarDenunciaActivity" android:screenOrientation="portrait" android:configChanges="orientation|keyboardHidden">
+        <activity
+            android:name=".PublicarDenunciaActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" >
 ​​​​​​​​​​​​			
             <intent-filter>
 ​​​​​​​​​​​​​​​​				
@@ -80,10 +83,19 @@
             </intent-filter>
 ​​​​​​​​		
         </activity>
-        <activity
-            android:name=".MinhasInformacoesActivity">
+        <activity android:name=".MinhasInformacoesActivity" >
             <intent-filter>
                 <action android:name="br.uff.antoniocanhota.dengueapp.android.MINHASINFORMACOESACTIVITY" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ShowDenunciaActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="landscape" >
+            <intent-filter>
+                <action android:name="br.uff.antoniocanhota.dengueapp.android.SHOWDENUNCIAACTIVITY" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>

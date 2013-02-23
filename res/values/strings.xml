@@ -1,5 +1,9 @@
 <resources>
-
+	<!-- DENUNCIAS -->
+	<string name="denuncia_publicada_em_label">Publicada em</string>
+	<string name="denuncia_endereco_aproximado_label">Endereço aproximado</string>
+	<string name="denuncia_situacao_label">Situação atual</string>
+	<!-- DEMAIS -->
     <string name="app_name">DengueApp</string>
     <string name="hello_world">Estamos desenvolvendo alguma coisa aqui. Enquanto isso: Hello World!</string>
     <string name="menu_settings">Preferências</string>
@@ -37,5 +41,6 @@
     <string name="api_google_maps">0jThpxQvFWO9uJJsik5milTZWFAAACqh7usjHGA</string>
     <string name="title_activity_minhas_informacoes">Minhas informacoes</string>
     <string name="minhas_informacoes">Minhas informações</string>
+    <string name="title_activity_show_denuncia">ShowDenunciaActivity</string>
 
 </resources>
