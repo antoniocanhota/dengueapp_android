@@ -26,22 +26,21 @@ public final class R {
         public static final int bt_sobre=0x7f070006;
         public static final int cod_ativacao_campo=0x7f07000d;
         public static final int cod_ativacao_label=0x7f07000c;
-        public static final int denuncia_endereco_aproximado_label=0x7f07001d;
-        public static final int denuncia_endereco_aproximado_value=0x7f07001e;
+        public static final int denuncia_endereco_aproximado_label=0x7f07001c;
+        public static final int denuncia_endereco_aproximado_value=0x7f07001d;
         public static final int denuncia_foto_value=0x7f070018;
-        public static final int denuncia_id_value=0x7f07001a;
-        public static final int denuncia_publicada_em_label=0x7f07001b;
-        public static final int denuncia_publicada_em_value=0x7f07001c;
-        public static final int denuncia_situacao_label=0x7f07001f;
-        public static final int denuncia_situacao_value=0x7f070020;
+        public static final int denuncia_id_value=0x7f070019;
+        public static final int denuncia_publicada_em_label=0x7f07001a;
+        public static final int denuncia_publicada_em_value=0x7f07001b;
+        public static final int denuncia_situacao_label=0x7f07001e;
+        public static final int denuncia_situacao_value=0x7f07001f;
         public static final int endereco_aproximado_da_denuncia=0x7f070014;
         public static final int foto_da_denuncia=0x7f070011;
-        public static final int imageView2=0x7f070019;
         public static final int imei_campo=0x7f07000b;
         public static final int imei_label=0x7f07000a;
         public static final int mapa_denuncias=0x7f070000;
         public static final int mapa_minhas_denuncias=0x7f070007;
-        public static final int menu_settings=0x7f070023;
+        public static final int menu_settings=0x7f070022;
         public static final int progressBar=0x7f070013;
         public static final int telefone_campo=0x7f070009;
         public static final int telefone_label=0x7f070008;
@@ -52,8 +51,8 @@ public final class R {
         public static final int textView5=0x7f070012;
         public static final int textView6=0x7f070015;
         public static final int textView7=0x7f070016;
-        public static final int textView8=0x7f070022;
-        public static final int textView9=0x7f070021;
+        public static final int textView8=0x7f070021;
+        public static final int textView9=0x7f070020;
     }
     public static final class layout {
         public static final int activity_denuncias=0x7f030000;
@@ -89,7 +88,7 @@ public final class R {
         public static final int app_name=0x7f040003;
         public static final int cod_ativacao_label=0x7f04000d;
         public static final int confirmar_publicacao_de_denuncia=0x7f040020;
-        public static final int denuncia_endereco_aproximado_label=0x7f040001;
+        public static final int denuncia_endereco_aproximado_abrv_label=0x7f040001;
         /**  DENUNCIAS 
          */
         public static final int denuncia_publicada_em_label=0x7f040000;

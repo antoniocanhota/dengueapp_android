@@ -1,7 +1,7 @@
 <resources>
 	<!-- DENUNCIAS -->
 	<string name="denuncia_publicada_em_label">Publicada em</string>
-	<string name="denuncia_endereco_aproximado_label">Endereço aproximado</string>
+	<string name="denuncia_endereco_aproximado_abrv_label">Endereço aprox.</string>
 	<string name="denuncia_situacao_label">Situação atual</string>
 	<!-- DEMAIS -->
     <string name="app_name">DengueApp</string>
