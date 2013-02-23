@@ -96,7 +96,7 @@ public class PublicarDenunciaActivity extends MapActivity {
 //		}
 
 		Button bt_confirmar_publicacao_de_denuncia = (Button) findViewById(R.id.bt_confirmar_publicacao_de_denuncia);
-		Button bt_tirar_foto = (Button) findViewById(R.id.bt_tirar_foto);
+		ImageView bt_tirar_foto = (ImageView) findViewById(R.id.foto_da_denuncia);
 
 		bt_tirar_foto.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View arg0) {
