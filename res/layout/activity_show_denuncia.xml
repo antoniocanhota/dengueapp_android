@@ -8,7 +8,7 @@
             android:id="@+id/denuncia_foto_value"
             android:layout_width="388dp"
             android:layout_height="match_parent"
-            />
+            android:scaleType="fitXY" />
 
         <LinearLayout
             android:layout_width="match_parent"

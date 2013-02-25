@@ -138,27 +138,30 @@ public class PublicarDenunciaActivity extends MapActivity {
 	private class MyLocationListener implements LocationListener {
 		public void onLocationChanged(Location loc) {
 			if (loc != null) {
-				Geocoder geoCoder = new Geocoder(getBaseContext(), Locale.getDefault());
-				try {
-					List<Address> addresses = geoCoder.getFromLocation(
-							loc.getLatitude(),
-							loc.getLongitude(),
-							1);
-					String add = "";
-					if (addresses.size() > 0){						
-						for (int i=0; i<addresses.get(0).getMaxAddressLineIndex(); i++)
-							add += addresses.get(0).getAddressLine(i) + "\n";
-					}
-					TextView addressView = (TextView) findViewById(R.id.endereco_aproximado_da_denuncia);
-					if (add == "") {
-						addressView.setText("Latitude: "+loc.getLatitude()+"\n"+"Longitude:"+loc.getLongitude());
-					}else{
-						addressView.setText(add);
-					}							
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				//Geocoder geoCoder = new Geocoder(getBaseContext(), Locale.getDefault());
+				TextView addressView = (TextView) findViewById(R.id.endereco_aproximado_da_denuncia);
+				addressView.setText("Localização obtida com sucesso!\n\n"+"Latitude: "+loc.getLatitude()+"\n"+"Longitude:"+loc.getLongitude());
+				
+//				try {
+//					List<Address> addresses = geoCoder.getFromLocation(
+//							loc.getLatitude(),
+//							loc.getLongitude(),
+//							1);
+//					String add = "";
+//					if (addresses.size() > 0){						
+//						for (int i=0; i<addresses.get(0).getMaxAddressLineIndex(); i++)
+//							add += addresses.get(0).getAddressLine(i) + "\n";
+//					}					
+//					if (add == "") {
+//						addressView.setText("Latitude: "+loc.getLatitude()+"\n"+"Longitude:"+loc.getLongitude());
+//					}else{
+//						addressView.setText(add);
+//					}							
+//				} catch (IOException e) {
+//					// TODO Auto-generated catch block
+//					addressView.setText("Latitude: "+loc.getLatitude()+"\n"+"Longitude:"+loc.getLongitude());
+//					e.printStackTrace();
+//				}
 			}
 			localDaDenuncia = new GeoPoint((int) (loc.getLatitude()),
 					(int) (loc.getLongitude()));
