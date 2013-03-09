@@ -4,7 +4,6 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 
 import android.os.Bundle;
-import android.util.Log;
 
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapActivity;

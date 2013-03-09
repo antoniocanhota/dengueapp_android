@@ -1,10 +1,7 @@
 package br.uff.antoniocanhota.dengueapp.android;
 
-import com.google.android.maps.MapView;
-
-import android.os.Bundle;
 import android.app.Activity;
-import android.view.Menu;
+import android.os.Bundle;
 import android.widget.TextView;
 
 public class MinhasInformacoesActivity extends Activity {
@@ -21,9 +18,4 @@ public class MinhasInformacoesActivity extends Activity {
         cod_ativacao_campo.setText(Utilitarios.getCodigoAtivacao(getApplicationContext()));
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.activity_minhas_informacoes, menu);
-        return true;
-    }
 }

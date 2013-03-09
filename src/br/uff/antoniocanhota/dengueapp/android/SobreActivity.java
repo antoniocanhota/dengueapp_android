@@ -1,8 +1,7 @@
 package br.uff.antoniocanhota.dengueapp.android;
 
-import android.os.Bundle;
 import android.app.Activity;
-import android.view.Menu;
+import android.os.Bundle;
 
 public class SobreActivity extends Activity {
 
@@ -12,9 +11,4 @@ public class SobreActivity extends Activity {
         setContentView(R.layout.activity_sobre);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.activity_sobre, menu);
-        return true;
-    }
 }

@@ -1,8 +1,7 @@
 package br.uff.antoniocanhota.dengueapp.android;
 
-import android.os.Bundle;
 import android.app.Activity;
-import android.view.Menu;
+import android.os.Bundle;
 
 public class DicasPrevencaoActivity extends Activity {
 
@@ -12,9 +11,4 @@ public class DicasPrevencaoActivity extends Activity {
         setContentView(R.layout.activity_dicas_prevencao);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.activity_dicas_prevencao, menu);
-        return true;
-    }
 }
