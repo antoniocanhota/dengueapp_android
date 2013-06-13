@@ -3,7 +3,6 @@ package br.uff.antoniocanhota.dengueapp.android;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
@@ -48,6 +47,11 @@ public class Utilitarios {
 		Toast.makeText(ctx, "Houve um erro de conexão. Tente novamente.",
 				Toast.LENGTH_LONG).show();
 	}
+	
+	public static void showToast(String message, Context ctx) {
+		Toast.makeText(ctx, message,
+				Toast.LENGTH_LONG).show();
+	}
 
 	public static void showToastException(Context ctx) {
 		Toast.makeText(ctx, "Desculpe, mas não é possível continuar a ação solicitada. Houve um erro da aplicação.", Toast.LENGTH_LONG)
@@ -60,7 +64,7 @@ public class Utilitarios {
 		webservice.postExceptionToServer(e);		
 		showToastException(ctx);
 	}
-
+	
 	public static StringBody getStringBody(String string) throws UnsupportedEncodingException{
 		return new StringBody(string,Charset.forName("UTF-8"));
 	}

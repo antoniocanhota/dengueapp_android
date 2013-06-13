@@ -25,7 +25,7 @@ public class Webservice {
 	// Para uso em desenvolvimento:
 	public static final String WEBSERVICES = "http://10.0.2.2:3000/webservices/";
 	// "http://dengue.herokuapp.com/webservices/";
-	public static final String WEBSERVICE_PUBLICAR_DENUNCIA = "denuncias/publicar";
+	public static final String WEBSERVICE_PUBLICAR_DENUNCIA = WEBSERVICES+"denuncias/publicar";
 	public static final String WEBSERVICE_LISTAGEM_DE_DENUNCIAS = WEBSERVICES
 			+ "denuncias.xml";
 	public static final String WEBSERVICE_LISTAGEM_DE_DENUNCIAS_DO_USUARIO = WEBSERVICE_LISTAGEM_DE_DENUNCIAS
@@ -93,7 +93,7 @@ public class Webservice {
 		} catch (Exception eInternal) {
 			Utilitarios.notifyExceptionToServer(eInternal, ctx);
 		}
-		return wsPost.send(false);
+		return wsPost.send();
 	}
 
 	public String getCodigoDeAtivacao() {

@@ -27,20 +27,23 @@ public class WebservicePost {
 		this.mpEntity.addPart(name, contentBody);
 	}
 
-	public void send() {
-		send(true);
+	public boolean send() {
+		return send(true);
 	}
 
 	public boolean send(boolean notifyExceptionToServer) {
 		boolean result = false;
 		HttpPost post = new HttpPost(this.url);
-		post.setEntity(this.mpEntity);
+		
 		HttpClient client = new DefaultHttpClient();
 		try {
-
+			post.setEntity(this.mpEntity);
 			HttpResponse response = client.execute(post);
-			response.toString();
-			result = true;
+			if (response.getStatusLine().getStatusCode() != 201){
+				Utilitarios.showToastException(ctx);					
+			} else {
+				result = true;
+			}						
 		} catch (Exception e) {
 			if (notifyExceptionToServer) {
 				Utilitarios.notifyExceptionToServer(e, ctx);

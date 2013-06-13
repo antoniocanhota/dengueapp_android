@@ -83,6 +83,7 @@ public class PublicarDenunciaActivity extends MapActivity {
 		bt_confirmar_publicacao_de_denuncia
 				.setOnClickListener(new View.OnClickListener() {
 					public void onClick(View arg0) {
+						Utilitarios.showToast("Enviando denúncia...", getApplicationContext());
 						buildDenuncia();
 						if (validateDenuncia() && sendDenuncia()){							
 								Toast.makeText(getApplicationContext(),
