@@ -1,7 +1,8 @@
 package br.uff.antoniocanhota.dengueapp.android;
 
-import java.util.Enumeration;
-import java.util.Hashtable;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import android.os.Bundle;
 
@@ -12,7 +13,7 @@ import com.google.android.maps.MapView;
 
 public class MinhasDenunciasActivity extends MapActivity{
 	
-	String webservice_de_listagem_de_denuncias_de_um_usuario = "http://dengue.herokuapp.com/webservices/denuncias.xml?identificador_do_android=";
+	//String webservice_de_listagem_de_denuncias_de_um_usuario = "http://dengue.herokuapp.com/webservices/denuncias.xml?identificador_do_android=";
 
 	@Override
 	public void onCreate(Bundle savedInstanceState){
@@ -24,19 +25,20 @@ public class MinhasDenunciasActivity extends MapActivity{
 		String identificador_do_android = Utilitarios.getAndroidID(getApplicationContext());		
 		
 		//Convers�o do XML do webservice em uma lista de den�ncias
-		Hashtable<Integer,Denuncia> hash_de_denuncias = Denuncia.processarXMLDenuncias(webservice_de_listagem_de_denuncias_de_um_usuario+identificador_do_android);
-		Enumeration enum_denuncias = hash_de_denuncias.keys();		
+//		Hashtable<Integer,Denuncia> hash_de_denuncias = Denuncia.processarXMLDenuncias(webservice_de_listagem_de_denuncias_de_um_usuario+identificador_do_android);
+//		Enumeration enum_denuncias = hash_de_denuncias.keys();	
+		List<Denuncia> denuncias = new ArrayList<Denuncia>();
+		try {
+			denuncias = Webservice.getDenuncias(identificador_do_android);
+		} catch (IOException e) {
+			Utilitarios.showToastIOException(getApplicationContext());
+		}
 
 		//Cria��o da listagem de pontos das den�ncias		
 		MyItemizedOverlay itemizedOverlay = new MyItemizedOverlay(this);
 	    
-		//Itera��o da lista de den�ncias		
-		while(enum_denuncias.hasMoreElements()){		
-
-			//Transforma��o dos dados de uma den�ncia em XML em um objeto 'Denuncia'
-			Object obj = enum_denuncias.nextElement();
-			Denuncia denuncia = hash_de_denuncias.get(obj);
-			
+		//Itera��o da lista de den�ncias
+		for (Denuncia denuncia : denuncias){
 			//Cria��o do ponto no mapa			
 			Double lat = Double.parseDouble(String.valueOf(denuncia.getLatitude()));
 			Double lng = Double.parseDouble(String.valueOf(denuncia.getLongitude()));
@@ -45,8 +47,24 @@ public class MinhasDenunciasActivity extends MapActivity{
  			//Adicionando o ponto � listagem de pontos 		      			
   			itemizedOverlay.addOverlayItem(ponto, denuncia);
   			mapView.getOverlays().add(itemizedOverlay);
-  			 		    
+			
 		}
+//		while(enum_denuncias.hasMoreElements()){		
+//
+//			//Transforma��o dos dados de uma den�ncia em XML em um objeto 'Denuncia'
+//			Object obj = enum_denuncias.nextElement();
+//			Denuncia denuncia = hash_de_denuncias.get(obj);
+//			
+//			//Cria��o do ponto no mapa			
+//			Double lat = Double.parseDouble(String.valueOf(denuncia.getLatitude()));
+//			Double lng = Double.parseDouble(String.valueOf(denuncia.getLongitude()));
+//  			GeoPoint ponto = new GeoPoint((int)(lat * 1E6), (int)(lng * 1E6)); 
+//  			
+// 			//Adicionando o ponto � listagem de pontos 		      			
+//  			itemizedOverlay.addOverlayItem(ponto, denuncia);
+//  			mapView.getOverlays().add(itemizedOverlay);
+//  			 		    
+//		}
 		
 		//Configura��es diversas de exibi��o do mapa
 	    mapView.setBuiltInZoomControls(true);

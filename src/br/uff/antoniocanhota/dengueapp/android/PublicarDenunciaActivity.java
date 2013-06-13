@@ -231,24 +231,11 @@ public class PublicarDenunciaActivity extends MapActivity {
 						Charset.forName("UTF-8")));
 				mpEntity.addPart("denuncia[longitude]", new StringBody(lng,
 						Charset.forName("UTF-8")));
-				mpEntity.addPart(
-						"dispositivo[identificador_do_hardware]",
-						new StringBody(Utilitarios.getDeviceIDCoded(ctx), Charset
-								.forName("UTF-8")));
+				
 				mpEntity.addPart(
 						"dispositivo[identificador_do_android]",
 						new StringBody(Utilitarios.getAndroidID(ctx), Charset
-								.forName("UTF-8")));
-				// a condicional a seguir é feita para evitar erro ao usar tablets, que não possuem
-				// a informação do número do telefone
-				String numero_do_telefone = Utilitarios.getPhoneNumberCoded(ctx);
-				if (numero_do_telefone != null) {
-					mpEntity.addPart("dispositivo[numero_do_telefone]",
-							new StringBody(Utilitarios.getPhoneNumberCoded(ctx),
-									Charset.forName("UTF-8")));
-				}
-				;
-
+								.forName("UTF-8")));				
 				try {
 					post.setEntity(mpEntity);
 					HttpResponse response = client.execute(post);
