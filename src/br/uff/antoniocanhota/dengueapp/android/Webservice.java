@@ -1,6 +1,5 @@
 package br.uff.antoniocanhota.dengueapp.android;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -16,88 +15,134 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import android.content.Context;
+
 public class Webservice {
 
 	// Para uso em produção:
-	public static final String WEBSERVICES = "http://dengue.herokuapp.com/webservices/";
-	// Para uso em desenvolvimento:
 	// public static final String WEBSERVICES =
+	// "http://dengue.herokuapp.com/webservices/";
+	// Para uso em desenvolvimento:
+	public static final String WEBSERVICES = "http://10.0.2.2:3000/webservices/";
 	// "http://dengue.herokuapp.com/webservices/";
 	public static final String WEBSERVICE_PUBLICAR_DENUNCIA = "denuncias/publicar";
 	public static final String WEBSERVICE_LISTAGEM_DE_DENUNCIAS = WEBSERVICES
 			+ "denuncias.xml";
 	public static final String WEBSERVICE_LISTAGEM_DE_DENUNCIAS_DO_USUARIO = WEBSERVICE_LISTAGEM_DE_DENUNCIAS
 			+ "?identificador_do_android=";
-	public static final String WEBSERVICE_CODIGO_DE_ATIVACAO = "codigo_de_ativacao.xml";
+	public static final String WEBSERVICE_CODIGO_DE_ATIVACAO = WEBSERVICES
+			+ "codigo_de_ativacao.xml";
+	public static final String WEBSERVICE_NOTIFY_EXCEPTION = WEBSERVICES
+			+ "reportar_excecao";
 
-	public static List<Denuncia> getDenuncias() throws IOException {
+	private Context ctx;
+
+	public Webservice(Context ctx) {
+		this.ctx = ctx;
+	}
+
+	public List<Denuncia> getDenuncias() {
 		return getDenuncias(null);
 	}
 
-	public static List<Denuncia> getDenuncias(String identificadorDoAndroid) throws IOException {
-		Document doc;
+	public List<Denuncia> getDenuncias(String identificadorDoAndroid) {
 		List<Denuncia> denuncias = new ArrayList<Denuncia>();
-		if (identificadorDoAndroid == null) {
-			doc = getDocument(WEBSERVICE_LISTAGEM_DE_DENUNCIAS);			
-		} else {
-			doc = getDocument(WEBSERVICE_LISTAGEM_DE_DENUNCIAS_DO_USUARIO+identificadorDoAndroid);			
-		}
-		NodeList denunciasNodeList = doc.getElementsByTagName("denuncia");
-		for (int i = 0; i < denunciasNodeList.getLength(); i++){
-			Node denunciaNode = denunciasNodeList.item(i);
-			Element denunciaElement = (Element) denunciaNode;
-			Denuncia d = new Denuncia();
-			d.setId(Integer.valueOf(processarCampoXML(denunciaElement,"id")));
-			d.setLatitude(Double.parseDouble(processarCampoXML(denunciaElement,"latitude")));
-			d.setLongitude(Double.parseDouble(processarCampoXML(denunciaElement,"longitude")));
-			d.setFotoUrl(processarCampoXML(denunciaElement, "url_imagem"));
-			d.setDataEHora(processarCampoXML(denunciaElement, "data-e-hora"));
-			denuncias.add(d);
+		try {
+			Document doc;
+
+			if (identificadorDoAndroid == null) {
+				doc = getDocument(WEBSERVICE_LISTAGEM_DE_DENUNCIAS);
+			} else {
+				doc = getDocument(WEBSERVICE_LISTAGEM_DE_DENUNCIAS_DO_USUARIO
+						+ identificadorDoAndroid);
+			}
+			NodeList denunciasNodeList = doc.getElementsByTagName("denuncia");
+			for (int i = 0; i < denunciasNodeList.getLength(); i++) {
+				Node denunciaNode = denunciasNodeList.item(i);
+				Element denunciaElement = (Element) denunciaNode;
+				Denuncia d = new Denuncia();
+				d.setId(Integer
+						.valueOf(processarCampoXML(denunciaElement, "id")));
+				d.setLatitude(Double.parseDouble(processarCampoXML(
+						denunciaElement, "latitude")));
+				d.setLongitude(Double.parseDouble(processarCampoXML(
+						denunciaElement, "longitude")));
+				d.setFotoUrl(processarCampoXML(denunciaElement, "url_imagem"));
+				d.setDataEHora(processarCampoXML(denunciaElement, "data-e-hora"));
+				denuncias.add(d);
+			}
+		} catch (Exception e) {
+			Utilitarios.notifyExceptionToServer(e, ctx);
 		}
 		return denuncias;
-		
+
 	}
 
-	public static int postDenuncia(Denuncia denuncia) {
+	public int postDenuncia(Denuncia denuncia) {
 		return 1;
 	}
 
-	public static String getCodigoDeAtivacao() throws IOException {
-		Document doc = getDocument(WEBSERVICE_CODIGO_DE_ATIVACAO);
-		String codigoDeAtivacao = doc.getDocumentElement().getNodeValue();
+	public String getCodigoDeAtivacao() {
+		Document doc = null;
+		String codigoDeAtivacao = null;
+		try {
+			doc = getDocument(WEBSERVICE_CODIGO_DE_ATIVACAO);
+			codigoDeAtivacao = doc.getDocumentElement().getNodeValue();
+		} catch (Exception e) {
+			Utilitarios.notifyExceptionToServer(e, ctx);
+		}
 		return codigoDeAtivacao;
 	}
 
 	public static boolean isComunicavelComOServidor() {
 		return true;
 	}
-	
-	public static void postExceptionToServer(Exception e){
-		
+
+	public void postExceptionToServer(Exception e) {
+		WebservicePost wsPost = new WebservicePost(WEBSERVICE_NOTIFY_EXCEPTION,
+				ctx);		
+		try {
+			wsPost.addParam("exception",
+					Utilitarios.getStringBody(e.toString()));
+			wsPost.addParam("trace", Utilitarios.getStringBody(Utilitarios
+					.getExceptionStackTraceAsString(e)));
+			wsPost.addParam("android_version", Utilitarios
+					.getStringBody(Utilitarios.getAndroidVersionRelease()));
+			wsPost.addParam("android_id", Utilitarios
+					.getStringBody(Utilitarios.getAndroidID(ctx)));
+			wsPost.addParam("manufacturer", Utilitarios
+					.getStringBody(Utilitarios.getDeviceManufacturer()));
+			wsPost.addParam("model",
+					Utilitarios.getStringBody(Utilitarios.getDeviceModel()));
+		} catch (Exception eInternal) {
+			Utilitarios.notifyExceptionToServer(eInternal, ctx);
+		}
+		wsPost.send(false);
 	}
-	
-	private static Document getDocument(String url) throws IOException{
+
+	private Document getDocument(String url) {
 		return getDocument(getInputStream(url));
 	}
-	
-	private static Document getDocument(InputStream inputStream){
+
+	private Document getDocument(InputStream inputStream) {
 		Document doc = null;
 		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 		DocumentBuilder db;
 		try {
 			db = dbf.newDocumentBuilder();
-			doc = db.parse(inputStream);	
+			doc = db.parse(inputStream);
 			doc.getDocumentElement().normalize();
-		} catch(Exception e){
+		} catch (Exception e) {
+			Utilitarios.notifyExceptionToServer(e, this.ctx);
 			e.printStackTrace();
 		}
 		return doc;
 	}
-	
-	private static InputStream getInputStream(String url) throws IOException{
+
+	private InputStream getInputStream(String url) {
 		InputStream inputStream = null;
 		int response = -1;
-		
+
 		URL urlObject = null;
 		try {
 			urlObject = new URL(url);
@@ -112,19 +157,24 @@ public class Webservice {
 				inputStream = httpConn.getInputStream();
 			}
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}								
-		
+			Utilitarios.notifyExceptionToServer(e, ctx);
+		}
+
 		return inputStream;
-		
+
 	}
-	
-	private static String processarCampoXML(Element objeto, String campo){
+
+	private static String processarCampoXML(Element objeto, String campo) {
 		NodeList campoElmntLs = objeto.getElementsByTagName(campo);
 		Element campoElmnt = (Element) campoElmntLs.item(0);
 		NodeList campoNd = campoElmnt.getChildNodes();
 		return ((Node) campoNd.item(0)).getNodeValue();
 	}
+
+	// private MultipartEntity getMultipartEntity(String url){
+	// HttpClient client = new DefaultHttpClient();
+	// HttpPost post = new HttpPost(url);
+	// return new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
+	// }
 
 }

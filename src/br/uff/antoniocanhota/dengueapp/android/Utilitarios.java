@@ -1,26 +1,14 @@
 package br.uff.antoniocanhota.dengueapp.android;
 
-import java.io.BufferedReader;
-import java.io.DataInputStream;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.math.BigDecimal;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLConnection;
-import java.util.Random;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
 
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
+import org.apache.http.entity.mime.content.StringBody;
 
 import android.content.Context;
 import android.provider.Settings.Secure;
-import android.telephony.TelephonyManager;
 import android.widget.Toast;
 
 public class Utilitarios {
@@ -31,6 +19,18 @@ public class Utilitarios {
 	// return tMgr.getLine1Number();
 	// }
 
+	public static String getAndroidVersionRelease(){	
+		return android.os.Build.VERSION.RELEASE;
+	}
+	
+	public static String getDeviceManufacturer(){
+		return android.os.Build.MANUFACTURER;
+	}
+	
+	public static String getDeviceModel(){
+		return android.os.Build.MODEL;
+	}
+	
 	public static String getAndroidID(Context ctx) {
 		String android_id = Secure.getString(ctx.getContentResolver(),
 				Secure.ANDROID_ID);
@@ -43,14 +43,28 @@ public class Utilitarios {
 	}
 
 	public static void showToastException(Context ctx) {
-//		Toast.makeText(, "Erro interno da aplicação.", Toast.LENGTH_LONG)
-//				.show();
+		Toast.makeText(ctx, "Desculpe, mas não é possível continuar a ação solicitada. Houve um erro da aplicação.", Toast.LENGTH_LONG)
+				.show();
 	}
 	
-	public static void notifyExceptionToServer(Exception e){
-		
+	public static void notifyExceptionToServer(Exception e, Context ctx){
+		e.printStackTrace();
+		Webservice webservice = new Webservice(ctx);
+		webservice.postExceptionToServer(e);		
+		showToastException(ctx);
 	}
 
+	public static StringBody getStringBody(String string) throws UnsupportedEncodingException{
+		return new StringBody(string,Charset.forName("UTF-8"));
+	}
+	
+	public static String getExceptionStackTraceAsString(Exception e){
+		StringWriter sw = new StringWriter();
+		PrintWriter pw = new PrintWriter(sw);
+		e.printStackTrace(pw);
+		return sw.toString();
+	}	
+	
 	// public static String getDeviceID(Context ctx) {
 	// String deviceID = null;
 	// String serviceName = Context.TELEPHONY_SERVICE;

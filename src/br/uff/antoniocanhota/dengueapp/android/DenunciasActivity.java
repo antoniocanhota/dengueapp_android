@@ -1,6 +1,5 @@
 package br.uff.antoniocanhota.dengueapp.android;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,12 +25,9 @@ public class DenunciasActivity extends MapActivity{
 		//Convers�o do XML do webservice em uma lista de den�ncias
 		//Hashtable<Integer,Denuncia> hash_de_denuncias = Denuncia.processarXMLDenuncias(webservice_de_listagem_de_denuncias);
 		//Enumeration enum_denuncias = hash_de_denuncias.keys();
-		List<Denuncia> denuncias = new ArrayList<Denuncia>();
-		try {
-			denuncias = Webservice.getDenuncias();
-		} catch (IOException e) {
-			Utilitarios.showToastIOException(getApplicationContext());
-		}
+		Webservice webservice = new Webservice(getApplicationContext());
+		List<Denuncia> denuncias = new ArrayList<Denuncia>();		
+		denuncias = webservice.getDenuncias();		
 
 		//Cria��o da listagem de pontos das den�ncias		
 		MyItemizedOverlay itemizedOverlay = new MyItemizedOverlay(this);
