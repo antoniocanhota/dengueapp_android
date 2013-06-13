@@ -10,6 +10,7 @@ import java.util.List;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import org.apache.http.conn.HttpHostConnectException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -34,6 +35,7 @@ public class Webservice {
 			+ "codigo_de_ativacao.xml";
 	public static final String WEBSERVICE_NOTIFY_EXCEPTION = WEBSERVICES
 			+ "reportar_excecao";
+	public static final String WEBSERVICE_SERVER_STATUS = WEBSERVICES + "status_do_servidor";
 
 	private Context ctx;
 
@@ -41,11 +43,11 @@ public class Webservice {
 		this.ctx = ctx;
 	}
 
-	public List<Denuncia> getDenuncias() {
+	public List<Denuncia> getDenuncias() {		
 		return getDenuncias(null);
 	}
 
-	public List<Denuncia> getDenuncias(String identificadorDoAndroid) {
+	public List<Denuncia> getDenuncias(String identificadorDoAndroid) {		
 		List<Denuncia> denuncias = new ArrayList<Denuncia>();
 		try {
 			Document doc;
@@ -108,9 +110,28 @@ public class Webservice {
 		return codigoDeAtivacao;
 	}
 
-	public static boolean isComunicavelComOServidor() {
-		return true;
-	}
+//	public boolean cannotConnectToServer() {
+//		boolean canConnect = false;
+//		if (getServerStatus() == 200)
+//			canConnect = true;
+//		return !canConnect;
+//	}
+//	
+//	public Integer getServerStatus() {
+//		Integer result = null;
+//		HttpPost post = new HttpPost(WEBSERVICE_SERVER_STATUS);		
+//		HttpClient client = new DefaultHttpClient();
+//		HttpResponse response;
+//		try {
+//			response = client.execute(post);
+//			result = response.getStatusLine().getStatusCode();
+//		} catch (HttpHostConnectException e) {
+//			Utilitarios.showToast("O servidor da aplicação está fora do ar.", ctx);			
+//		} catch (Exception e) {
+//			Utilitarios.notifyExceptionToServer(e, ctx);
+//		}
+//		return result;
+//	}
 
 	public void postExceptionToServer(Exception e) {
 		WebservicePost wsPost = new WebservicePost(WEBSERVICE_NOTIFY_EXCEPTION,
@@ -147,8 +168,7 @@ public class Webservice {
 			doc = db.parse(inputStream);
 			doc.getDocumentElement().normalize();
 		} catch (Exception e) {
-			Utilitarios.notifyExceptionToServer(e, this.ctx);
-			e.printStackTrace();
+			Utilitarios.notifyExceptionToServer(e, this.ctx);			
 		}
 		return doc;
 	}
@@ -170,6 +190,8 @@ public class Webservice {
 			if (response == HttpURLConnection.HTTP_OK) {
 				inputStream = httpConn.getInputStream();
 			}
+		} catch (HttpHostConnectException e) {
+			Utilitarios.showToast("O servidor da aplicação está fora do ar.", ctx);	
 		} catch (Exception e) {
 			Utilitarios.notifyExceptionToServer(e, ctx);
 		}
