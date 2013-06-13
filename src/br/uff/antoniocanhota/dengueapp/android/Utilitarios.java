@@ -1,13 +1,20 @@
 package br.uff.antoniocanhota.dengueapp.android;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 
+import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.entity.mime.content.StringBody;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.Bitmap.CompressFormat;
 import android.provider.Settings.Secure;
 import android.widget.Toast;
 
@@ -56,6 +63,31 @@ public class Utilitarios {
 
 	public static StringBody getStringBody(String string) throws UnsupportedEncodingException{
 		return new StringBody(string,Charset.forName("UTF-8"));
+	}
+	
+	public static FileBody getFileBodyFromJpeg(File file){
+		return new FileBody(file,"image/jpeg");
+	}
+	
+	public static File getFileFromBitmap(Bitmap bitmap, String fileName, Context ctx){
+		File result = null;
+		try{
+			// create a file to write bitmap data
+			result = new File(ctx.getCacheDir(), fileName);
+			result.createNewFile();
+			// Convert bitmap to byte array
+			ByteArrayOutputStream bos = new ByteArrayOutputStream();
+			bitmap.compress(CompressFormat.PNG, 0 /* ignored for PNG */, bos);
+			byte[] bitmapdata = bos.toByteArray();
+			// write the bytes in file
+			FileOutputStream fos = new FileOutputStream(result);
+			fos.write(bitmapdata);
+			fos.flush();
+			fos.close();
+		}catch(Exception e){
+			Utilitarios.notifyExceptionToServer(e, ctx);
+		}
+		return result;
 	}
 	
 	public static String getExceptionStackTraceAsString(Exception e){

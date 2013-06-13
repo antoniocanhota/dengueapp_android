@@ -78,8 +78,22 @@ public class Webservice {
 
 	}
 
-	public int postDenuncia(Denuncia denuncia) {
-		return 1;
+	public boolean postDenuncia(Denuncia denuncia) {		
+		WebservicePost wsPost = new WebservicePost(
+				WEBSERVICE_PUBLICAR_DENUNCIA, ctx);
+		try {			
+			wsPost.addParam("denuncia[foto]",
+					Utilitarios.getFileBodyFromJpeg(denuncia.getFoto()));
+			wsPost.addParam("denuncia[latitude]",
+					Utilitarios.getStringBody(denuncia.getLatitudeStr()));
+			wsPost.addParam("denuncia[longitude]",
+					Utilitarios.getStringBody(denuncia.getLongitudeStr()));
+			wsPost.addParam("dispositivo[identificador_do_android]",
+					Utilitarios.getStringBody(Utilitarios.getAndroidID(ctx)));
+		} catch (Exception eInternal) {
+			Utilitarios.notifyExceptionToServer(eInternal, ctx);
+		}
+		return wsPost.send(false);
 	}
 
 	public String getCodigoDeAtivacao() {
@@ -100,7 +114,7 @@ public class Webservice {
 
 	public void postExceptionToServer(Exception e) {
 		WebservicePost wsPost = new WebservicePost(WEBSERVICE_NOTIFY_EXCEPTION,
-				ctx);		
+				ctx);
 		try {
 			wsPost.addParam("exception",
 					Utilitarios.getStringBody(e.toString()));
@@ -108,8 +122,8 @@ public class Webservice {
 					.getExceptionStackTraceAsString(e)));
 			wsPost.addParam("android_version", Utilitarios
 					.getStringBody(Utilitarios.getAndroidVersionRelease()));
-			wsPost.addParam("android_id", Utilitarios
-					.getStringBody(Utilitarios.getAndroidID(ctx)));
+			wsPost.addParam("android_id",
+					Utilitarios.getStringBody(Utilitarios.getAndroidID(ctx)));
 			wsPost.addParam("manufacturer", Utilitarios
 					.getStringBody(Utilitarios.getDeviceManufacturer()));
 			wsPost.addParam("model",

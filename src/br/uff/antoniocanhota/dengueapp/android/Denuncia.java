@@ -1,5 +1,10 @@
 package br.uff.antoniocanhota.dengueapp.android;
 
+import java.io.File;
+
+import android.content.Context;
+import android.graphics.Bitmap;
+
 
 public class Denuncia {
 
@@ -8,6 +13,7 @@ public class Denuncia {
 	private Double longitude;
 	private String url_da_foto;
 	private String data_e_hora;
+	private File foto;
 	
 	public Denuncia(){
 		
@@ -25,12 +31,30 @@ public class Denuncia {
 		return latitude;
 	}
 	
+	public String getLatitudeStr(){
+		if (latitude != null){
+			return String.valueOf(latitude);
+		} else {
+			return null;
+		}
+			
+	}
+	
 	public void setLatitude(Double latitude){
 		this.latitude = latitude;
 	}
 	
 	public Double getLongitude(){
 		return longitude;
+	}
+	
+	public String getLongitudeStr(){
+		if (longitude != null){
+			return String.valueOf(longitude);
+		} else {
+			return null;
+		}
+			
 	}
 	
 	public void setLongitude(Double longitude){
@@ -51,6 +75,18 @@ public class Denuncia {
 	
 	public void setDataEHora(String data_e_hora){
 		this.data_e_hora = data_e_hora;
+	}
+	
+	public File getFoto(){
+		return foto;
+	}
+	
+	public void setFoto(File foto){
+		this.foto = foto;
+	}
+	
+	public void setFoto(Bitmap bitmap, Context ctx){
+		this.foto = Utilitarios.getFileFromBitmap(bitmap, "foto_denuncia", ctx);
 	}
 	
 //	public static Hashtable<Integer,Denuncia> processarXMLDenuncias(String webservice){

@@ -1,24 +1,8 @@
 package br.uff.antoniocanhota.dengueapp.android;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.nio.charset.Charset;
-
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.mime.HttpMultipartMode;
-import org.apache.http.entity.mime.MultipartEntity;
-import org.apache.http.entity.mime.content.FileBody;
-import org.apache.http.entity.mime.content.StringBody;
-import org.apache.http.impl.client.DefaultHttpClient;
-
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Bitmap.CompressFormat;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -43,12 +27,18 @@ public class PublicarDenunciaActivity extends MapActivity {
 	private LocationManager lm;
 	private LocationListener locationListener;
 	private MapController mapa;
-	private String lat;
-	private String lng;
+//	private String lat;
+//	private String lng;
+	
+	private Double latitude;
+	private Double longitude;
+	
 	private GeoPoint localDaDenuncia;
 	private ProgressBar progressBar;
+	
+	private Denuncia denuncia;
 
-	static String webservice_de_publicar_denuncia = "http://dengue.herokuapp.com/webservices/denuncias/publicar";
+	//static String webservice_de_publicar_denuncia = "http://dengue.herokuapp.com/webservices/denuncias/publicar";
 	//static String webservice_de_publicar_denuncia = "http://10.0.2.2:3000/webservices/denuncias/publicar";
 
 	@Override
@@ -65,7 +55,7 @@ public class PublicarDenunciaActivity extends MapActivity {
 		setContentView(R.layout.activity_publicar_denuncia);
 		imgFoto = (ImageView) findViewById(R.id.foto_da_denuncia);
 
-		// Centraliza e foca no local do usuáiro
+		// Centraliza e foca no local do usuГЎiro
 //		MapView mapView = (MapView) findViewById(R.id.mapa_publicar_denuncia);
 //		mapa = mapView.getController();
 //
@@ -93,31 +83,70 @@ public class PublicarDenunciaActivity extends MapActivity {
 		bt_confirmar_publicacao_de_denuncia
 				.setOnClickListener(new View.OnClickListener() {
 					public void onClick(View arg0) {
-						try {
-							Boolean ret = PublicarDenunciaActivity.enviar(
-									getApplicationContext(), lat, lng, bitmap);
-							// startActivity(new
-							// Intent("android.intent.action.MAIN"));
-							if (ret == true) {
+						buildDenuncia();
+						if (validateDenuncia() && sendDenuncia()){							
 								Toast.makeText(getApplicationContext(),
 										"Denúncia enviada com sucesso.",
 										Toast.LENGTH_SHORT).show();
-								finish();
-								
-							} else {
-								Toast.makeText(
-										getApplicationContext(),
-										"Erro ao enviar a denúcia. Tente novamente em breve",
-										Toast.LENGTH_SHORT).show();
-							}
-							lm.removeUpdates(locationListener);
-						} catch (IOException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
+								finish();							
+						} 
+						 
+//						try {
+//							Boolean ret = PublicarDenunciaActivity.enviar(
+//									getApplicationContext(), lat, lng, bitmap);
+//							// startActivity(new
+//							// Intent("android.intent.action.MAIN"));
+//							if (ret == true) {
+//								Toast.makeText(getApplicationContext(),
+//										"DenГєncia enviada com sucesso.",
+//										Toast.LENGTH_SHORT).show();
+//								finish();
+//								
+//							} else {
+//								Toast.makeText(
+//										getApplicationContext(),
+//										"Erro ao enviar a denГєcia. Tente novamente em breve",
+//										Toast.LENGTH_SHORT).show();
+//							}
+//							lm.removeUpdates(locationListener);
+//						} catch (IOException e) {
+//							// TODO Auto-generated catch block
+//							e.printStackTrace();
+//						}
 					}
 				});
 
+	}
+	
+	private void buildDenuncia(){
+		this.denuncia = new Denuncia();
+		denuncia.setLatitude(latitude);
+		denuncia.setLongitude(longitude);
+		denuncia.setFoto(bitmap, getApplicationContext());
+	}
+	
+	private boolean validateDenuncia(){
+		boolean result = true;
+		if (denuncia.getFoto() == null){
+			result = false;
+			Toast.makeText(
+					getApplicationContext(),
+					"Você precisa tirar uma foto do local antes de publicar!",
+					Toast.LENGTH_SHORT).show();
+		}
+		if (denuncia.getLatitude() == null || denuncia.getLongitude() == null) {
+			result = false;
+			Toast.makeText(
+					getApplicationContext(),
+					"Ainda não foi possível obter sua localização. Aguarde alguns segundos e tente reenviar a denúncia.",
+					Toast.LENGTH_SHORT).show();
+		}
+		return result;
+	}
+	
+	private boolean sendDenuncia(){
+		Webservice ws = new Webservice(getApplicationContext());
+		return ws.postDenuncia(denuncia);
 	}
 	
 	private class MyLocationListener implements LocationListener {
@@ -125,7 +154,7 @@ public class PublicarDenunciaActivity extends MapActivity {
 			if (loc != null) {
 				//Geocoder geoCoder = new Geocoder(getBaseContext(), Locale.getDefault());
 				TextView addressView = (TextView) findViewById(R.id.endereco_aproximado_da_denuncia);
-				addressView.setText("Localização obtida com sucesso!\n\n"+"Latitude: "+loc.getLatitude()+"\n"+"Longitude:"+loc.getLongitude());
+				addressView.setText("LocalizaГ§ГЈo obtida com sucesso!\n\n"+"Latitude: "+loc.getLatitude()+"\n"+"Longitude:"+loc.getLongitude());
 				
 //				try {
 //					List<Address> addresses = geoCoder.getFromLocation(
@@ -155,8 +184,11 @@ public class PublicarDenunciaActivity extends MapActivity {
 			// mc.animateTo(p);
 			// mc.setZoom(18);
 
-			lat = String.valueOf((loc.getLatitude()));
-			lng = String.valueOf((loc.getLongitude()));
+			latitude = loc.getLatitude();
+			longitude = loc.getLongitude();
+			
+//			lat = String.valueOf((loc.getLatitude()));
+//			lng = String.valueOf((loc.getLongitude()));
 		}
 
 		public void onProviderDisabled(String provider) {
@@ -176,7 +208,7 @@ public class PublicarDenunciaActivity extends MapActivity {
 			if (resultCode == RESULT_OK) {
 				bitmap = (Bitmap) data.getExtras().get("data");
 				imgFoto.setImageBitmap(bitmap);
-				// A foto poderá ser salva aqui
+				// A foto poderГЎ ser salva aqui
 			} else if (resultCode == RESULT_CANCELED) {
 				Toast.makeText(this, "Cancelou", Toast.LENGTH_SHORT);
 			} else {
@@ -186,70 +218,70 @@ public class PublicarDenunciaActivity extends MapActivity {
 		}
 	}
 
-	private static boolean enviar(Context ctx, String lat, String lng,
-			Bitmap imagem) throws IOException {
-
-		Boolean resultado = false;
-		if (imagem == null) {
-			Toast.makeText(ctx,
-					"Você precisa tirar uma foto do local antes de publicar!",
-					Toast.LENGTH_SHORT).show();
-		} else {
-			if (lat == null || lng == null) {
-				Toast.makeText(
-						ctx,
-						"Ainda não conseguimos obter sua localização. Aguarde alguns segundos e tente novamente.",
-						Toast.LENGTH_SHORT).show();
-			} else {
-
-				HttpClient client = new DefaultHttpClient();
-				HttpPost post = new HttpPost(
-						webservice_de_publicar_denuncia);
-				MultipartEntity mpEntity = new MultipartEntity(
-						HttpMultipartMode.BROWSER_COMPATIBLE);
-
-				// Object filename;
-				// create a file to write bitmap data
-				File f = new File(ctx.getCacheDir(), "foto_denuncia.jpg");
-				f.createNewFile();
-
-				// Convert bitmap to byte array
-				ByteArrayOutputStream bos = new ByteArrayOutputStream();
-				imagem.compress(CompressFormat.PNG, 0 /* ignored for PNG */, bos);
-				byte[] bitmapdata = bos.toByteArray();
-
-				// write the bytes in file
-				FileOutputStream fos = new FileOutputStream(f);
-				fos.write(bitmapdata);
-				fos.flush();
-				fos.close();
-
-				// adiciona os parametros à requisição POST
-				mpEntity.addPart("denuncia[foto]",
-						new FileBody(f, "image/jpeg"));
-				mpEntity.addPart("denuncia[latitude]", new StringBody(lat,
-						Charset.forName("UTF-8")));
-				mpEntity.addPart("denuncia[longitude]", new StringBody(lng,
-						Charset.forName("UTF-8")));
-				
-				mpEntity.addPart(
-						"dispositivo[identificador_do_android]",
-						new StringBody(Utilitarios.getAndroidID(ctx), Charset
-								.forName("UTF-8")));				
-				try {
-					post.setEntity(mpEntity);
-					HttpResponse response = client.execute(post);
-					resultado = true;
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					resultado = false;
-					e.printStackTrace();
-				}
-			}
-		}
-		return resultado;
-
-	}
+//	private static boolean enviar(Context ctx, String lat, String lng,
+//			Bitmap imagem) throws IOException {
+//
+//		Boolean resultado = false;
+//		if (imagem == null) {
+//			Toast.makeText(ctx,
+//					"VocГЄ precisa tirar uma foto do local antes de publicar!",
+//					Toast.LENGTH_SHORT).show();
+//		} else {
+//			if (lat == null || lng == null) {
+//				Toast.makeText(
+//						ctx,
+//						"Ainda nГЈo conseguimos obter sua localizaГ§ГЈo. Aguarde alguns segundos e tente novamente.",
+//						Toast.LENGTH_SHORT).show();
+//			} else {
+//
+//				HttpClient client = new DefaultHttpClient();
+//				HttpPost post = new HttpPost(
+//						webservice_de_publicar_denuncia);
+//				MultipartEntity mpEntity = new MultipartEntity(
+//						HttpMultipartMode.BROWSER_COMPATIBLE);
+//
+//				// Object filename;
+//				// create a file to write bitmap data
+//				File f = new File(ctx.getCacheDir(), "foto_denuncia.jpg");
+//				f.createNewFile();
+//
+//				// Convert bitmap to byte array
+//				ByteArrayOutputStream bos = new ByteArrayOutputStream();
+//				imagem.compress(CompressFormat.PNG, 0 /* ignored for PNG */, bos);
+//				byte[] bitmapdata = bos.toByteArray();
+//
+//				// write the bytes in file
+//				FileOutputStream fos = new FileOutputStream(f);
+//				fos.write(bitmapdata);
+//				fos.flush();
+//				fos.close();
+//
+//				// adiciona os parametros Г  requisiГ§ГЈo POST
+//				mpEntity.addPart("denuncia[foto]",
+//						new FileBody(f, "image/jpeg"));
+//				mpEntity.addPart("denuncia[latitude]", new StringBody(lat,
+//						Charset.forName("UTF-8")));
+//				mpEntity.addPart("denuncia[longitude]", new StringBody(lng,
+//						Charset.forName("UTF-8")));
+//				
+//				mpEntity.addPart(
+//						"dispositivo[identificador_do_android]",
+//						new StringBody(Utilitarios.getAndroidID(ctx), Charset
+//								.forName("UTF-8")));				
+//				try {
+//					post.setEntity(mpEntity);
+//					HttpResponse response = client.execute(post);
+//					resultado = true;
+//				} catch (Exception e) {
+//					// TODO Auto-generated catch block
+//					resultado = false;
+//					e.printStackTrace();
+//				}
+//			}
+//		}
+//		return resultado;
+//
+//	}
 
 	protected boolean isRouteDisplayed() {
 		// TODO Auto-generated method stub return false;
