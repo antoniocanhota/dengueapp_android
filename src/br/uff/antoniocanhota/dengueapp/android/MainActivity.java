@@ -2,15 +2,30 @@ package br.uff.antoniocanhota.dengueapp.android;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
 public class MainActivity extends Activity {
 
+	private boolean isTablet() {
+		return (getApplicationContext().getResources().getConfiguration().screenLayout
+		& Configuration.SCREENLAYOUT_SIZE_MASK)
+		>= Configuration.SCREENLAYOUT_SIZE_XLARGE;
+		}
+	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        
+        if ( isTablet() )
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        else
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        
+        
         setContentView(R.layout.activity_main);
                 
         Button bt_publicar_denuncia = (Button)findViewById(R.id.bt_publicar_denuncia);

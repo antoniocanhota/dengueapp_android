@@ -1,6 +1,8 @@
 package br.uff.antoniocanhota.dengueapp.android;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.location.Location;
@@ -8,6 +10,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.provider.Settings;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -38,20 +41,25 @@ public class PublicarDenunciaActivity extends MapActivity {
 
 	private Denuncia denuncia;
 
-	// static String webservice_de_publicar_denuncia =
-	// "http://dengue.herokuapp.com/webservices/denuncias/publicar";
-	// static String webservice_de_publicar_denuncia =
-	// "http://10.0.2.2:3000/webservices/denuncias/publicar";
-
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+	public void onResume(){
+		super.onResume();
+		
 		userLocation = null;
 
 //		progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
 		// ---use the LocationManager class to obtain locations data---
 		lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+		
+		if (!lm.isProviderEnabled(LocationManager.GPS_PROVIDER)){
+			//finish();
+			
+			//startActivity(new Intent("br.uff.antoniocanhota.dengueapp.android.MAINACTIVITY"));
+			showSettingsAlert();
+			//finish();
+		} else {
+		
 		locationListener = new MyLocationListener();
 
 		
@@ -93,40 +101,31 @@ public class PublicarDenunciaActivity extends MapActivity {
 				.setOnClickListener(new View.OnClickListener() {
 					public void onClick(View arg0) {
 						Utilitarios.showToast("Enviando denúncia...",
-								getApplicationContext());
+								PublicarDenunciaActivity.this);
 						buildDenuncia();
 						if (validateDenuncia() && sendDenuncia()) {
-							Toast.makeText(getApplicationContext(),
+							Toast.makeText(PublicarDenunciaActivity.this,
 									"Denúncia enviada com sucesso.",
 									Toast.LENGTH_SHORT).show();
 							
 						}
 						lm.removeUpdates(locationListener);
 						finish();
-						// try {
-						// Boolean ret = PublicarDenunciaActivity.enviar(
-						// getApplicationContext(), lat, lng, bitmap);
-						// // startActivity(new
-						// // Intent("android.intent.action.MAIN"));
-						// if (ret == true) {
-						// Toast.makeText(getApplicationContext(),
-						// "DenГєncia enviada com sucesso.",
-						// Toast.LENGTH_SHORT).show();
-						// finish();
-						//
-						// } else {
-						// Toast.makeText(
-						// getApplicationContext(),
-						// "Erro ao enviar a denГєcia. Tente novamente em breve",
-						// Toast.LENGTH_SHORT).show();
-						// }
-						// lm.removeUpdates(locationListener);
-						// } catch (IOException e) {
-						// // TODO Auto-generated catch block
-						// e.printStackTrace();
-						// }
 					}
 				});
+		}
+		
+	}
+	
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		
+	
+		
+		
+		
+		
 
 	}
 
@@ -134,21 +133,21 @@ public class PublicarDenunciaActivity extends MapActivity {
 		this.denuncia = new Denuncia();
 		denuncia.setLatitude(userLocation.getLatitude());
 		denuncia.setLongitude(userLocation.getLongitude());
-		denuncia.setFoto(bitmap, getApplicationContext());
+		denuncia.setFoto(bitmap, PublicarDenunciaActivity.this);
 	}
 
 	private boolean validateDenuncia() {
 		boolean result = true;
 		if (denuncia.getFoto() == null) {
 			result = false;
-			Toast.makeText(getApplicationContext(),
+			Toast.makeText(PublicarDenunciaActivity.this,
 					"Você precisa tirar uma foto do local antes de publicar!",
 					Toast.LENGTH_SHORT).show();
 		}
 		if (denuncia.getLatitude() == null || denuncia.getLongitude() == null) {
 			result = false;
 			Toast.makeText(
-					getApplicationContext(),
+					PublicarDenunciaActivity.this,
 					"Ainda não foi possível obter sua localização. Aguarde alguns segundos e tente reenviar a denúncia.",
 					Toast.LENGTH_SHORT).show();
 		}
@@ -156,14 +155,14 @@ public class PublicarDenunciaActivity extends MapActivity {
 	}
 
 	private boolean sendDenuncia() {
-		Webservice ws = new Webservice(getApplicationContext());
+		Webservice ws = new Webservice(PublicarDenunciaActivity.this);
 		return ws.postDenuncia(denuncia);
 	}
 
 	private class MyLocationListener implements LocationListener {
 
 		public void onLocationChanged(Location loc) {
-
+			Utilitarios.showToast("jjkjk",PublicarDenunciaActivity.this);
 			if (loc != null) {
 
 				if ((userLocation != null && loc.getAccuracy() <= userLocation
@@ -179,8 +178,8 @@ public class PublicarDenunciaActivity extends MapActivity {
 				}
 			}
 
-			if (loc != null && loc.getAccuracy() <= MIN_ACCURACY
-					&& loc.getAccuracy() <= userLocation.getAccuracy()) {
+//			if (loc != null && loc.getAccuracy() <= MIN_ACCURACY
+//					&& loc.getAccuracy() <= userLocation.getAccuracy()) {
 
 				// Geocoder geoCoder = new Geocoder(getBaseContext(),
 				// Locale.getDefault());
@@ -210,7 +209,7 @@ public class PublicarDenunciaActivity extends MapActivity {
 				// addressView.setText("Latitude: "+loc.getLatitude()+"\n"+"Longitude:"+loc.getLongitude());
 				// e.printStackTrace();
 				// }
-			}
+//			}
 
 			// localDaDenuncia = new GeoPoint((int) (loc.getLatitude()),
 			// (int) (loc.getLongitude()));
@@ -228,8 +227,8 @@ public class PublicarDenunciaActivity extends MapActivity {
 		}
 
 		public void onProviderDisabled(String provider) {
-			Utilitarios.showToast("Por favor, reative o sensor GPS para o correto funcionamento do DengueApp. Pode ser necessário reiniciar a aplicação.",
-					getApplicationContext());
+//			Utilitarios.showToast("Por favor, reative o sensor GPS para o correto funcionamento do DengueApp. Pode ser necessário reiniciar a aplicação.",
+//					PublicarDenunciaActivity.this);
 		}
 
 		public void onProviderEnabled(String provider) {//			
@@ -256,74 +255,41 @@ public class PublicarDenunciaActivity extends MapActivity {
 		}
 	}
 
-	// private static boolean enviar(Context ctx, String lat, String lng,
-	// Bitmap imagem) throws IOException {
-	//
-	// Boolean resultado = false;
-	// if (imagem == null) {
-	// Toast.makeText(ctx,
-	// "VocГЄ precisa tirar uma foto do local antes de publicar!",
-	// Toast.LENGTH_SHORT).show();
-	// } else {
-	// if (lat == null || lng == null) {
-	// Toast.makeText(
-	// ctx,
-	// "Ainda nГЈo conseguimos obter sua localizaГ§ГЈo. Aguarde alguns segundos e tente novamente.",
-	// Toast.LENGTH_SHORT).show();
-	// } else {
-	//
-	// HttpClient client = new DefaultHttpClient();
-	// HttpPost post = new HttpPost(
-	// webservice_de_publicar_denuncia);
-	// MultipartEntity mpEntity = new MultipartEntity(
-	// HttpMultipartMode.BROWSER_COMPATIBLE);
-	//
-	// // Object filename;
-	// // create a file to write bitmap data
-	// File f = new File(ctx.getCacheDir(), "foto_denuncia.jpg");
-	// f.createNewFile();
-	//
-	// // Convert bitmap to byte array
-	// ByteArrayOutputStream bos = new ByteArrayOutputStream();
-	// imagem.compress(CompressFormat.PNG, 0 /* ignored for PNG */, bos);
-	// byte[] bitmapdata = bos.toByteArray();
-	//
-	// // write the bytes in file
-	// FileOutputStream fos = new FileOutputStream(f);
-	// fos.write(bitmapdata);
-	// fos.flush();
-	// fos.close();
-	//
-	// // adiciona os parametros Г  requisiГ§ГЈo POST
-	// mpEntity.addPart("denuncia[foto]",
-	// new FileBody(f, "image/jpeg"));
-	// mpEntity.addPart("denuncia[latitude]", new StringBody(lat,
-	// Charset.forName("UTF-8")));
-	// mpEntity.addPart("denuncia[longitude]", new StringBody(lng,
-	// Charset.forName("UTF-8")));
-	//
-	// mpEntity.addPart(
-	// "dispositivo[identificador_do_android]",
-	// new StringBody(Utilitarios.getAndroidID(ctx), Charset
-	// .forName("UTF-8")));
-	// try {
-	// post.setEntity(mpEntity);
-	// HttpResponse response = client.execute(post);
-	// resultado = true;
-	// } catch (Exception e) {
-	// // TODO Auto-generated catch block
-	// resultado = false;
-	// e.printStackTrace();
-	// }
-	// }
-	// }
-	// return resultado;
-	//
-	// }
-
 	protected boolean isRouteDisplayed() {
 		// TODO Auto-generated method stub return false;
 		return false;
 	}
+	
+	public void showSettingsAlert(){
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(PublicarDenunciaActivity.this);
+      
+        // Setting Dialog Title
+        alertDialog.setTitle("GPS is settings");
+  
+        // Setting Dialog Message
+        alertDialog.setMessage("GPS is not enabled. Do you want to go to settings menu?");
+  
+        // Setting Icon to Dialog
+        //alertDialog.setIcon(R.drawable.delete);
+  
+        // On pressing Settings button
+        alertDialog.setPositiveButton("Settings", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog,int which) {
+                Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                PublicarDenunciaActivity.this.startActivity(intent);
+            }
+        });
+  
+        // on pressing cancel button
+        alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+            dialog.cancel();
+            finish();
+            }
+        });
+  
+        // Showing Alert Message
+        alertDialog.show();
+    }
 
 }
