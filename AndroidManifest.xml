@@ -19,7 +19,10 @@
 
         <activity
             android:name=".MainActivity"
-            android:label="@string/title_activity_main" >
+            android:label="@string/title_activity_main" 
+            android:screenOrientation="portrait"
+            android:configChanges="orientation"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -27,9 +30,9 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".PublicarDenunciaActivity"
-            android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="portrait" >
+            android:name=".PublicarDenunciaActivity"            
+            android:screenOrientation="portrait"
+            android:configChanges="orientation" >
 ​​​​​​​​​​​​			
             <intent-filter>
 ​​​​​​​​​​​​​​​​				
@@ -40,7 +43,9 @@
             </intent-filter>
 ​​​​​​​​		
         </activity>
-        <activity android:name=".DenunciasActivity" >
+        <activity android:name=".DenunciasActivity" 
+            android:configChanges="orientation"
+            android:screenOrientation="landscape">
 ​​​​​​​​​​​​			
             <intent-filter>
 ​​​​​​​​​​​​​​​​				
@@ -51,7 +56,9 @@
             </intent-filter>
 ​​​​​​​​		
         </activity>
-        <activity android:name=".MinhasDenunciasActivity" >
+        <activity android:name=".MinhasDenunciasActivity" 
+            android:configChanges="orientation"
+            android:screenOrientation="landscape">
 ​​​​​​​​​​​​			
             <intent-filter>
 ​​​​​​​​​​​​​​​​				
@@ -73,7 +80,9 @@
             </intent-filter>
 ​​​​​​​​		
         </activity>
-        <activity android:name=".SobreActivity" >
+        <activity android:name=".SobreActivity" 
+            android:screenOrientation="portrait"
+            android:configChanges="orientation">
 ​​​​​​​​​​​​			
             <intent-filter>
 ​​​​​​​​​​​​​​​​				
@@ -84,7 +93,9 @@
             </intent-filter>
 ​​​​​​​​		
         </activity>
-        <activity android:name=".MinhasInformacoesActivity" >
+        <activity android:name=".MinhasInformacoesActivity" 
+            android:screenOrientation="portrait"
+            android:configChanges="orientation">
             <intent-filter>
                 <action android:name="br.uff.antoniocanhota.dengueapp.android.MINHASINFORMACOESACTIVITY" />
 
@@ -93,7 +104,7 @@
         </activity>
         <activity
             android:name=".ShowDenunciaActivity"
-            android:configChanges="orientation|keyboardHidden"
+            android:configChanges="orientation"
             android:screenOrientation="landscape" >
             <intent-filter>
                 <action android:name="br.uff.antoniocanhota.dengueapp.android.SHOWDENUNCIAACTIVITY" />
