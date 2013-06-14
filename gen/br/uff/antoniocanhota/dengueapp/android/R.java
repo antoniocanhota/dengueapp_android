@@ -19,41 +19,37 @@ public final class R {
         public static final int logo_dengueapp=0x7f020005;
     }
     public static final class id {
-        public static final int bt_confirmar_publicacao_de_denuncia=0x7f060018;
+        public static final int bt_confirmar_publicacao_de_denuncia=0x7f060014;
         public static final int bt_denuncias=0x7f060003;
         public static final int bt_minhas_denuncias=0x7f060004;
         public static final int bt_minhas_informacoes=0x7f060005;
         public static final int bt_publicar_denuncia=0x7f060002;
         public static final int bt_sobre=0x7f060006;
-        public static final int cod_ativacao_campo=0x7f06000e;
-        public static final int cod_ativacao_label=0x7f06000d;
-        public static final int denuncia_endereco_aproximado_label=0x7f06001d;
-        public static final int denuncia_endereco_aproximado_value=0x7f06001e;
-        public static final int denuncia_foto_value=0x7f060019;
-        public static final int denuncia_id_value=0x7f06001a;
-        public static final int denuncia_publicada_em_label=0x7f06001b;
-        public static final int denuncia_publicada_em_value=0x7f06001c;
-        public static final int denuncia_situacao_label=0x7f06001f;
-        public static final int denuncia_situacao_value=0x7f060020;
-        public static final int endereco_aproximado_da_denuncia=0x7f060015;
-        public static final int foto_da_denuncia=0x7f060012;
+        public static final int denuncia_endereco_aproximado_label=0x7f060019;
+        public static final int denuncia_endereco_aproximado_value=0x7f06001a;
+        public static final int denuncia_foto_value=0x7f060015;
+        public static final int denuncia_id_value=0x7f060016;
+        public static final int denuncia_publicada_em_label=0x7f060017;
+        public static final int denuncia_publicada_em_value=0x7f060018;
+        public static final int denuncia_situacao_label=0x7f06001b;
+        public static final int denuncia_situacao_value=0x7f06001c;
+        public static final int endereco_aproximado_da_denuncia=0x7f060011;
+        public static final int foto_da_denuncia=0x7f06000e;
         public static final int imageView1=0x7f060001;
-        public static final int imei_campo=0x7f06000c;
-        public static final int imei_label=0x7f06000b;
+        public static final int labelEmphasis=0x7f06000a;
         public static final int mapa_denuncias=0x7f060000;
         public static final int mapa_minhas_denuncias=0x7f060007;
-        public static final int progressBar=0x7f060014;
-        public static final int telefone_campo=0x7f06000a;
-        public static final int telefone_label=0x7f060009;
+        public static final int paragraph=0x7f060009;
+        public static final int progressBar=0x7f060010;
         public static final int textView1=0x7f060008;
-        public static final int textView2=0x7f06000f;
-        public static final int textView3=0x7f060010;
-        public static final int textView4=0x7f060011;
-        public static final int textView5=0x7f060013;
-        public static final int textView6=0x7f060016;
-        public static final int textView7=0x7f060017;
-        public static final int textView8=0x7f060022;
-        public static final int textView9=0x7f060021;
+        public static final int textView2=0x7f06000b;
+        public static final int textView3=0x7f06000c;
+        public static final int textView4=0x7f06000d;
+        public static final int textView5=0x7f06000f;
+        public static final int textView6=0x7f060012;
+        public static final int textView7=0x7f060013;
+        public static final int textView8=0x7f06001e;
+        public static final int textView9=0x7f06001d;
     }
     public static final class layout {
         public static final int activity_denuncias=0x7f030000;
@@ -66,52 +62,53 @@ public final class R {
         public static final int activity_sobre=0x7f030007;
     }
     public static final class string {
-        public static final int aluno_email=0x7f040017;
-        public static final int aluno_label=0x7f040016;
-        public static final int aluno_valor=0x7f040015;
+        public static final int aluno_email=0x7f040018;
+        public static final int aluno_label=0x7f040017;
+        public static final int aluno_valor=0x7f040016;
         /** 
 	chave para o mac: 0jThpxQvFWO9uJJsik5milTZWFAAACqh7usjHGA
 	chave para o linux de casa: 0jThpxQvFWO96kWlACMapyrB1aVjKYYiMk13WQQ
     
          */
-        public static final int api_google_maps=0x7f040021;
+        public static final int api_google_maps=0x7f040022;
         /**  DEMAIS 
          */
         public static final int app_name=0x7f040003;
-        public static final int cod_ativacao_label=0x7f04000d;
-        public static final int confirmar_publicacao_de_denuncia=0x7f040020;
+        public static final int cod_ativacao_label=0x7f04000e;
+        public static final int confirmar_publicacao_de_denuncia=0x7f040021;
         public static final int denuncia_endereco_aproximado_abrv_label=0x7f040001;
         /**  DENUNCIAS 
          */
         public static final int denuncia_publicada_em_label=0x7f040000;
         public static final int denuncia_situacao_label=0x7f040002;
-        public static final int denuncias=0x7f040010;
-        public static final int dicas_prevencao=0x7f040012;
-        public static final int enviando_denuncia=0x7f04001d;
+        public static final int denuncias=0x7f040011;
+        public static final int dicas_prevencao=0x7f040013;
+        public static final int email_do_usuario_associado_label=0x7f04000c;
+        public static final int enviando_denuncia=0x7f04001e;
         public static final int hello_world=0x7f040004;
         public static final int imei_label=0x7f04000b;
         public static final int menu_settings=0x7f040005;
-        public static final int minhas_denuncias=0x7f040011;
-        public static final int minhas_informacoes=0x7f040023;
-        public static final int orientador_label=0x7f040019;
-        public static final int orientador_valor=0x7f040018;
-        public static final int publicar_denuncia=0x7f04000e;
-        public static final int sobre=0x7f040013;
-        public static final int sobre_paragrafo_1=0x7f04001a;
-        public static final int telefone_label=0x7f04000c;
-        public static final int tirar_foto=0x7f04000f;
+        public static final int minhas_denuncias=0x7f040012;
+        public static final int minhas_informacoes=0x7f040024;
+        public static final int orientador_label=0x7f04001a;
+        public static final int orientador_valor=0x7f040019;
+        public static final int publicar_denuncia=0x7f04000f;
+        public static final int sobre=0x7f040014;
+        public static final int sobre_paragrafo_1=0x7f04001b;
+        public static final int telefone_label=0x7f04000d;
+        public static final int tirar_foto=0x7f040010;
         public static final int title_activity_dicas_prevencao=0x7f04000a;
         public static final int title_activity_main=0x7f040006;
         public static final int title_activity_minhas_denuncias=0x7f040008;
-        public static final int title_activity_minhas_informacoes=0x7f040022;
+        public static final int title_activity_minhas_informacoes=0x7f040023;
         public static final int title_activity_publicar_denuncia=0x7f040009;
-        public static final int title_activity_show_denuncia=0x7f040024;
+        public static final int title_activity_show_denuncia=0x7f040025;
         public static final int title_activity_sobre=0x7f040007;
-        public static final int versao_label=0x7f04001c;
-        public static final int versao_valor=0x7f04001b;
-        public static final int voltar_inicial=0x7f040014;
-        public static final int webserivce_listagem_denuncias=0x7f04001f;
-        public static final int webservice_publicar_denuncia=0x7f04001e;
+        public static final int versao_label=0x7f04001d;
+        public static final int versao_valor=0x7f04001c;
+        public static final int voltar_inicial=0x7f040015;
+        public static final int webserivce_listagem_denuncias=0x7f040020;
+        public static final int webservice_publicar_denuncia=0x7f04001f;
     }
     public static final class style {
         public static final int DengueApp=0x7f050000;

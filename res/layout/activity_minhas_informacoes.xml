@@ -10,50 +10,32 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingBottom="15dp"
-        android:paddingTop="5dp"
-        android:text="@string/minhas_informacoes"
+        android:text="@string/title_activity_minhas_informacoes"
+        android:paddingTop="5dp"        
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
      <TextView
-        android1:id="@+id/telefone_label"
+        android1:id="@+id/paragraph"
         android1:layout_width="wrap_content"
         android1:layout_height="wrap_content"
-        android:paddingBottom="5dp"
-        android1:text="@string/telefone_label"
+        android:text="Lorem ipsum dolor sit amet, consecteur adpiscing elit, sed do eiusmod tempo incindut."
+        android:paddingBottom="5dp"        
         android1:textAppearance="?android:attr/textAppearanceSmall" />
 
-    <TextView
-        android1:id="@+id/telefone_campo"
-        android1:layout_width="wrap_content"
-        android1:layout_height="wrap_content"
-        android1:textAppearance="?android:attr/textAppearanceMedium" />
+     <FrameLayout
+         android1:layout_width="match_parent"
+         android1:layout_height="wrap_content" >
+
+             <TextView
+                 android1:id="@+id/labelEmphasis"
+                 android1:layout_width="wrap_content"
+                 android1:layout_height="wrap_content"
+                 android1:layout_gravity="center"                 
+                 android1:text="898232"
+                 android1:textAppearance="?android:attr/textAppearanceMedium" />
+
+     </FrameLayout>
     
-    <TextView
-        android1:id="@+id/imei_label"
-        android1:layout_width="wrap_content"
-        android1:layout_height="wrap_content"
-        android:paddingBottom="5dp"
-        android1:text="@string/imei_label"
-        android1:textAppearance="?android:attr/textAppearanceSmall" />
-
-    <TextView
-        android1:id="@+id/imei_campo"
-        android1:layout_width="wrap_content"
-        android1:layout_height="wrap_content"
-        android1:textAppearance="?android:attr/textAppearanceMedium" />
-    
-     <TextView
-        android1:id="@+id/cod_ativacao_label"
-        android1:layout_width="wrap_content"
-        android1:layout_height="wrap_content"
-        android:paddingBottom="5dp"
-        android1:text="@string/cod_ativacao_label"
-        android1:textAppearance="?android:attr/textAppearanceSmall" />
-
-    <TextView
-        android1:id="@+id/cod_ativacao_campo"
-        android1:layout_width="wrap_content"
-        android1:layout_height="wrap_content"
-        android1:textAppearance="?android:attr/textAppearanceMedium" />
+   
 
 </LinearLayout>

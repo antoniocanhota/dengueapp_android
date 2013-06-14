@@ -13,6 +13,7 @@
     <string name="title_activity_publicar_denuncia">PublicarDenunciaActivity</string>
     <string name="title_activity_dicas_prevencao">DicasPrevencaoActivity</string>
     <string name="imei_label">IMEI</string>
+    <string name="email_do_usuario_associado_label">Usuário</string>
     <string name="telefone_label">Meu número de telefone</string>
     <string name="cod_ativacao_label">Código de ativação</string>
     <string name="publicar_denuncia">Publicar denúncia</string>

@@ -31,8 +31,8 @@ public class Webservice {
 			+ "denuncias.xml";
 	public static final String WEBSERVICE_LISTAGEM_DE_DENUNCIAS_DO_USUARIO = WEBSERVICE_LISTAGEM_DE_DENUNCIAS
 			+ "?identificador_do_android=";
-	public static final String WEBSERVICE_CODIGO_DE_ATIVACAO = WEBSERVICES
-			+ "codigo_de_ativacao.xml";
+	public static final String WEBSERVICE_REGISTRO_DO_DISPOSITIVO = WEBSERVICES
+			+ "registro_do_dispositivo.xml?identificador_do_android=";
 	public static final String WEBSERVICE_NOTIFY_EXCEPTION = WEBSERVICES
 			+ "reportar_excecao";
 	public static final String WEBSERVICE_SERVER_STATUS = WEBSERVICES + "status_do_servidor";
@@ -98,16 +98,19 @@ public class Webservice {
 		return wsPost.send();
 	}
 
-	public String getCodigoDeAtivacao() {
+	public Dispositivo getRegistroDoDispositivo() {
 		Document doc = null;
-		String codigoDeAtivacao = null;
+		Dispositivo dispositivo = new Dispositivo();		
 		try {
-			doc = getDocument(WEBSERVICE_CODIGO_DE_ATIVACAO);
-			codigoDeAtivacao = doc.getDocumentElement().getNodeValue();
+			doc = getDocument(WEBSERVICE_REGISTRO_DO_DISPOSITIVO+Utilitarios.getAndroidID(ctx));
+			Element registroDoDispositivoElement = doc.getDocumentElement();			
+			dispositivo.setCodigoDeAtivacao(processarCampoXML(registroDoDispositivoElement,"codigo_de_ativacao"));
+			dispositivo.setEmailDoUsuarioAssociado(processarCampoXML(registroDoDispositivoElement,"usuario_associado"));
+			dispositivo.setIdentificadorDoAndroid(processarCampoXML(registroDoDispositivoElement,"identificador_do_android"));
 		} catch (Exception e) {
 			Utilitarios.notifyExceptionToServer(e, ctx);
 		}
-		return codigoDeAtivacao;
+		return dispositivo;
 	}
 
 //	public boolean cannotConnectToServer() {
