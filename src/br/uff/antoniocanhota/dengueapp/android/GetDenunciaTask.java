@@ -7,7 +7,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class GetDenunciaTask extends AsyncTask<String, Void, Denuncia> {
 
@@ -54,9 +53,6 @@ public class GetDenunciaTask extends AsyncTask<String, Void, Denuncia> {
 
 	@Override
 	protected void onPostExecute(Denuncia denuncia) {
-		Toast.makeText(ctx,
-				"Denúncia enviada com sucesso.",
-				Toast.LENGTH_SHORT).show();
 		progressDialog.dismiss();
 	}
 
