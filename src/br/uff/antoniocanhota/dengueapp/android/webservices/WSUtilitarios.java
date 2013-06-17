@@ -15,6 +15,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import br.uff.antoniocanhota.dengueapp.android.Utilitarios;
 
@@ -71,6 +72,11 @@ public class WSUtilitarios {
 		Element campoElmnt = (Element) campoElmntLs.item(0);
 		NodeList campoNd = campoElmnt.getChildNodes();
 		return ((Node) campoNd.item(0)).getNodeValue();
+	}
+	
+	public static void showProgressDialog(ProgressDialog progressDialog){		
+		progressDialog.setMessage("Executando...");
+		progressDialog.show();
 	}
 	
 	

@@ -1,16 +1,12 @@
 package br.uff.antoniocanhota.dengueapp.android;
 
 import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
-import org.apache.http.conn.HttpHostConnectException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -87,7 +83,7 @@ public class Webservice {
 				WEBSERVICE_PUBLICAR_DENUNCIA, ctx);
 		try {			
 			wsPost.addParam("denuncia[foto]",
-					Utilitarios.getFileBodyFromJpeg(denuncia.getFoto()));
+					Utilitarios.getBitmapBodyFromJpeg(denuncia.getFoto(),ctx));
 			wsPost.addParam("denuncia[latitude]",
 					Utilitarios.getStringBody(denuncia.getLatitudeStr()));
 			wsPost.addParam("denuncia[longitude]",

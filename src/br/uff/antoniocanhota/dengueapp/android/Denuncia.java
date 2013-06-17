@@ -1,10 +1,6 @@
 package br.uff.antoniocanhota.dengueapp.android;
 
-import java.io.File;
-
-import android.content.Context;
 import android.graphics.Bitmap;
-
 
 public class Denuncia {
 
@@ -13,122 +9,143 @@ public class Denuncia {
 	private Double longitude;
 	private String url_da_foto;
 	private String data_e_hora;
-	private File foto;
-	
-	public Denuncia(){
-		
+	private Bitmap foto;
+	private String enderecoAproximado;
+	private String situacao;
+
+	public Denuncia() {
+
 	}
-	
-	public Integer getId(){
+
+	public Integer getId() {
 		return id;
 	}
-	
-	public void setId(Integer id){
+
+	public void setId(Integer id) {
 		this.id = id;
 	}
-	
-	public Double getLatitude(){
+
+	public Double getLatitude() {
 		return latitude;
 	}
-	
-	public String getLatitudeStr(){
-		if (latitude != null){
+
+	public String getLatitudeStr() {
+		if (latitude != null) {
 			return String.valueOf(latitude);
 		} else {
 			return null;
 		}
-			
+
 	}
-	
-	public void setLatitude(Double latitude){
+
+	public void setLatitude(Double latitude) {
 		this.latitude = latitude;
 	}
-	
-	public Double getLongitude(){
+
+	public Double getLongitude() {
 		return longitude;
 	}
-	
-	public String getLongitudeStr(){
-		if (longitude != null){
+
+	public String getLongitudeStr() {
+		if (longitude != null) {
 			return String.valueOf(longitude);
 		} else {
 			return null;
 		}
-			
+
 	}
-	
-	public void setLongitude(Double longitude){
+
+	public void setLongitude(Double longitude) {
 		this.longitude = longitude;
 	}
-	
-	public String getFotoUrl(){
+
+	public String getFotoUrl() {
 		return url_da_foto;
 	}
-	
-	public void setFotoUrl(String url_da_foto){
+
+	public void setFotoUrl(String url_da_foto) {
 		this.url_da_foto = url_da_foto;
 	}
-	
-	public String getdataEHora(){
+
+	public String getdataEHora() {
 		return data_e_hora;
 	}
-	
-	public void setDataEHora(String data_e_hora){
+
+	public void setDataEHora(String data_e_hora) {
 		this.data_e_hora = data_e_hora;
 	}
-	
-	public File getFoto(){
+
+	public Bitmap getFoto() {
 		return foto;
 	}
-	
-	public void setFoto(File foto){
+
+	public void setFoto(Bitmap foto) {
 		this.foto = foto;
 	}
-	
-	public void setFoto(Bitmap bitmap, Context ctx){
-		this.foto = Utilitarios.getFileFromBitmap(bitmap, "foto_denuncia", ctx);
+
+	// public void setFoto(Bitmap bitmap, Context ctx){
+	// this.foto = Utilitarios.getFileFromBitmap(bitmap, "foto_denuncia", ctx);
+	// }
+
+	public String getEnderecoAproximado() {
+		return enderecoAproximado;
 	}
-	
-//	public static Hashtable<Integer,Denuncia> processarXMLDenuncias(String webservice){
-//		InputStream in = null;
-//		Hashtable<Integer,Denuncia> hash_de_denuncias = new Hashtable<Integer,Denuncia>();
-//		int id = 0;
-//
-//		try {
-//			in = Utilitarios.OpenHttpConnection(webservice);
-//			Document doc = null;
-//			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-//			DocumentBuilder db;
-//			try {
-//				db = dbf.newDocumentBuilder();
-//				doc = db.parse(in);
-//			} catch(ParserConfigurationException e){
-//				e.printStackTrace();
-//			} catch(Exception e){
-//				e.printStackTrace();
-//			}
-//			doc.getDocumentElement().normalize();
-//			NodeList denuncias = doc.getElementsByTagName("denuncia");
-//			for (int i = 0; i < denuncias.getLength(); i++){
-//				Node denuncia_bruta = denuncias.item(i);
-//				if (denuncia_bruta.getNodeType() == Node.ELEMENT_NODE){
-//					Element denuncia = (Element) denuncia_bruta;
-//					Denuncia d = new Denuncia();
-//					id = Integer.parseInt(Utilitarios.processarCampoXML(denuncia,"id"));
-//					d.setId(id);
-//					d.setLatitude(Double.parseDouble(Utilitarios.processarCampoXML(denuncia,"latitude")));
-//					d.setLongitude(Double.parseDouble(Utilitarios.processarCampoXML(denuncia,"longitude")));
-//					d.setFotoUrl(Utilitarios.processarCampoXML(denuncia, "url_imagem"));
-//					d.setDataEHora(Utilitarios.processarCampoXML(denuncia, "data-e-hora"));
-//					hash_de_denuncias.put(id,d);
-//				}
-//				//Toast.makeText(getBaseContext(),latitude, Toast.LENGTH_SHORT).show();
-//			}
-//
-//		}catch (IOException e){
-//
-//		}
-//		return hash_de_denuncias;
-//	}
-	
+
+	public void setEnderecoAproximado(String enderecoAproximado) {
+		this.enderecoAproximado = enderecoAproximado;
+	}
+
+	public void setSituacao(String situacao) {
+		this.situacao = situacao;
+
+	}
+
+	public CharSequence getSituacao() {
+		return this.situacao;
+	}
+
+	// public static Hashtable<Integer,Denuncia> processarXMLDenuncias(String
+	// webservice){
+	// InputStream in = null;
+	// Hashtable<Integer,Denuncia> hash_de_denuncias = new
+	// Hashtable<Integer,Denuncia>();
+	// int id = 0;
+	//
+	// try {
+	// in = Utilitarios.OpenHttpConnection(webservice);
+	// Document doc = null;
+	// DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+	// DocumentBuilder db;
+	// try {
+	// db = dbf.newDocumentBuilder();
+	// doc = db.parse(in);
+	// } catch(ParserConfigurationException e){
+	// e.printStackTrace();
+	// } catch(Exception e){
+	// e.printStackTrace();
+	// }
+	// doc.getDocumentElement().normalize();
+	// NodeList denuncias = doc.getElementsByTagName("denuncia");
+	// for (int i = 0; i < denuncias.getLength(); i++){
+	// Node denuncia_bruta = denuncias.item(i);
+	// if (denuncia_bruta.getNodeType() == Node.ELEMENT_NODE){
+	// Element denuncia = (Element) denuncia_bruta;
+	// Denuncia d = new Denuncia();
+	// id = Integer.parseInt(Utilitarios.processarCampoXML(denuncia,"id"));
+	// d.setId(id);
+	// d.setLatitude(Double.parseDouble(Utilitarios.processarCampoXML(denuncia,"latitude")));
+	// d.setLongitude(Double.parseDouble(Utilitarios.processarCampoXML(denuncia,"longitude")));
+	// d.setFotoUrl(Utilitarios.processarCampoXML(denuncia, "url_imagem"));
+	// d.setDataEHora(Utilitarios.processarCampoXML(denuncia, "data-e-hora"));
+	// hash_de_denuncias.put(id,d);
+	// }
+	// //Toast.makeText(getBaseContext(),latitude, Toast.LENGTH_SHORT).show();
+	// }
+	//
+	// }catch (IOException e){
+	//
+	// }
+	// return hash_de_denuncias;
+	// }
+
 }

@@ -3,21 +3,24 @@ package br.uff.antoniocanhota.dengueapp.android;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
+import java.net.URL;
 import java.nio.charset.Charset;
 
 import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.entity.mime.content.StringBody;
 
-import com.google.android.maps.GeoPoint;
-
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
+import android.graphics.BitmapFactory;
 import android.provider.Settings.Secure;
 import android.widget.Toast;
+
+import com.google.android.maps.GeoPoint;
 
 public class Utilitarios {
 
@@ -71,8 +74,20 @@ public class Utilitarios {
 		return new StringBody(string,Charset.forName("UTF-8"));
 	}
 	
-	public static FileBody getFileBodyFromJpeg(File file){
+	public static FileBody getBitmapBodyFromJpeg(Bitmap bitmap,Context ctx){
+		File file;
+		file = getFileFromBitmap(bitmap,"foto_denuncia",ctx);
 		return new FileBody(file,"image/jpeg");
+	}
+	
+	public static Bitmap getBitmapFromUrl(String url, Context ctx){
+		Bitmap result = null;
+		try {
+			result = (Bitmap)BitmapFactory.decodeStream((InputStream)new URL(url).getContent());		
+		} catch (Exception e) {
+			Utilitarios.notifyExceptionToServer(e, ctx);
+		}
+		return result;
 	}
 	
 	public static File getFileFromBitmap(Bitmap bitmap, String fileName, Context ctx){

@@ -27,8 +27,7 @@ public class MinhasDenunciasActivity extends MapActivity {
 		mapView.setSatellite(true);
 		mapa = mapView.getController();
 		mapa.setCenter(Utilitarios.getGrandeRioGeoPoint());
-		mapa.setZoom(11);
-		mapView.invalidate();
+		mapa.setZoom(11);		
 
 	}
 

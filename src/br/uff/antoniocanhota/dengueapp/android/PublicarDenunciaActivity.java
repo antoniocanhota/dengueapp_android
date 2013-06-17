@@ -27,7 +27,7 @@ public class PublicarDenunciaActivity extends MapActivity {
 
 	private LocationManager lm;
 	private LocationListener locationListener;
-//	private MapController mapa;
+	// private MapController mapa;
 	// private String lat;
 	// private String lng;
 
@@ -37,95 +37,89 @@ public class PublicarDenunciaActivity extends MapActivity {
 	// private float userLocationAccuracy = MIN_ACCURACY;
 
 	// private GeoPoint localDaDenuncia;
-//	private ProgressBar progressBar;
+	// private ProgressBar progressBar;
 
 	private Denuncia denuncia;
 
 	@Override
-	public void onResume(){
+	public void onResume() {
 		super.onResume();
-		
+
 		userLocation = null;
 
-//		progressBar = (ProgressBar) findViewById(R.id.progressBar);
+		// progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
 		// ---use the LocationManager class to obtain locations data---
 		lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-		
-		if (!lm.isProviderEnabled(LocationManager.GPS_PROVIDER)){
-			//finish();
-			
-			//startActivity(new Intent("br.uff.antoniocanhota.dengueapp.android.MAINACTIVITY"));
+
+		if (!lm.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+			// finish();
+
+			// startActivity(new
+			// Intent("br.uff.antoniocanhota.dengueapp.android.MAINACTIVITY"));
 			showSettingsAlert();
-			//finish();
+			// finish();
 		} else {
-		
-		locationListener = new MyLocationListener();
 
-		
-		lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0,
-				locationListener);
-		lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0,
-				locationListener);
+			locationListener = new MyLocationListener();
 
-		setContentView(R.layout.activity_publicar_denuncia);
-		imgFoto = (ImageView) findViewById(R.id.foto_da_denuncia);
+			lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0,
+					locationListener);
+			lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0,
+					locationListener);
 
-		// Centraliza e foca no local do usuГЎiro
-		// MapView mapView = (MapView)
-		// findViewById(R.id.mapa_publicar_denuncia);
-		// mapa = mapView.getController();
-		//
-		// // TODO: REMOVER ESTE BACALHAU DAQUI DEPOIS
-		// if (lat != null && lng != null) {
-		// double lat_db = Double.parseDouble(lat);
-		// double lng_db = Double.parseDouble(lng);
-		// localDaDenuncia = new GeoPoint((int) (lat_db * 1E6),
-		// (int) (lng_db * 1E6));
-		//
-		// mapa.animateTo(localDaDenuncia);
-		// mapa.setZoom(15);
-		// }
+			setContentView(R.layout.activity_publicar_denuncia);
+			imgFoto = (ImageView) findViewById(R.id.foto_da_denuncia);
 
-		Button bt_confirmar_publicacao_de_denuncia = (Button) findViewById(R.id.bt_confirmar_publicacao_de_denuncia);
-		ImageView bt_tirar_foto = (ImageView) findViewById(R.id.foto_da_denuncia);
+			// Centraliza e foca no local do usuГЎiro
+			// MapView mapView = (MapView)
+			// findViewById(R.id.mapa_publicar_denuncia);
+			// mapa = mapView.getController();
+			//
+			// // TODO: REMOVER ESTE BACALHAU DAQUI DEPOIS
+			// if (lat != null && lng != null) {
+			// double lat_db = Double.parseDouble(lat);
+			// double lng_db = Double.parseDouble(lng);
+			// localDaDenuncia = new GeoPoint((int) (lat_db * 1E6),
+			// (int) (lng_db * 1E6));
+			//
+			// mapa.animateTo(localDaDenuncia);
+			// mapa.setZoom(15);
+			// }
 
-		bt_tirar_foto.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View arg0) {
-				Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-				startActivityForResult(intent, TIRAR_FOTO);
-			}
-		});
+			Button bt_confirmar_publicacao_de_denuncia = (Button) findViewById(R.id.bt_confirmar_publicacao_de_denuncia);
+			ImageView bt_tirar_foto = (ImageView) findViewById(R.id.foto_da_denuncia);
 
-		bt_confirmar_publicacao_de_denuncia
-				.setOnClickListener(new View.OnClickListener() {
-					public void onClick(View arg0) {
-						Utilitarios.showToast("Enviando denúncia...",
-								PublicarDenunciaActivity.this);
-						buildDenuncia();
-						if (validateDenuncia() && sendDenuncia()) {
-							Toast.makeText(PublicarDenunciaActivity.this,
-									"Denúncia enviada com sucesso.",
-									Toast.LENGTH_SHORT).show();
-							
+			bt_tirar_foto.setOnClickListener(new View.OnClickListener() {
+				public void onClick(View arg0) {
+					Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+					startActivityForResult(intent, TIRAR_FOTO);
+				}
+			});
+
+			bt_confirmar_publicacao_de_denuncia
+					.setOnClickListener(new View.OnClickListener() {
+						public void onClick(View arg0) {
+							Utilitarios.showToast("Enviando denúncia...",
+									PublicarDenunciaActivity.this);
+							buildDenuncia();
+							if (validateDenuncia() && sendDenuncia()) {
+								Toast.makeText(PublicarDenunciaActivity.this,
+										"Denúncia enviada com sucesso.",
+										Toast.LENGTH_SHORT).show();
+
+							}
+							lm.removeUpdates(locationListener);
+							finish();
 						}
-						lm.removeUpdates(locationListener);
-						finish();
-					}
-				});
+					});
 		}
-		
+
 	}
-	
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
-	
-		
-		
-		
-		
 
 	}
 
@@ -133,7 +127,7 @@ public class PublicarDenunciaActivity extends MapActivity {
 		this.denuncia = new Denuncia();
 		denuncia.setLatitude(userLocation.getLatitude());
 		denuncia.setLongitude(userLocation.getLongitude());
-		denuncia.setFoto(bitmap, PublicarDenunciaActivity.this);
+		denuncia.setFoto(bitmap);
 	}
 
 	private boolean validateDenuncia() {
@@ -162,54 +156,55 @@ public class PublicarDenunciaActivity extends MapActivity {
 	private class MyLocationListener implements LocationListener {
 
 		public void onLocationChanged(Location loc) {
-			Utilitarios.showToast("jjkjk",PublicarDenunciaActivity.this);
+			Utilitarios.showToast("jjkjk", PublicarDenunciaActivity.this);
 			if (loc != null) {
 
 				if ((userLocation != null && loc.getAccuracy() <= userLocation
 						.getAccuracy())
 						|| (userLocation == null && loc.getAccuracy() <= MIN_ACCURACY)) {
-					
+
 					userLocation = loc;
 					TextView addressView = (TextView) findViewById(R.id.endereco_aproximado_da_denuncia);
 					addressView.setText("Localização obtida com sucesso!\n\n"
 							+ "Latitude: " + loc.getLatitude() + "\n"
 							+ "Longitude:" + loc.getLongitude());
-					
+
 				}
 			}
 
-//			if (loc != null && loc.getAccuracy() <= MIN_ACCURACY
-//					&& loc.getAccuracy() <= userLocation.getAccuracy()) {
+			// if (loc != null && loc.getAccuracy() <= MIN_ACCURACY
+			// && loc.getAccuracy() <= userLocation.getAccuracy()) {
 
-				// Geocoder geoCoder = new Geocoder(getBaseContext(),
-				// Locale.getDefault());
-//				TextView addressView = (TextView) findViewById(R.id.endereco_aproximado_da_denuncia);
-//				addressView.setText("LocalizaГ§ГЈo obtida com sucesso!\n\n"
-//						+ "Latitude: " + loc.getLatitude() + "\n"
-//						+ "Longitude:" + loc.getLongitude());
+			// Geocoder geoCoder = new Geocoder(getBaseContext(),
+			// Locale.getDefault());
+			// TextView addressView = (TextView)
+			// findViewById(R.id.endereco_aproximado_da_denuncia);
+			// addressView.setText("LocalizaГ§ГЈo obtida com sucesso!\n\n"
+			// + "Latitude: " + loc.getLatitude() + "\n"
+			// + "Longitude:" + loc.getLongitude());
 
-				// try {
-				// List<Address> addresses = geoCoder.getFromLocation(
-				// loc.getLatitude(),
-				// loc.getLongitude(),
-				// 1);
-				// String add = "";
-				// if (addresses.size() > 0){
-				// for (int i=0; i<addresses.get(0).getMaxAddressLineIndex();
-				// i++)
-				// add += addresses.get(0).getAddressLine(i) + "\n";
-				// }
-				// if (add == "") {
-				// addressView.setText("Latitude: "+loc.getLatitude()+"\n"+"Longitude:"+loc.getLongitude());
-				// }else{
-				// addressView.setText(add);
-				// }
-				// } catch (IOException e) {
-				// // TODO Auto-generated catch block
-				// addressView.setText("Latitude: "+loc.getLatitude()+"\n"+"Longitude:"+loc.getLongitude());
-				// e.printStackTrace();
-				// }
-//			}
+			// try {
+			// List<Address> addresses = geoCoder.getFromLocation(
+			// loc.getLatitude(),
+			// loc.getLongitude(),
+			// 1);
+			// String add = "";
+			// if (addresses.size() > 0){
+			// for (int i=0; i<addresses.get(0).getMaxAddressLineIndex();
+			// i++)
+			// add += addresses.get(0).getAddressLine(i) + "\n";
+			// }
+			// if (add == "") {
+			// addressView.setText("Latitude: "+loc.getLatitude()+"\n"+"Longitude:"+loc.getLongitude());
+			// }else{
+			// addressView.setText(add);
+			// }
+			// } catch (IOException e) {
+			// // TODO Auto-generated catch block
+			// addressView.setText("Latitude: "+loc.getLatitude()+"\n"+"Longitude:"+loc.getLongitude());
+			// e.printStackTrace();
+			// }
+			// }
 
 			// localDaDenuncia = new GeoPoint((int) (loc.getLatitude()),
 			// (int) (loc.getLongitude()));
@@ -218,7 +213,7 @@ public class PublicarDenunciaActivity extends MapActivity {
 			// mc.animateTo(p);
 			// mc.setZoom(18);
 
-//			userLocation = loc;
+			// userLocation = loc;
 			// latitude = loc.getLatitude();
 			// longitude = loc.getLongitude();
 
@@ -227,11 +222,11 @@ public class PublicarDenunciaActivity extends MapActivity {
 		}
 
 		public void onProviderDisabled(String provider) {
-//			Utilitarios.showToast("Por favor, reative o sensor GPS para o correto funcionamento do DengueApp. Pode ser necessário reiniciar a aplicação.",
-//					PublicarDenunciaActivity.this);
+			// Utilitarios.showToast("Por favor, reative o sensor GPS para o correto funcionamento do DengueApp. Pode ser necessário reiniciar a aplicação.",
+			// PublicarDenunciaActivity.this);
 		}
 
-		public void onProviderEnabled(String provider) {//			
+		public void onProviderEnabled(String provider) {//
 		}
 
 		public void onStatusChanged(String provider, int status, Bundle extras) {
@@ -259,37 +254,42 @@ public class PublicarDenunciaActivity extends MapActivity {
 		// TODO Auto-generated method stub return false;
 		return false;
 	}
-	
-	public void showSettingsAlert(){
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(PublicarDenunciaActivity.this);
-      
-        // Setting Dialog Title
-        alertDialog.setTitle("GPS is settings");
-  
-        // Setting Dialog Message
-        alertDialog.setMessage("GPS is not enabled. Do you want to go to settings menu?");
-  
-        // Setting Icon to Dialog
-        //alertDialog.setIcon(R.drawable.delete);
-  
-        // On pressing Settings button
-        alertDialog.setPositiveButton("Settings", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog,int which) {
-                Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                PublicarDenunciaActivity.this.startActivity(intent);
-            }
-        });
-  
-        // on pressing cancel button
-        alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-            dialog.cancel();
-            finish();
-            }
-        });
-  
-        // Showing Alert Message
-        alertDialog.show();
-    }
+
+	public void showSettingsAlert() {
+		AlertDialog.Builder alertDialog = new AlertDialog.Builder(
+				PublicarDenunciaActivity.this);
+
+		// Setting Dialog Title
+		alertDialog.setTitle("GPS is settings");
+
+		// Setting Dialog Message
+		alertDialog
+				.setMessage("GPS is not enabled. Do you want to go to settings menu?");
+
+		// Setting Icon to Dialog
+		// alertDialog.setIcon(R.drawable.delete);
+
+		// On pressing Settings button
+		alertDialog.setPositiveButton("Settings",
+				new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int which) {
+						Intent intent = new Intent(
+								Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+						PublicarDenunciaActivity.this.startActivity(intent);
+					}
+				});
+
+		// on pressing cancel button
+		alertDialog.setNegativeButton("Cancel",
+				new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int which) {
+						dialog.cancel();
+						finish();
+					}
+				});
+
+		// Showing Alert Message
+		alertDialog.show();
+	}
 
 }
