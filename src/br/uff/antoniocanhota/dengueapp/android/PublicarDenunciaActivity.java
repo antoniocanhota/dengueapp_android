@@ -20,6 +20,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import br.uff.antoniocanhota.dengueapp.android.webservices.GetDenuncias;
 
 import com.google.android.maps.MapActivity;
 
@@ -33,7 +34,9 @@ public class PublicarDenunciaActivity extends MapActivity {
 	private LocationManager locationManager;
 	private LocationListener locationListener;
 	private Location userLocation;
-	Timer timer;
+	private Timer timer;
+	
+	private static PublicarDenunciaActivity atividade;
 	// private MapController mapa;
 	// private String lat;
 	// private String lng;
@@ -51,6 +54,7 @@ public class PublicarDenunciaActivity extends MapActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		atividade = this;
 		userLocation = null;	
 		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 		locationListener = new MyLocationListener();		
@@ -98,18 +102,15 @@ public class PublicarDenunciaActivity extends MapActivity {
 
 		bt_confirmar_publicacao_de_denuncia
 				.setOnClickListener(new View.OnClickListener() {
-					public void onClick(View arg0) {
-						Utilitarios.showToast("Enviando denúncia...",
-								PublicarDenunciaActivity.this);
+					public void onClick(View arg0) {						
 						buildDenuncia();
-						if (validateDenuncia() && sendDenuncia()) {
-							Toast.makeText(PublicarDenunciaActivity.this,
-									"Denúncia enviada com sucesso.",
-									Toast.LENGTH_SHORT).show();
-
-						}						
-						stopLocationServices();
-						finish();
+						if (validateDenuncia()) {
+							stopLocationServices();
+							PostDenunciaTask postDenunciaTask = new PostDenunciaTask(denuncia,PublicarDenunciaActivity.this, atividade);
+							postDenunciaTask.execute(null);		
+							
+							//finish();
+						}
 					}
 				});
 

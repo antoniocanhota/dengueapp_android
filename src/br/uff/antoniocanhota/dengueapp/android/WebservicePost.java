@@ -18,8 +18,6 @@ public class WebservicePost {
 	private Context ctx;
 	private Integer httpStatus;
 
-	//klkl
-	
 	public WebservicePost(String url, Context ctx) {
 		this.url = url;
 		this.mpEntity = new MultipartEntity(
@@ -39,19 +37,20 @@ public class WebservicePost {
 	public boolean send(boolean notifyExceptionToServer) {
 		boolean result = false;
 		HttpPost post = new HttpPost(this.url);
-		
+
 		HttpClient client = new DefaultHttpClient();
 		try {
 			post.setEntity(this.mpEntity);
 			HttpResponse response = client.execute(post);
 			this.httpStatus = response.getStatusLine().getStatusCode();
-			if (httpStatus.intValue() != 201){
-				Utilitarios.showToastException(ctx);					
+			if (httpStatus.intValue() != 201) {
+				Utilitarios.showToastException(ctx);
 			} else {
 				result = true;
-			}	
+			}
 		} catch (HttpHostConnectException e) {
-			Utilitarios.showToast("O servidor da aplicação está fora do ar.", ctx);		
+			Utilitarios.showToast("O servidor da aplicação está fora do ar.",
+					ctx);
 		} catch (Exception e) {
 			if (notifyExceptionToServer) {
 				Utilitarios.notifyExceptionToServer(e, ctx);
@@ -60,10 +59,17 @@ public class WebservicePost {
 		return result;
 
 	}
-	
-	public Integer getHttpStatus(){
+
+	public Integer getHttpStatus() {
 		return this.httpStatus;
 	}
 	
+	public MultipartEntity getMultiPartEntity(){
+		return this.mpEntity;
+	}
+	
+	public String getUrl(){
+		return this.url;
+	}
 
 }

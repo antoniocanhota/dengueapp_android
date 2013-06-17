@@ -7,6 +7,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class GetDenunciaTask extends AsyncTask<String, Void, Denuncia> {
 
@@ -53,16 +54,10 @@ public class GetDenunciaTask extends AsyncTask<String, Void, Denuncia> {
 
 	@Override
 	protected void onPostExecute(Denuncia denuncia) {
-		fillForm();
+		Toast.makeText(ctx,
+				"Denúncia enviada com sucesso.",
+				Toast.LENGTH_SHORT).show();
 		progressDialog.dismiss();
-	}
-	
-	private void fillForm(){		
-    	foto.setImageBitmap(denuncia.getFoto());    	
-    	id.setText("Denúncia #"+denuncia.getId()); 
-        publicadaEm.setText(denuncia.getdataEHora());
-        enderecoAproximado.setText(denuncia.getEnderecoAproximado());
-        situacao.setText(denuncia.getSituacao());    	
 	}
 
 }
