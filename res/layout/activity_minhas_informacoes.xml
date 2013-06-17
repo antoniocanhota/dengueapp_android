@@ -10,15 +10,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingBottom="15dp"
-        android:text="Foo-bar"
+        android:text="Minhas informações"
         android:paddingTop="5dp"        
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
      <TextView
         android1:id="@+id/paragraph"
         android1:layout_width="wrap_content"
-        android1:layout_height="wrap_content"
-        android:text="Lorem ipsum dolor sit amet, consecteur adpiscing elit, sed do eiusmod tempo incindut."
+        android1:layout_height="wrap_content"        
         android:paddingBottom="5dp"        
         android1:textAppearance="?android:attr/textAppearanceSmall" />
 
@@ -30,8 +29,7 @@
                  android1:id="@+id/labelEmphasis"
                  android1:layout_width="wrap_content"
                  android1:layout_height="wrap_content"
-                 android1:layout_gravity="center"                 
-                 android1:text="898232"
+                 android1:layout_gravity="center"                                  
                  android1:textAppearance="?android:attr/textAppearanceMedium" />
 
      </FrameLayout>

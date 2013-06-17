@@ -20,7 +20,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-import br.uff.antoniocanhota.dengueapp.android.webservices.GetDenuncias;
 
 import com.google.android.maps.MapActivity;
 
