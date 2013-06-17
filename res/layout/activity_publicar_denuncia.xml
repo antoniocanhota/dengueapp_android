@@ -1,40 +1,47 @@
-
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:gravity="center_vertical"        
+        android:orientation="vertical" >
+        
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:gravity="center_vertical"
+        android:background="#2A333C"
+        android:paddingLeft="16dp"
+        android:text="Publicar denúncia"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+    
+    <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:gravity="center_vertical"
+        android:padding="16dp"
         android:orientation="vertical" >
-
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingBottom="15dp"
-        	android:paddingTop="5dp"
-            android:text="Publicar denúncia"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <TextView
             android:id="@+id/textView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Publicar uma denúncia é simples. Siga os passos abaixo."
-            android:paddingBottom="5dp"
+            android:text="Publicar uma denúncia é simples. Siga os passos abaixo."            
             android:textAppearance="?android:attr/textAppearanceSmall" />
 
         <TextView
             android:id="@+id/textView4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:text="1. Foto do foco de dengue"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <ImageView
             android:id="@+id/foto_da_denuncia"
-            android:layout_width="match_parent"
-            android:layout_height="122dp"
-            android:layout_gravity="bottom"
-            android:paddingBottom="5dp"
+            android:layout_width="200dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:layout_weight="4"
             android:src="@drawable/ic_tirar_foto" >
 
         </ImageView>
@@ -43,46 +50,24 @@
             android:id="@+id/textView5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="2. Determinar localização da denúncia"
+            android:layout_marginTop="8dp"
+            android:text="2. Determinar sua localização"
             android:textAppearance="?android:attr/textAppearanceMedium" />
-
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:paddingBottom="5dp"
-        	android:paddingTop="5dp" 
-            >
-
-            <ProgressBar
-                android:id="@+id/progressBar"
-                android:layout_width="16dp"
-                android:layout_height="16dp" />
-
-            <TextView
-                android:id="@+id/textView1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingLeft="5dp"                
-                android:text="Procurando sua localização aproximada"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
-
-        </LinearLayout>
 
         <TextView
             android:id="@+id/endereco_aproximado_da_denuncia"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.09"
-            android:paddingBottom="15dp"
-            android:paddingTop="5dp"
-            android:text="Aguarde..."
+            android:layout_height="100dp"
+            android:layout_gravity="top"
+            android:layout_weight="4"
+            android:text="O aplicativo está tentando obter sua localização..."
             android:textAppearance="?android:attr/textAppearanceSmall" />
 
         <TextView
             android:id="@+id/textView6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:text="3. Pronto!"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
@@ -90,8 +75,8 @@
             android:id="@+id/textView7"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Com a foto tirada e a localização determinada, basta apertar o botão abaixo."
-            android:paddingBottom="30dp"
+            android:layout_weight="1"
+            android:text="Com a foto tirada e a localização determinada, basta apertar o botão abaixo."            
             android:textAppearance="?android:attr/textAppearanceSmall" />
 
         <Button
@@ -101,3 +86,5 @@
             android:text="@string/confirmar_publicacao_de_denuncia" />
 
     </LinearLayout>
+    
+</LinearLayout>

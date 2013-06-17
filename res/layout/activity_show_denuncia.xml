@@ -6,35 +6,41 @@
 
         <ImageView
             android:id="@+id/denuncia_foto_value"
-            android:layout_width="388dp"
+            android:layout_width="360dp"
             android:layout_height="match_parent"
+            android:layout_weight="8"
             android:scaleType="fitXY" />
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical" >            
+            android:layout_weight="2"
+            android:layout_width="120dp"
+            android:layout_height="match_parent" 
+            android:paddingLeft="8dp"   
+            android:paddingRight="8dp"           
+            android:orientation="vertical" >
 
             <TextView
                 android:id="@+id/denuncia_id_value"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"  
-                android:paddingBottom="15dp"
-        		android:paddingTop="5dp"            		         
-                android:textAppearance="?android:attr/textAppearanceLarge" />
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
+                android:textColor="#FFFFFF"      
+                android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <TextView
                 android:id="@+id/denuncia_publicada_em_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/denuncia_publicada_em_label"
-                android:textAppearance="?android:attr/textAppearanceMedium" />            
+                android:textAppearance="?android:attr/textAppearanceSmall" />            
 
             <TextView
                 android:id="@+id/denuncia_publicada_em_value"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" 
-                android:paddingBottom="5dp"               
+                android:paddingBottom="4dp"         
+                android:textColor="#FFFFFF"                      
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <TextView
@@ -42,13 +48,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/denuncia_endereco_aproximado_abrv_label"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+                android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <TextView
                 android:id="@+id/denuncia_endereco_aproximado_value"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" 
-                android:paddingBottom="5dp"
+                android:paddingBottom="4dp"
+                android:textColor="#FFFFFF"      
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <TextView
@@ -56,13 +63,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/denuncia_situacao_label"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+                android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <TextView
                 android:id="@+id/denuncia_situacao_value"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingBottom="5dp"
+                android:paddingBottom="4dp"
+                android:textColor="#FFFFFF"      
                 android:textAppearance="?android:attr/textAppearanceSmall" />
             
         </LinearLayout>

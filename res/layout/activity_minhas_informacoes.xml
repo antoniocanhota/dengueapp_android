@@ -7,33 +7,42 @@
 
     <TextView
         android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingBottom="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="#2A333C"
+        android:gravity="center_vertical"
+        android:paddingLeft="16dp"
         android:text="Minhas informações"
-        android:paddingTop="5dp"        
         android:textAppearance="?android:attr/textAppearanceLarge" />
-
-     <TextView
-        android1:id="@+id/paragraph"
-        android1:layout_width="wrap_content"
-        android1:layout_height="wrap_content"        
-        android:paddingBottom="5dp"        
-        android1:textAppearance="?android:attr/textAppearanceSmall" />
-
-     <FrameLayout
-         android1:layout_width="match_parent"
-         android1:layout_height="wrap_content" >
-
-             <TextView
-                 android1:id="@+id/labelEmphasis"
-                 android1:layout_width="wrap_content"
-                 android1:layout_height="wrap_content"
-                 android1:layout_gravity="center"                                  
-                 android1:textAppearance="?android:attr/textAppearanceMedium" />
-
-     </FrameLayout>
     
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:gravity="center_vertical"
+        android:padding="16dp"
+        android:orientation="vertical" >
+
+	     <TextView
+	        android1:id="@+id/paragraph"
+	        android1:layout_width="wrap_content"
+	        android1:layout_height="wrap_content"        
+	        android:paddingBottom="5dp"        
+	        android1:textAppearance="?android:attr/textAppearanceSmall" />
+	
+	     <FrameLayout
+	         android1:layout_width="match_parent"
+	         android1:layout_height="wrap_content" >
+	
+	             <TextView
+	                 android1:id="@+id/labelEmphasis"
+	                 android1:layout_width="wrap_content"
+	                 android1:layout_height="wrap_content"
+	                 android1:layout_gravity="center"                                  
+	                 android1:textAppearance="?android:attr/textAppearanceMedium" />
+	
+	     </FrameLayout>
+    
+     </LinearLayout>
    
 
 </LinearLayout>

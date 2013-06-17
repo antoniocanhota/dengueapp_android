@@ -1,0 +1,66 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#2A333C"
+    android:orientation="horizontal"
+    android:padding="48dp" >
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="200dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="top"
+        android:layout_weight="0.41"
+        android:paddingRight="24dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/logo_dengueapp" />
+
+    <LinearLayout
+        android:layout_width="400dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:paddingLeft="24dp" >
+
+        <Button
+            android:id="@+id/bt_publicar_denuncia"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:height="48dp"
+            android:text="@string/publicar_denuncia" />
+
+        <Button
+            android:id="@+id/bt_denuncias"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:layout_marginTop="12dp"
+            android:text="@string/denuncias" />
+
+        <Button
+            android:id="@+id/bt_minhas_denuncias"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:layout_marginTop="12dp"
+            android:text="@string/minhas_denuncias" />
+
+        <Button
+            android:id="@+id/bt_minhas_informacoes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:layout_marginTop="12dp"
+            android:text="@string/minhas_informacoes" />
+
+        <Button
+            android:id="@+id/bt_sobre"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="12dp"
+            android:text="@string/sobre" />
+    </LinearLayout>
+
+</LinearLayout>

@@ -3,6 +3,7 @@
     android:layout_height="fill_parent"
     android:orientation="vertical"
     android:background="#2A333C" 
+    android:padding="16dp"
      >
 
     <ImageView
@@ -10,36 +11,46 @@
         android:layout_width="match_parent"
         android:layout_height="129dp"
         android:scaleType="centerInside"
+        android:paddingBottom="16dp"
         android:src="@drawable/logo_dengueapp" />
 
     <Button
         android:id="@+id/bt_publicar_denuncia"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+    	android:layout_marginBottom="4dp"        
         android:text="@string/publicar_denuncia" />
 
     <Button
         android:id="@+id/bt_denuncias"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"  
+        android:layout_marginBottom="4dp"  
         android:text="@string/denuncias" />
 
     <Button
         android:id="@+id/bt_minhas_denuncias"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"  
+        android:layout_marginBottom="4dp"  
         android:text="@string/minhas_denuncias" />
 
     <Button
         android:id="@+id/bt_minhas_informacoes"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"  
+        android:layout_marginBottom="4dp"  
         android:text="@string/minhas_informacoes" />
 
     <Button
         android:id="@+id/bt_sobre"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"  
+        android:layout_marginBottom="4dp"  
         android:text="@string/sobre" />
 
 </LinearLayout>

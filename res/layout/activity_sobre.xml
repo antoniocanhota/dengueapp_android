@@ -7,84 +7,94 @@
 
     <TextView
         android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingBottom="15dp"
-        android:paddingTop="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="#2A333C"
+        android:gravity="center_vertical"
+        android:paddingLeft="16dp"
         android:text="@string/sobre"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
-    <TextView
-        android1:id="@+id/textView2"
-        android1:layout_width="wrap_content"
-        android1:layout_height="wrap_content"
-        android1:paddingBottom="5dp"
-        android1:text="@string/sobre_paragrafo_1"
-        android1:textAppearance="?android:attr/textAppearanceSmall" />
-
-    <TextView
-        android1:id="@+id/textView5"
-        android1:layout_width="wrap_content"
-        android1:layout_height="wrap_content"
-        android1:text="@string/aluno_label"
-        android1:textAppearance="?android:attr/textAppearanceMedium" />
+     <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:gravity="center_vertical"
+        android:padding="16dp"
+        android:orientation="vertical" >
     
-    <TextView
-        android1:id="@+id/textView3"
-        android1:layout_width="wrap_content"
-        android1:layout_height="wrap_content"
-        android1:text="@string/aluno_valor"
-        android1:textAppearance="?android:attr/textAppearanceSmall" />
+	    <TextView
+	        android1:id="@+id/textView2"
+	        android1:layout_width="wrap_content"
+	        android1:layout_height="wrap_content"
+	        android1:paddingBottom="8dp"
+	        android1:text="@string/sobre_paragrafo_1"
+	        android1:textAppearance="?android:attr/textAppearanceSmall" />
+	
+	    <TextView
+	        android1:id="@+id/textView5"
+	        android1:layout_width="wrap_content"
+	        android1:layout_height="wrap_content"
+	        android1:text="@string/aluno_label"
+	        android1:textAppearance="?android:attr/textAppearanceMedium" />
+	    
+	    <TextView
+	        android1:id="@+id/textView3"
+	        android1:layout_width="wrap_content"
+	        android1:layout_height="wrap_content"
+	        android1:text="@string/aluno_valor"
+	        android1:textAppearance="?android:attr/textAppearanceSmall" />
+	    
+	    <TextView
+	        android1:id="@+id/textView6"
+	        android1:layout_width="wrap_content"
+	        android1:layout_height="wrap_content"
+	        android1:text="@string/aluno_email"
+	        android:paddingBottom="4dp"
+	        android1:textAppearance="?android:attr/textAppearanceSmall" />
+
+	    <TextView
+	        android1:id="@+id/textView4"
+	        android1:layout_width="wrap_content"
+	        android1:layout_height="wrap_content"
+	        android1:text="@string/orientador_label"
+	        android1:textAppearance="?android:attr/textAppearanceMedium" />
+	
+	    <TextView
+	        android1:id="@+id/textView9"
+	        android1:layout_width="wrap_content"
+	        android1:layout_height="wrap_content"
+	        android:paddingBottom="4dp"
+	        android1:text="@string/orientador_valor"
+	        android1:textAppearance="?android:attr/textAppearanceSmall" />
+	    
+	    <TextView
+	        android1:id="@+id/textView7"
+	        android1:layout_width="wrap_content"
+	        android1:layout_height="wrap_content"
+	        android1:text="@string/versao_label"
+	        android1:textAppearance="?android:attr/textAppearanceMedium" />
+	
+	    <TextView
+	        android1:id="@+id/textView8"
+	        android1:layout_width="wrap_content"
+	        android1:layout_height="wrap_content"
+	        android:paddingBottom="4dp"
+	        android1:text="@string/versao_valor"
+	        android1:textAppearance="?android:attr/textAppearanceSmall" />
+
+	    <LinearLayout
+	        android1:layout_width="match_parent"
+	        android1:layout_height="match_parent"
+	        android1:gravity="bottom"
+	        android1:paddingBottom="15dp" >
+	
+	        <ImageView
+	            android1:id="@+id/imageView1"
+	            android1:layout_width="match_parent"
+	            android1:layout_height="wrap_content"
+	            android1:src="@drawable/logo_faperj" />
+	    </LinearLayout>
     
-    <TextView
-        android1:id="@+id/textView6"
-        android1:layout_width="wrap_content"
-        android1:layout_height="wrap_content"
-        android1:text="@string/aluno_email"
-        android:paddingBottom="5dp"
-        android1:textAppearance="?android:attr/textAppearanceSmall" />
-
-    <TextView
-        android1:id="@+id/textView4"
-        android1:layout_width="wrap_content"
-        android1:layout_height="wrap_content"
-        android1:text="@string/orientador_label"
-        android1:textAppearance="?android:attr/textAppearanceMedium" />
-
-    <TextView
-        android1:id="@+id/textView9"
-        android1:layout_width="wrap_content"
-        android1:layout_height="wrap_content"
-        android:paddingBottom="5dp"
-        android1:text="@string/orientador_valor"
-        android1:textAppearance="?android:attr/textAppearanceSmall" />
-    
-    <TextView
-        android1:id="@+id/textView7"
-        android1:layout_width="wrap_content"
-        android1:layout_height="wrap_content"
-        android1:text="@string/versao_label"
-        android1:textAppearance="?android:attr/textAppearanceMedium" />
-
-    <TextView
-        android1:id="@+id/textView8"
-        android1:layout_width="wrap_content"
-        android1:layout_height="wrap_content"
-        android:paddingBottom="5dp"
-        android1:text="@string/versao_valor"
-        android1:textAppearance="?android:attr/textAppearanceSmall" />
-
-    <LinearLayout
-        android1:layout_width="match_parent"
-        android1:layout_height="match_parent"
-        android1:gravity="bottom"
-        android1:paddingBottom="15dp" >
-
-        <ImageView
-            android1:id="@+id/imageView1"
-            android1:layout_width="match_parent"
-            android1:layout_height="wrap_content"
-            android1:src="@drawable/logo_faperj" />
     </LinearLayout>
 
 </LinearLayout>

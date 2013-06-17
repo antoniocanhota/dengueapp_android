@@ -20,37 +20,36 @@ public final class R {
         public static final int logo_faperj=0x7f020006;
     }
     public static final class id {
-        public static final int bt_confirmar_publicacao_de_denuncia=0x7f060014;
+        public static final int bt_confirmar_publicacao_de_denuncia=0x7f060013;
         public static final int bt_denuncias=0x7f060003;
         public static final int bt_minhas_denuncias=0x7f060004;
         public static final int bt_minhas_informacoes=0x7f060005;
         public static final int bt_publicar_denuncia=0x7f060002;
         public static final int bt_sobre=0x7f060006;
-        public static final int denuncia_endereco_aproximado_label=0x7f060019;
-        public static final int denuncia_endereco_aproximado_value=0x7f06001a;
-        public static final int denuncia_foto_value=0x7f060015;
-        public static final int denuncia_id_value=0x7f060016;
-        public static final int denuncia_publicada_em_label=0x7f060017;
-        public static final int denuncia_publicada_em_value=0x7f060018;
-        public static final int denuncia_situacao_label=0x7f06001b;
-        public static final int denuncia_situacao_value=0x7f06001c;
-        public static final int endereco_aproximado_da_denuncia=0x7f060011;
+        public static final int denuncia_endereco_aproximado_label=0x7f060018;
+        public static final int denuncia_endereco_aproximado_value=0x7f060019;
+        public static final int denuncia_foto_value=0x7f060014;
+        public static final int denuncia_id_value=0x7f060015;
+        public static final int denuncia_publicada_em_label=0x7f060016;
+        public static final int denuncia_publicada_em_value=0x7f060017;
+        public static final int denuncia_situacao_label=0x7f06001a;
+        public static final int denuncia_situacao_value=0x7f06001b;
+        public static final int endereco_aproximado_da_denuncia=0x7f060010;
         public static final int foto_da_denuncia=0x7f06000e;
         public static final int imageView1=0x7f060001;
         public static final int labelEmphasis=0x7f06000a;
         public static final int mapa_denuncias=0x7f060000;
         public static final int mapa_minhas_denuncias=0x7f060007;
         public static final int paragraph=0x7f060009;
-        public static final int progressBar=0x7f060010;
         public static final int textView1=0x7f060008;
         public static final int textView2=0x7f06000b;
         public static final int textView3=0x7f06000c;
         public static final int textView4=0x7f06000d;
         public static final int textView5=0x7f06000f;
-        public static final int textView6=0x7f060012;
-        public static final int textView7=0x7f060013;
-        public static final int textView8=0x7f06001e;
-        public static final int textView9=0x7f06001d;
+        public static final int textView6=0x7f060011;
+        public static final int textView7=0x7f060012;
+        public static final int textView8=0x7f06001d;
+        public static final int textView9=0x7f06001c;
     }
     public static final class layout {
         public static final int activity_denuncias=0x7f030000;
