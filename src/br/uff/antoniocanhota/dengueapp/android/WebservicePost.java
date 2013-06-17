@@ -18,6 +18,8 @@ public class WebservicePost {
 	private Context ctx;
 	private Integer httpStatus;
 
+	//klkl
+	
 	public WebservicePost(String url, Context ctx) {
 		this.url = url;
 		this.mpEntity = new MultipartEntity(
