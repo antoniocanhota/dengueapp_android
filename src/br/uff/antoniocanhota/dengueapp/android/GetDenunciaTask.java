@@ -1,7 +1,5 @@
 package br.uff.antoniocanhota.dengueapp.android;
 
-import java.util.List;
-
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -9,7 +7,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
-import br.uff.antoniocanhota.dengueapp.android.webservices.WSUtilitarios;
 
 public class GetDenunciaTask extends AsyncTask<String, Void, Denuncia> {
 
