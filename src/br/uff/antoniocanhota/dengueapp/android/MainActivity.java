@@ -20,6 +20,9 @@ public class MainActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
+        WakeUpServerTask wakeUpServerTask = new WakeUpServerTask(getApplicationContext());
+        wakeUpServerTask.execute();
+        
         if ( isTablet() )
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         else
