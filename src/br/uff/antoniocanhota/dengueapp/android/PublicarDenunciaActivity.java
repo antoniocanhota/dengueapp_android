@@ -1,5 +1,8 @@
 package br.uff.antoniocanhota.dengueapp.android;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -9,6 +12,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.Looper;
 import android.provider.MediaStore;
 import android.provider.Settings;
 import android.view.View;
@@ -21,19 +25,22 @@ import com.google.android.maps.MapActivity;
 
 public class PublicarDenunciaActivity extends MapActivity {
 	private static final float MIN_ACCURACY = 35; // in meters
+	private static final int LOCATION_TIMEOUT = 5000;// in miliseconds
 	private static final int TIRAR_FOTO = 1020394857;
 	private ImageView imgFoto;
 	private Bitmap bitmap;
 
-	private LocationManager lm;
+	private LocationManager locationManager;
 	private LocationListener locationListener;
+	private Location userLocation;
+	Timer timer;
 	// private MapController mapa;
 	// private String lat;
 	// private String lng;
 
 	// private Double latitude;
 	// private Double longitude;
-	private Location userLocation;
+
 	// private float userLocationAccuracy = MIN_ACCURACY;
 
 	// private GeoPoint localDaDenuncia;
@@ -42,87 +49,95 @@ public class PublicarDenunciaActivity extends MapActivity {
 	private Denuncia denuncia;
 
 	@Override
-	public void onResume() {
-		super.onResume();
-
-		userLocation = null;
-
-		// progressBar = (ProgressBar) findViewById(R.id.progressBar);
-
-		// ---use the LocationManager class to obtain locations data---
-		lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-
-		if (!lm.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-			// finish();
-
-			// startActivity(new
-			// Intent("br.uff.antoniocanhota.dengueapp.android.MAINACTIVITY"));
-			showSettingsAlert();
-			// finish();
-		} else {
-
-			locationListener = new MyLocationListener();
-
-			lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0,
-					locationListener);
-			lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0,
-					locationListener);
-
-			setContentView(R.layout.activity_publicar_denuncia);
-			imgFoto = (ImageView) findViewById(R.id.foto_da_denuncia);
-
-			// Centraliza e foca no local do usuГЎiro
-			// MapView mapView = (MapView)
-			// findViewById(R.id.mapa_publicar_denuncia);
-			// mapa = mapView.getController();
-			//
-			// // TODO: REMOVER ESTE BACALHAU DAQUI DEPOIS
-			// if (lat != null && lng != null) {
-			// double lat_db = Double.parseDouble(lat);
-			// double lng_db = Double.parseDouble(lng);
-			// localDaDenuncia = new GeoPoint((int) (lat_db * 1E6),
-			// (int) (lng_db * 1E6));
-			//
-			// mapa.animateTo(localDaDenuncia);
-			// mapa.setZoom(15);
-			// }
-
-			Button bt_confirmar_publicacao_de_denuncia = (Button) findViewById(R.id.bt_confirmar_publicacao_de_denuncia);
-			ImageView bt_tirar_foto = (ImageView) findViewById(R.id.foto_da_denuncia);
-
-			bt_tirar_foto.setOnClickListener(new View.OnClickListener() {
-				public void onClick(View arg0) {
-					Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-					startActivityForResult(intent, TIRAR_FOTO);
-				}
-			});
-
-			bt_confirmar_publicacao_de_denuncia
-					.setOnClickListener(new View.OnClickListener() {
-						public void onClick(View arg0) {
-							Utilitarios.showToast("Enviando denúncia...",
-									PublicarDenunciaActivity.this);
-							buildDenuncia();
-							if (validateDenuncia() && sendDenuncia()) {
-								Toast.makeText(PublicarDenunciaActivity.this,
-										"Denúncia enviada com sucesso.",
-										Toast.LENGTH_SHORT).show();
-
-							}
-							lm.removeUpdates(locationListener);
-							finish();
-						}
-					});
-		}
-
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		userLocation = null;	
+		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+		locationListener = new MyLocationListener();		
+		//startLocationServices();		
 	}
 
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+	public void onResume() {
+		super.onResume();
+
+		startLocationServices();
+		// progressBar = (ProgressBar) findViewById(R.id.progressBar);
+
+		// ---use the LocationManager class to obtain locations data---
+		
+
+		setContentView(R.layout.activity_publicar_denuncia);
+		imgFoto = (ImageView) findViewById(R.id.foto_da_denuncia);
+
+		// Centraliza e foca no local do usuГЎiro
+		// MapView mapView = (MapView)
+		// findViewById(R.id.mapa_publicar_denuncia);
+		// mapa = mapView.getController();
+		//
+		// // TODO: REMOVER ESTE BACALHAU DAQUI DEPOIS
+		// if (lat != null && lng != null) {
+		// double lat_db = Double.parseDouble(lat);
+		// double lng_db = Double.parseDouble(lng);
+		// localDaDenuncia = new GeoPoint((int) (lat_db * 1E6),
+		// (int) (lng_db * 1E6));
+		//
+		// mapa.animateTo(localDaDenuncia);
+		// mapa.setZoom(15);
+		// }
+
+		Button bt_confirmar_publicacao_de_denuncia = (Button) findViewById(R.id.bt_confirmar_publicacao_de_denuncia);
+		ImageView bt_tirar_foto = (ImageView) findViewById(R.id.foto_da_denuncia);
+
+		bt_tirar_foto.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View arg0) {
+				Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+				startActivityForResult(intent, TIRAR_FOTO);
+			}
+		});
+
+		bt_confirmar_publicacao_de_denuncia
+				.setOnClickListener(new View.OnClickListener() {
+					public void onClick(View arg0) {
+						Utilitarios.showToast("Enviando denúncia...",
+								PublicarDenunciaActivity.this);
+						buildDenuncia();
+						if (validateDenuncia() && sendDenuncia()) {
+							Toast.makeText(PublicarDenunciaActivity.this,
+									"Denúncia enviada com sucesso.",
+									Toast.LENGTH_SHORT).show();
+
+						}						
+						stopLocationServices();
+						finish();
+					}
+				});
 
 	}
+	
+	private void resetLocationTimeout(){
+		timer = new Timer();
+		timer.schedule(new LocationTimeout(), LOCATION_TIMEOUT);
+	}
 
+	private void startLocationServices(){			
+		try {
+			locationManager.requestLocationUpdates(
+					LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
+		} catch (Exception e) {
+			// Esse request location foi colocado com try/catch devido a um bug
+			// do simulador do Android 4.0+
+		}
+		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0,
+				0, locationListener);
+		resetLocationTimeout();
+	}
+	
+	private void stopLocationServices(){
+		timer.cancel();
+		locationManager.removeUpdates(locationListener);		
+	}
+	
 	private void buildDenuncia() {
 		this.denuncia = new Denuncia();
 		denuncia.setLatitude(userLocation.getLatitude());
@@ -156,7 +171,6 @@ public class PublicarDenunciaActivity extends MapActivity {
 	private class MyLocationListener implements LocationListener {
 
 		public void onLocationChanged(Location loc) {
-			Utilitarios.showToast("jjkjk", PublicarDenunciaActivity.this);
 			if (loc != null) {
 
 				if ((userLocation != null && loc.getAccuracy() <= userLocation
@@ -222,8 +236,10 @@ public class PublicarDenunciaActivity extends MapActivity {
 		}
 
 		public void onProviderDisabled(String provider) {
-			// Utilitarios.showToast("Por favor, reative o sensor GPS para o correto funcionamento do DengueApp. Pode ser necessário reiniciar a aplicação.",
-			// PublicarDenunciaActivity.this);
+			Utilitarios
+					.showToast(
+							"Por favor, reative o sensor GPS para o correto funcionamento do DengueApp. Pode ser necessário reiniciar a aplicação.",
+							PublicarDenunciaActivity.this);
 		}
 
 		public void onProviderEnabled(String provider) {//
@@ -259,18 +275,11 @@ public class PublicarDenunciaActivity extends MapActivity {
 		AlertDialog.Builder alertDialog = new AlertDialog.Builder(
 				PublicarDenunciaActivity.this);
 
-		// Setting Dialog Title
-		alertDialog.setTitle("GPS is settings");
-
-		// Setting Dialog Message
+		alertDialog.setTitle("GPS Desativado");
 		alertDialog
-				.setMessage("GPS is not enabled. Do you want to go to settings menu?");
+				.setMessage("O GPS precisa estar ativo para publicar uma denúncia. Deseja alterar essa configuração?");
 
-		// Setting Icon to Dialog
-		// alertDialog.setIcon(R.drawable.delete);
-
-		// On pressing Settings button
-		alertDialog.setPositiveButton("Settings",
+		alertDialog.setPositiveButton("Configurações",
 				new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int which) {
 						Intent intent = new Intent(
@@ -278,9 +287,7 @@ public class PublicarDenunciaActivity extends MapActivity {
 						PublicarDenunciaActivity.this.startActivity(intent);
 					}
 				});
-
-		// on pressing cancel button
-		alertDialog.setNegativeButton("Cancel",
+		alertDialog.setNegativeButton("Cancelar",
 				new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int which) {
 						dialog.cancel();
@@ -288,8 +295,60 @@ public class PublicarDenunciaActivity extends MapActivity {
 					}
 				});
 
-		// Showing Alert Message
 		alertDialog.show();
 	}
 
+	public void showLocationTimeoutAlert() {
+		AlertDialog.Builder alertDialog = new AlertDialog.Builder(
+				PublicarDenunciaActivity.this);
+
+		alertDialog.setTitle("Localização indeterminada");
+		alertDialog
+				.setMessage("Não foi possível obter sua localização. Deseja continuar tentando?");
+
+		alertDialog.setPositiveButton("Sim",
+				new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int which) {
+						resetLocationTimeout();
+					}
+				});
+		alertDialog.setNegativeButton("Cancelar",
+				new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int which) {
+						dialog.cancel();
+						finish();
+					}
+				});
+
+		alertDialog.show();
+	}
+
+	class LocationTimeout extends TimerTask {
+		public void run() {			
+			Looper.prepare();			
+			if (userLocation == null){				
+				showLocationTimeoutAlert();
+			} else {
+				stopLocationServices();
+			}
+			Looper.loop();			
+		}
+	}
+
+	// private class TimeoutTimer extends TimerTask {
+	// private Timer timer;
+	//
+	// public TimeoutTimer(){
+	// timer = new Timer();
+	// timer.schedule(new TimeoutTimer(), LOCATION_TIMEOUT);
+	// }
+	//
+	// public void run() {
+	// timer.cancel();
+	// }
+	//
+	// public void stop(){
+	// timer.cancel();
+	// }
+	// }
 }
