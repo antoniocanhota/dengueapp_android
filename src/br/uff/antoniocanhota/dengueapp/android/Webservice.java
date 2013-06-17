@@ -24,8 +24,10 @@ public class Webservice {
 	// public static final String WEBSERVICES =
 	// "http://dengue.herokuapp.com/webservices/";
 	// Para uso em desenvolvimento:
-	public static final String WEBSERVICES = "http://10.0.2.2:3000/webservices/";
+	//public static final String WEBSERVICES = "http://10.0.2.2:3000/webservices/";
 	// "http://dengue.herokuapp.com/webservices/";
+	// Para uso em desenvolvimento:
+	public static final String WEBSERVICES = "http://10.1.1.2:3000/webservices/";
 	public static final String WEBSERVICE_PUBLICAR_DENUNCIA = WEBSERVICES+"denuncias/publicar";
 	public static final String WEBSERVICE_LISTAGEM_DE_DENUNCIAS = WEBSERVICES
 			+ "denuncias.xml";
@@ -177,30 +179,10 @@ public class Webservice {
 	}
 
 	private InputStream getInputStream(String url) {
-		InputStream inputStream = null;
-		int response = -1;
-
-		URL urlObject = null;
-		try {
-			urlObject = new URL(url);
-			URLConnection conn = urlObject.openConnection();
-			HttpURLConnection httpConn = (HttpURLConnection) conn;
-			httpConn.setAllowUserInteraction(false);
-			httpConn.setInstanceFollowRedirects(true);
-			httpConn.setRequestMethod("GET");
-			httpConn.connect();
-			response = httpConn.getResponseCode();
-			if (response == HttpURLConnection.HTTP_OK) {
-				inputStream = httpConn.getInputStream();
-			}
-		} catch (HttpHostConnectException e) {
-			Utilitarios.showToast("O servidor da aplicação está fora do ar.", ctx);	
-		} catch (Exception e) {
-			Utilitarios.notifyExceptionToServer(e, ctx);
-		}
-
-		return inputStream;
-
+//		WebserviceGet wsGet = new WebserviceGet(ctx);
+//		wsGet.execute(new String[] { url });
+//		return wsGet.getInputStream();
+		return null;
 	}
 
 	private static String processarCampoXML(Element objeto, String campo) {

@@ -2,8 +2,10 @@ package br.uff.antoniocanhota.dengueapp.android;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import android.os.Bundle;
+import br.uff.antoniocanhota.dengueapp.android.webservices.GetDenuncias;
 
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.MapActivity;
@@ -25,9 +27,13 @@ public class DenunciasActivity extends MapActivity{
 		//Convers�o do XML do webservice em uma lista de den�ncias
 		//Hashtable<Integer,Denuncia> hash_de_denuncias = Denuncia.processarXMLDenuncias(webservice_de_listagem_de_denuncias);
 		//Enumeration enum_denuncias = hash_de_denuncias.keys();
-		Webservice webservice = new Webservice(getApplicationContext());
-		List<Denuncia> denuncias = new ArrayList<Denuncia>();		
-		denuncias = webservice.getDenuncias();		
+//		Webservice webservice = new Webservice(getApplicationContext());
+//		List<Denuncia> denuncias = new ArrayList<Denuncia>();		
+		List<Denuncia> denuncias = new ArrayList<Denuncia>();
+		GetDenuncias wsDenuncias = new GetDenuncias(this,denuncias);
+		wsDenuncias.execute(null);
+		//List<Denuncia> denuncias = wsDenuncias.getDenuncias();
+		
 
 		//Cria��o da listagem de pontos das den�ncias		
 		MyItemizedOverlay itemizedOverlay = new MyItemizedOverlay(this);

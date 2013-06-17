@@ -18,7 +18,7 @@ public class WebservicePost {
 	private Context ctx;
 	private Integer httpStatus;
 
-	WebservicePost(String url, Context ctx) {
+	public WebservicePost(String url, Context ctx) {
 		this.url = url;
 		this.mpEntity = new MultipartEntity(
 				HttpMultipartMode.BROWSER_COMPATIBLE);
