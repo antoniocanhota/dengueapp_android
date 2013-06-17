@@ -11,6 +11,8 @@ import java.nio.charset.Charset;
 import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.entity.mime.content.StringBody;
 
+import com.google.android.maps.GeoPoint;
+
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
@@ -100,6 +102,10 @@ public class Utilitarios {
 		e.printStackTrace(pw);
 		return sw.toString();
 	}	
+	
+	public static GeoPoint getGrandeRioGeoPoint(){
+		return new GeoPoint((int) (Double.parseDouble("-22.890209") * 1E6), (int) (Double.parseDouble("-43.296562") * 1E6));
+	}
 	
 	// public static String getDeviceID(Context ctx) {
 	// String deviceID = null;

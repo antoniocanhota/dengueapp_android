@@ -25,12 +25,18 @@ public class GetDenuncias extends AsyncTask<String, Void, List<Denuncia>> {
 	private Context ctx;
 	private List<Denuncia> denuncias;
 	private MapView mapView;
+	private String androidId;
 
 	public GetDenuncias(Context ctx, MapView mapView) {
-		this.ctx = ctx;
-		Utilitarios.getAndroidID(this.ctx);
+		this.ctx = ctx;		
 		this.mapView = mapView;
-		denuncias = new ArrayList<Denuncia>();
+		this.denuncias = new ArrayList<Denuncia>();
+		this.androidId = null;
+	}
+	
+	public GetDenuncias(Context ctx, MapView mapView, String androidId) {
+		this(ctx,mapView);
+		this.androidId = androidId;
 	}
 
 	@Override
@@ -38,8 +44,13 @@ public class GetDenuncias extends AsyncTask<String, Void, List<Denuncia>> {
 		try {
 			Document doc;
 
-			doc = WSUtilitarios.getDocument(
-					Webservice.WEBSERVICE_LISTAGEM_DE_DENUNCIAS, this.ctx);
+			if (androidId == null){
+				doc = WSUtilitarios.getDocument(
+						Webservice.WEBSERVICE_LISTAGEM_DE_DENUNCIAS, this.ctx);
+			}else{
+				doc = WSUtilitarios.getDocument(
+						Webservice.WEBSERVICE_LISTAGEM_DE_DENUNCIAS_DO_USUARIO+androidId, this.ctx);
+			}			
 			NodeList denunciasNodeList = doc.getElementsByTagName("denuncia");
 			for (int i = 0; i < denunciasNodeList.getLength(); i++) {
 				Node denunciaNode = denunciasNodeList.item(i);
@@ -73,23 +84,24 @@ public class GetDenuncias extends AsyncTask<String, Void, List<Denuncia>> {
 	@Override
 	protected void onPostExecute(List<Denuncia> denuncias) {
 		generateMarkers();
+		mapView.invalidate();
 		progressDialog.dismiss();
 	}
 
 	private void generateMarkers() {
-		// Cria��o da listagem de pontos das den�ncias
+		// Criação da listagem de pontos das denúncias
 		MyItemizedOverlay itemizedOverlay = new MyItemizedOverlay(ctx);
 
-		// Itera��o da lista de den�ncias
+		// Iteração da lista de denúncias
 		for (Denuncia denuncia : denuncias) {
-			// Cria��o do ponto no mapa
+			// Criação do ponto no mapa
 			Double lat = Double.parseDouble(String.valueOf(denuncia
 					.getLatitude()));
 			Double lng = Double.parseDouble(String.valueOf(denuncia
 					.getLongitude()));
 			GeoPoint ponto = new GeoPoint((int) (lat * 1E6), (int) (lng * 1E6));
 
-			// Adicionando o ponto � listagem de pontos
+			// Adicionando o ponto à listagem de pontos
 			itemizedOverlay.addOverlayItem(ponto, denuncia);
 			mapView.getOverlays().add(itemizedOverlay);
 		}
