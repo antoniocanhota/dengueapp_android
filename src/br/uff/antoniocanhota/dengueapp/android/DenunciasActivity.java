@@ -30,25 +30,25 @@ public class DenunciasActivity extends MapActivity{
 //		Webservice webservice = new Webservice(getApplicationContext());
 //		List<Denuncia> denuncias = new ArrayList<Denuncia>();		
 		List<Denuncia> denuncias = new ArrayList<Denuncia>();
-		GetDenuncias wsDenuncias = new GetDenuncias(this,denuncias);
+		GetDenuncias wsDenuncias = new GetDenuncias(this,mapView);
 		wsDenuncias.execute(null);
-		//List<Denuncia> denuncias = wsDenuncias.getDenuncias();
+		
 		
 
 		//Cria��o da listagem de pontos das den�ncias		
-		MyItemizedOverlay itemizedOverlay = new MyItemizedOverlay(this);
+//		MyItemizedOverlay itemizedOverlay = new MyItemizedOverlay(this);
 	    
 		//Itera��o da lista de den�ncias		
-		for (Denuncia denuncia : denuncias){
-			//Cria��o do ponto no mapa			
-			Double lat = Double.parseDouble(String.valueOf(denuncia.getLatitude()));
-			Double lng = Double.parseDouble(String.valueOf(denuncia.getLongitude()));
-  			GeoPoint ponto = new GeoPoint((int)(lat * 1E6), (int)(lng * 1E6)); 
-  			
- 			//Adicionando o ponto � listagem de pontos 		      			
-  			itemizedOverlay.addOverlayItem(ponto, denuncia);
-  			mapView.getOverlays().add(itemizedOverlay);
-		}
+//		for (Denuncia denuncia : denuncias){
+//			//Cria��o do ponto no mapa			
+//			Double lat = Double.parseDouble(String.valueOf(denuncia.getLatitude()));
+//			Double lng = Double.parseDouble(String.valueOf(denuncia.getLongitude()));
+//  			GeoPoint ponto = new GeoPoint((int)(lat * 1E6), (int)(lng * 1E6)); 
+//  			
+// 			//Adicionando o ponto � listagem de pontos 		      			
+//  			itemizedOverlay.addOverlayItem(ponto, denuncia);
+//  			mapView.getOverlays().add(itemizedOverlay);
+//		}
 		
 //		while( enum_denuncias.hasMoreElements()){		
 //
