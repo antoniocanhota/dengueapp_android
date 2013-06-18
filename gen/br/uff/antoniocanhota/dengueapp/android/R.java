@@ -18,6 +18,7 @@ public final class R {
         public static final int ic_tirar_foto=0x7f020004;
         public static final int logo_dengueapp=0x7f020005;
         public static final int logo_faperj=0x7f020006;
+        public static final int logo_uff=0x7f020007;
     }
     public static final class id {
         public static final int bt_confirmar_publicacao_de_denuncia=0x7f060013;
@@ -37,6 +38,7 @@ public final class R {
         public static final int endereco_aproximado_da_denuncia=0x7f060010;
         public static final int foto_da_denuncia=0x7f06000e;
         public static final int imageView1=0x7f060001;
+        public static final int imageView2=0x7f06001e;
         public static final int labelEmphasis=0x7f06000a;
         public static final int mapa_denuncias=0x7f060000;
         public static final int mapa_minhas_denuncias=0x7f060007;

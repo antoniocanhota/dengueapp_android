@@ -100,7 +100,7 @@
 	            android1:id="@+id/imageView2"
 	            android1:layout_width="match_parent"
 	            android1:layout_height="25dp"
-	            android1:src="@drawable/LogoUFFM" />
+	            android1:src="@drawable/logo_uff" />
 
 	    </LinearLayout>
     
