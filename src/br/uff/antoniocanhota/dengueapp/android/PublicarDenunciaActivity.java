@@ -39,17 +39,6 @@ public class PublicarDenunciaActivity extends MapActivity {
 	private Timer timer;
 	
 	private static PublicarDenunciaActivity atividade;
-	// private MapController mapa;
-	// private String lat;
-	// private String lng;
-
-	// private Double latitude;
-	// private Double longitude;
-
-	// private float userLocationAccuracy = MIN_ACCURACY;
-
-	// private GeoPoint localDaDenuncia;
-	// private ProgressBar progressBar;
 
 	private Denuncia denuncia;
 
@@ -72,33 +61,6 @@ public class PublicarDenunciaActivity extends MapActivity {
 		super.onResume();
 
 		startLocationServices();
-		// progressBar = (ProgressBar) findViewById(R.id.progressBar);
-
-		// ---use the LocationManager class to obtain locations data---
-		
-
-		
-//		imgFoto = (ImageView) findViewById(R.id.foto_da_denuncia);
-//		Button bt_confirmar_publicacao_de_denuncia = (Button) findViewById(R.id.bt_confirmar_publicacao_de_denuncia);
-
-		// Centraliza e foca no local do usuГЎiro
-		// MapView mapView = (MapView)
-		// findViewById(R.id.mapa_publicar_denuncia);
-		// mapa = mapView.getController();
-		//
-		// // TODO: REMOVER ESTE BACALHAU DAQUI DEPOIS
-		// if (lat != null && lng != null) {
-		// double lat_db = Double.parseDouble(lat);
-		// double lng_db = Double.parseDouble(lng);
-		// localDaDenuncia = new GeoPoint((int) (lat_db * 1E6),
-		// (int) (lng_db * 1E6));
-		//
-		// mapa.animateTo(localDaDenuncia);
-		// mapa.setZoom(15);
-		// }
-
-		
-		//ImageView bt_tirar_foto = (ImageView) findViewById(R.id.foto_da_denuncia);
 
 		fotoImageView.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View arg0) {
@@ -186,62 +148,14 @@ public class PublicarDenunciaActivity extends MapActivity {
 						.getAccuracy())
 						|| (userLocation == null && loc.getAccuracy() <= MIN_ACCURACY)) {
 
-					userLocation = loc;
-					//TextView addressView = (TextView) findViewById(R.id.endereco_aproximado_da_denuncia);
+					userLocation = loc;					
 					endereco = "Localização obtida com sucesso!\n\n"
 							+ "Latitude: " + loc.getLatitude() + "\n"
 							+ "Longitude:" + loc.getLongitude();
 					enderecoTextView.setText(endereco);
 				}
 			}
-
-			// if (loc != null && loc.getAccuracy() <= MIN_ACCURACY
-			// && loc.getAccuracy() <= userLocation.getAccuracy()) {
-
-			// Geocoder geoCoder = new Geocoder(getBaseContext(),
-			// Locale.getDefault());
-			// TextView addressView = (TextView)
-			// findViewById(R.id.endereco_aproximado_da_denuncia);
-			// addressView.setText("LocalizaГ§ГЈo obtida com sucesso!\n\n"
-			// + "Latitude: " + loc.getLatitude() + "\n"
-			// + "Longitude:" + loc.getLongitude());
-
-			// try {
-			// List<Address> addresses = geoCoder.getFromLocation(
-			// loc.getLatitude(),
-			// loc.getLongitude(),
-			// 1);
-			// String add = "";
-			// if (addresses.size() > 0){
-			// for (int i=0; i<addresses.get(0).getMaxAddressLineIndex();
-			// i++)
-			// add += addresses.get(0).getAddressLine(i) + "\n";
-			// }
-			// if (add == "") {
-			// addressView.setText("Latitude: "+loc.getLatitude()+"\n"+"Longitude:"+loc.getLongitude());
-			// }else{
-			// addressView.setText(add);
-			// }
-			// } catch (IOException e) {
-			// // TODO Auto-generated catch block
-			// addressView.setText("Latitude: "+loc.getLatitude()+"\n"+"Longitude:"+loc.getLongitude());
-			// e.printStackTrace();
-			// }
-			// }
-
-			// localDaDenuncia = new GeoPoint((int) (loc.getLatitude()),
-			// (int) (loc.getLongitude()));
-			// p = new GeoPoint((int) (loc.getLatitude() * 1E6),(int)
-			// (loc.getLongitude() * 1E6));
-			// mc.animateTo(p);
-			// mc.setZoom(18);
-
-			// userLocation = loc;
-			// latitude = loc.getLatitude();
-			// longitude = loc.getLongitude();
-
-			// lat = String.valueOf((loc.getLatitude()));
-			// lng = String.valueOf((loc.getLongitude()));
+			
 		}
 
 		public void onProviderDisabled(String provider) {
@@ -344,20 +258,4 @@ public class PublicarDenunciaActivity extends MapActivity {
 		}
 	}
 
-	// private class TimeoutTimer extends TimerTask {
-	// private Timer timer;
-	//
-	// public TimeoutTimer(){
-	// timer = new Timer();
-	// timer.schedule(new TimeoutTimer(), LOCATION_TIMEOUT);
-	// }
-	//
-	// public void run() {
-	// timer.cancel();
-	// }
-	//
-	// public void stop(){
-	// timer.cancel();
-	// }
-	// }
 }
