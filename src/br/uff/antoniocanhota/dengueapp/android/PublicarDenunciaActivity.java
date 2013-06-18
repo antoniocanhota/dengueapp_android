@@ -25,10 +25,13 @@ import com.google.android.maps.MapActivity;
 
 public class PublicarDenunciaActivity extends MapActivity {
 	private static final float MIN_ACCURACY = 35; // in meters
-	private static final int LOCATION_TIMEOUT = 5000;// in miliseconds
+	private static final int LOCATION_TIMEOUT = 60000;// in miliseconds
 	private static final int TIRAR_FOTO = 1020394857;
-	private ImageView imgFoto;
-	private Bitmap bitmap;
+	private ImageView fotoImageView;
+	private Bitmap foto;
+	private TextView enderecoTextView;
+	private String endereco;
+	private Button bt_confirmar_publicacao_de_denuncia;
 
 	private LocationManager locationManager;
 	private LocationListener locationListener;
@@ -57,7 +60,11 @@ public class PublicarDenunciaActivity extends MapActivity {
 		userLocation = null;	
 		locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 		locationListener = new MyLocationListener();		
-		//startLocationServices();		
+		
+		setContentView(R.layout.activity_publicar_denuncia);
+		fotoImageView = (ImageView) findViewById(R.id.foto_da_denuncia);
+		enderecoTextView = (TextView) findViewById(R.id.endereco_aproximado_da_denuncia);
+		bt_confirmar_publicacao_de_denuncia = (Button) findViewById(R.id.bt_confirmar_publicacao_de_denuncia);
 	}
 
 	@Override
@@ -70,8 +77,9 @@ public class PublicarDenunciaActivity extends MapActivity {
 		// ---use the LocationManager class to obtain locations data---
 		
 
-		setContentView(R.layout.activity_publicar_denuncia);
-		imgFoto = (ImageView) findViewById(R.id.foto_da_denuncia);
+		
+//		imgFoto = (ImageView) findViewById(R.id.foto_da_denuncia);
+//		Button bt_confirmar_publicacao_de_denuncia = (Button) findViewById(R.id.bt_confirmar_publicacao_de_denuncia);
 
 		// Centraliza e foca no local do usuГЎiro
 		// MapView mapView = (MapView)
@@ -89,16 +97,19 @@ public class PublicarDenunciaActivity extends MapActivity {
 		// mapa.setZoom(15);
 		// }
 
-		Button bt_confirmar_publicacao_de_denuncia = (Button) findViewById(R.id.bt_confirmar_publicacao_de_denuncia);
-		ImageView bt_tirar_foto = (ImageView) findViewById(R.id.foto_da_denuncia);
+		
+		//ImageView bt_tirar_foto = (ImageView) findViewById(R.id.foto_da_denuncia);
 
-		bt_tirar_foto.setOnClickListener(new View.OnClickListener() {
+		fotoImageView.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View arg0) {
 				Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 				startActivityForResult(intent, TIRAR_FOTO);
 			}
 		});
-
+		if (foto != null){
+			fotoImageView.setImageBitmap(foto);
+		}
+		enderecoTextView.setText(endereco);
 		bt_confirmar_publicacao_de_denuncia
 				.setOnClickListener(new View.OnClickListener() {
 					public void onClick(View arg0) {						
@@ -106,9 +117,7 @@ public class PublicarDenunciaActivity extends MapActivity {
 						if (validateDenuncia()) {
 							stopLocationServices();
 							PostDenunciaTask postDenunciaTask = new PostDenunciaTask(denuncia,PublicarDenunciaActivity.this, atividade);
-							postDenunciaTask.execute(null);		
-							
-							//finish();
+							postDenunciaTask.execute(null);								
 						}
 					}
 				});
@@ -142,7 +151,7 @@ public class PublicarDenunciaActivity extends MapActivity {
 		this.denuncia = new Denuncia();
 		denuncia.setLatitude(userLocation.getLatitude());
 		denuncia.setLongitude(userLocation.getLongitude());
-		denuncia.setFoto(bitmap);
+		denuncia.setFoto(foto);
 	}
 
 	private boolean validateDenuncia() {
@@ -178,11 +187,11 @@ public class PublicarDenunciaActivity extends MapActivity {
 						|| (userLocation == null && loc.getAccuracy() <= MIN_ACCURACY)) {
 
 					userLocation = loc;
-					TextView addressView = (TextView) findViewById(R.id.endereco_aproximado_da_denuncia);
-					addressView.setText("Localização obtida com sucesso!\n\n"
+					//TextView addressView = (TextView) findViewById(R.id.endereco_aproximado_da_denuncia);
+					endereco = "Localização obtida com sucesso!\n\n"
 							+ "Latitude: " + loc.getLatitude() + "\n"
-							+ "Longitude:" + loc.getLongitude());
-
+							+ "Longitude:" + loc.getLongitude();
+					enderecoTextView.setText(endereco);
 				}
 			}
 
@@ -254,8 +263,8 @@ public class PublicarDenunciaActivity extends MapActivity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == TIRAR_FOTO) {
 			if (resultCode == RESULT_OK) {
-				bitmap = (Bitmap) data.getExtras().get("data");
-				imgFoto.setImageBitmap(bitmap);
+				foto = (Bitmap) data.getExtras().get("data");
+				fotoImageView.setImageBitmap(foto);
 				// A foto poderГЎ ser salva aqui
 			} else if (resultCode == RESULT_CANCELED) {
 				Toast.makeText(this, "Cancelou", Toast.LENGTH_SHORT).show();

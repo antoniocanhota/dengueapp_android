@@ -86,13 +86,22 @@
 	        android1:layout_width="match_parent"
 	        android1:layout_height="match_parent"
 	        android1:gravity="bottom"
+	        android:orientation="vertical"
 	        android1:paddingBottom="15dp" >
 	
 	        <ImageView
 	            android1:id="@+id/imageView1"
 	            android1:layout_width="match_parent"
 	            android1:layout_height="wrap_content"
-	            android1:src="@drawable/logo_faperj" />
+	            android1:src="@drawable/logo_faperj" 
+	            android1:paddingBottom="16dp" />
+
+	        <ImageView
+	            android1:id="@+id/imageView2"
+	            android1:layout_width="match_parent"
+	            android1:layout_height="25dp"
+	            android1:src="@drawable/LogoUFFM" />
+
 	    </LinearLayout>
     
     </LinearLayout>
