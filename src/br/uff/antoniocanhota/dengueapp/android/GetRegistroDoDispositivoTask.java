@@ -51,16 +51,15 @@ public class GetRegistroDoDispositivoTask extends AsyncTask<String, Void, Dispos
 	@Override
 	protected void onPostExecute(Dispositivo dispositivo) {
 		progressDialog.dismiss();
-		if (excp == null){			
+		if (excp != null){			
 			Utilitarios.notifyExceptionToServer(excp, ctx);
-		} else {
-			
+		} else {			
 			if (dispositivo.isCadastrado() && !dispositivo.isVinculadoAUmUsuario()){
 	        	paragraph.setText("Utilize o código de ativação abaixo para (i) se cadastrar no site dengue.herokuapp.com ou (ii) vincular este celular/tablet à sua conta já existente.");
 	        	labelEmphasis.setText(dispositivo.getCodigoDeAtivacao());
 	        } else if (dispositivo.isCadastrado()  && dispositivo.isVinculadoAUmUsuario()){
 	        	paragraph.setText("Este celular/tablet (código de ativação '"+dispositivo.getCodigoDeAtivacao()+"') já está vinculado à conta de usuário '"+dispositivo.getEmailDoUsuarioAssociado()+"'.");        	
-	        } else if (dispositivo.isCadastrado() && !dispositivo.isVinculadoAUmUsuario()){
+	        } else if (!dispositivo.isCadastrado() && !dispositivo.isVinculadoAUmUsuario()){
 	        	paragraph.setText("Nenhuma denúncia foi enviada a partir deste celular/tablet. Por isso, ainda não foi gerado o código de ativação.");        		        
 	        } else {
 	        	Utilitarios.showToast("Houve um erro ao processar a solicitação.", ctx);

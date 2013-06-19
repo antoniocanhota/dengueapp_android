@@ -71,7 +71,11 @@ public class WSUtilitarios {
 		NodeList campoElmntLs = objeto.getElementsByTagName(campo);
 		Element campoElmnt = (Element) campoElmntLs.item(0);
 		NodeList campoNd = campoElmnt.getChildNodes();
-		return ((Node) campoNd.item(0)).getNodeValue();
+		if (campoNd.item(0) == null){
+			return null;
+		}else{
+			return ((Node) campoNd.item(0)).getNodeValue();
+		}		
 	}
 	
 	public static void showProgressDialog(ProgressDialog progressDialog){		
