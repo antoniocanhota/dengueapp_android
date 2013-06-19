@@ -17,13 +17,12 @@ import android.content.Context;
 public class Webservice {
 
 	// Para uso em produção:
-	// public static final String WEBSERVICES =
-	// "http://dengue.herokuapp.com/webservices/";
+	public static final String WEBSERVICES = "http://dengue.herokuapp.com/webservices/";
 	// Para uso em desenvolvimento:
 	//public static final String WEBSERVICES = "http://10.0.2.2:3000/webservices/";
 	// "http://dengue.herokuapp.com/webservices/";
 	// Para uso em desenvolvimento:
-	public static final String WEBSERVICES = "http://10.1.1.2:3000/webservices/";
+	//public static final String WEBSERVICES = "http://10.1.1.2:3000/webservices/";
 	public static final String WEBSERVICE_PUBLICAR_DENUNCIA = WEBSERVICES+"denuncias/publicar";
 	public static final String WEBSERVICE_LISTAGEM_DE_DENUNCIAS = WEBSERVICES
 			+ "denuncias.xml";

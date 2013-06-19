@@ -1,5 +1,8 @@
 package br.uff.antoniocanhota.dengueapp.android;
 
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -8,6 +11,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -53,6 +58,8 @@ public class PublicarDenunciaActivity extends MapActivity {
 		setContentView(R.layout.activity_publicar_denuncia);
 		fotoImageView = (ImageView) findViewById(R.id.foto_da_denuncia);
 		enderecoTextView = (TextView) findViewById(R.id.endereco_aproximado_da_denuncia);
+		endereco = "O aplicativo está tentando determinar sua localização...\n\n" +
+				"(Procure um local a céu aberto ou próximo a uma janela). ";
 		bt_confirmar_publicacao_de_denuncia = (Button) findViewById(R.id.bt_confirmar_publicacao_de_denuncia);
 	}
 
@@ -148,21 +155,37 @@ public class PublicarDenunciaActivity extends MapActivity {
 						.getAccuracy())
 						|| (userLocation == null && loc.getAccuracy() <= MIN_ACCURACY)) {
 
-					userLocation = loc;					
-					endereco = "Localização obtida com sucesso!\n\n"
-							+ "Latitude: " + loc.getLatitude() + "\n"
-							+ "Longitude:" + loc.getLongitude();
+					userLocation = loc;		
+					getEndereco();
+//					endereco = "Localização obtida com sucesso!\n\n"
+//							+ "Latitude: " + loc.getLatitude() + "\n"
+//							+ "Longitude:" + loc.getLongitude();
 					enderecoTextView.setText(endereco);
 				}
 			}
 			
 		}
 
+		private void getEndereco() {
+			
+			Geocoder geoCoder = new Geocoder(getBaseContext(), Locale.getDefault());
+			try {
+				List<Address> enderecos = geoCoder.getFromLocation(userLocation.getLatitude(), userLocation.getLongitude(), 1);
+				if (enderecos.size() > 0){
+					for (int i=0; i<enderecos.get(0).getMaxAddressLineIndex();i++){
+						endereco ="";
+						endereco += "\n" + enderecos.get(0).getAddressLine(1) + "\n\n(Endereço aproximado. Erro estimado em um raio de "+userLocation.getAccuracy()+"m.)";
+					}
+				}
+				
+			} catch (IOException e) {
+				endereco = "\nLocalização obtida. ("+userLocation.getLatitude()+","+userLocation.getLongitude()+")\n\n(Erro estimado em um raio de "+userLocation.getAccuracy()+"m.)";
+			}
+			
+		}
+
 		public void onProviderDisabled(String provider) {
-			Utilitarios
-					.showToast(
-							"Por favor, reative o sensor GPS para o correto funcionamento do DengueApp. Pode ser necessário reiniciar a aplicação.",
-							PublicarDenunciaActivity.this);
+			showSettingsAlert();
 		}
 
 		public void onProviderEnabled(String provider) {//
